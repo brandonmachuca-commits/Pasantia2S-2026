@@ -1,0 +1,180 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Segoe UI,Tahoma;
+
+    background:#111827;
+
+    color:white;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    padding:40px;
+}
+
+.container{
+
+    width:100%;
+
+    max-width:900px;
+}
+
+.card{
+
+    background:#1f2937;
+
+    padding:30px;
+
+    border-radius:16px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+h1{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+    color:#38bdf8;
+}
+
+h2{
+
+    margin-bottom:15px;
+
+    color:#38bdf8;
+
+    font-size:18px;
+}
+
+.estado-box{
+
+    background:#111827;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    margin-bottom:25px;
+}
+
+#estado{
+
+    line-height:2;
+}
+
+hr{
+
+    border:none;
+
+    border-top:1px solid #374151;
+
+    margin:30px 0;
+}
+
+.acciones{
+
+    margin-bottom:25px;
+}
+
+.descripcion{
+
+    margin-top:15px;
+
+    color:#9ca3af;
+
+    font-size:14px;
+}
+
+.grid-botones{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+}
+
+button{
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:#1d4ed8;
+}
+
+.btn-principal{
+
+    background:#059669;
+
+    font-size:18px;
+
+    padding:18px;
+}
+
+.btn-principal:hover{
+
+    background:#047857;
+}
+
+#resultado{
+
+    margin-top:30px;
+
+    background:#111827;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    min-height:80px;
+
+    white-space:pre-wrap;
+
+    line-height:1.8;
+}
+
+.success{
+
+    color:#4ade80;
+}
+
+.error{
+
+    color:#f87171;
+}
+
+.loading{
+
+    color:#facc15;
+}

@@ -1,0 +1,181 @@
+TIP - Matemática
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Matemática
+Docente:
+Marcelo Suarez
+marcelo.suarez
+@utec.edu.uy
+Materiales
+Materia:
+Matemática
+Créditos:
+0.
+Objetivo de la Asignatura:
+La asignatura servirá para la nivelación de los estudiantes que ingresen desde el Bachillerato Tecnológico o la Enseñanza Media Tecnológica.
+Metodología de Enseñanza:
+Se dictarán clases teóricas destinadas a la presentación formal de los temas, y prácticas destinadas al ejercicio necesario para la incorporación de los contenidos, así como a las aplicaciones prácticas en el campo de la computación.
+Se ofrecerán a los estudiantes resúmenes teóricos y repartidos con ejercicios prácticos, los cuales no se podrán considerar como sustitutivos de la bibliografía indicada.
+Se dictarán  6  horas semanales de exposiciones teórica/prácticas.  Asimismo, cada alumno deberá dedicar un promedio de 6 horas semanales de estudio domiciliario.
+Temario:
+Unidad 1: Conteo y Probabilidad
+Contenidos
+Arreglos, permutaciones y combinaciones (simples y con repetición).
+Combinaciones complementarias.
+Teorema de Stieffel.
+Fórmula de Newton. Triángulo de Pascal.
+Probabilidad según Laplace.
+Propiedades de la probabilidad.
+Probabilidad condicional. Independencia de sucesos.
+Competencias Específicas
+Definir arreglos, permutaciones y combinaciones.
+Deducir las fórmulas del número de arreglos, permutaciones y combinaciones.
+Definir combinaciones complementarias y demostrar su propiedad fundamenta.
+Conocer el enunciado de Stieffel.
+Conocer la fórmula del binomio de Newton y el triángulo de Pascal.
+Definir espacio muestral, suceso y probabilidad según Laplace.
+Conocer y demostrar las propiedades de la probabilidad.
+Definir probabilidad condicional y aplicarla en la resolución de problemas.
+Definir sucesos independientes.
+Unidad 2: Divisibilidad en N
+Contenidos
+División entera.
+Divisores y múltiplos. Propiedades.
+M.C.D.(a,b) y m.c.m.(a,b).
+Algoritmo de Euclides.
+Teorema de Euclides.
+Números primos.
+Competencias Específicas
+Definir división entera.
+Enunciar y demostrar el teorema de existencia y unicidad del cociente y el resto de la división entera.
+Definir divisor y múltiplo de un número, conjunto de divisoresy múltiplos comunes de dos números, máximo común divisor y mínimo común múltiplo.
+Conocer y aplicar las propiedades de los divisores y los múltiplos en la resolución de problemas de divisibilidad.
+Aplicar el algoritmo de Euclides.
+Enunciar el teorema de Euclides.
+Enunciar el teorema: m.D = a.b
+Definir número primo y conocer el teorema de existencia y unicidad de la descomposición en producto de factores primos.
+Conocer la fórmula del número de divisores de un número.
+Unidad 3: Número Real
+Contenidos
+Operaciones, estructura algebraica. Orden. Completitud.
+Valor absoluto. Propiedades. Operaciones.
+Competencias Específicas
+Conocer y clasificar el número real.
+Conocer las operaciones y las propiedades de cuerpo en R.
+Conocer la relación de orden en R y sus propiedades.
+Enunciar el axioma de completitud en R.
+Conocer la definición de valor absoluto y sus propiedades.
+Aplicar el valor absoluto en la resolución de problemas.
+Unidad 4: Polinomios
+Contenidos
+Definición de polinomio. Grado. Operaciones: suma y multiplicación.
+División. Teorema de existencia. División por x – a.
+Teorema de descomposición factorial.
+Enunciado del teorema fundamental del álgebra y sus aplicaciones.
+Relaciones entre coeficientes y raíces.
+Teorema de la raíz racional.
+Teorema fundamental de identidad de polinomios. Método de los coeficientes indeterminados.
+Competencias específicas
+Enunciar el teorema de descomposición factorial.
+Enunciar el teorema fundamental del álgebra.
+Conocer el teorema de las raíces complejas conjugadas en un polinomio de coeficientes reales.
+Conjeturar sobre el número de raíces reales de un polinomio de coeficientes reales.
+Deducir las relaciones entre los coeficientes y las raíces.
+Enunciar el teorema de la raíz racional.
+Enunciar el teorema de identidad de polinomios.
+Aplicar la teoría a la resolución de problemas.
+Unidad 5: Ecuaciones, Inecuaciones y Sistemas
+Contenidos
+Definición de ecuación y de conjunto solución de la misma. Ecuaciones equivalentes.
+Teoremas de transformaciones de ecuaciones.
+Aplicación a la resolución de ecuaciones de primer y segundo grado.
+Ecuaciones que se reducen a una de segundo grado mediante un cambio de variable.
+Ecuaciones exponenciales y logarítmicas.
+Definición de inecuación y de conjunto solución de la misma. Inecuaciones equivalentes.
+Teoremas de transformación de inecuaciones.
+Inecuaciones polinómicas, exponenciales y logarítmicas.
+Sistemas de ecuaciones. Sistemas equivalentes.
+Teorema fundamental de transformación de sistemas.
+Sistemas lineales: resolución y discusión.
+Competencias Específicas
+Enunciar los teoremas de transformación de ecuaciones, inecuaciones y sistemas de ecuaciones.
+Aplicar los teoremas a la resolución de ecuaciones, inecuaciones y sistemas.
+Resolver ecuaciones bicuadradas, simétricas de cuarto y quinto grado, hemisimétricas.
+Resolver ecuaciones exponenciales y logarítmicas.
+Estudiar el signo de un polinomio y aplicarlo en la resolución de inecuaciones.
+Resolver inecuaciones logarítmicas.
+Resolver y discutir sistemas de ecuaciones.
+Unidad 6: Continuidad y Derivabilidad
+Contenidos
+Funciones continuas en un punto y en un intervalo.
+Propiedades de las funciones continuas en un intervalo.
+Función derivable en un punto y función derivada.
+Teoremas de Rolle, Lagrange, Cauchy y sus aplicaciones.
+Fórmulas de Taylor y Mac-Laurin.
+Competencias Específicas
+Definir función continua.
+Enunciar y aplicar los teoremas de Bolzano y de Darboux.
+Definir extremos relativos y absolutos.
+Enunciar y aplicar el teorema de Weierstrass.
+Definir función derivable y función derivada.
+Relacionar la variación de una función con la derivada.
+Conocer la condición necesaria de extremo relativo.
+Enunciar los teoremas de Rolle, Lagrange y Cauchy.
+Enunciar el teorema fundamental del cálculo integral.
+Conocer y aplicar las reglas de L’Hopital.
+Enunciar y aplicar la fórmula de Taylor.
+Unidad 7: Sucesiones y Series
+Contenidos
+Sucesiones. Definición. Límite. Clasificación.
+Sucesiones monótonas.
+Sumas finitas. Propiedades. Símbolo ∑.
+Series numéricas.
+Clasificación de series.
+Competencias Específicas
+Definir sucesiones.
+Definir límite y clasificar las sucesiones.
+Enunciar el teorema relativo a las sucesiones monótonas.
+Definir número e.
+Definir y clasificar series.
+Conocer la condición necesaria de convergencia de una serie.
+Aplicar los criterios de comparación (mayorante y minorante).
+Aplicar los criterios de Cauchy y D’Alembert.
+Conocer el criterio de Leibnitz.
+Unidad 8: Número Complejo
+Contenidos
+Número complejo: definición y representaciones cartesiana, binómico, polar y trigonométrica.
+Operaciones en C: suma, producto y potencia.
+Resolución de ecuaciones en C.
+Competencias Específicas
+Conocer la definición y las distintas representaciones de los números complejos.
+Utilizar las operaciones en C en la resolución de problemas.
+Resolver ecuaciones de segundo grado en C.
+Resolver en C ecuaciones de la forma: xn – an = 0; xn + an = 0 y representar gráficamente sus soluciones en el plano complejo.
+Bibliografía
+Cálculo infinitesimal , Spivak, M.
+Introducción al Cálculo y al Análisis Matemático, vol. I, vol II , Courant R. y John F.
+Calculus Vol I, Apostol, Tom.
+Previaturas
+No Tiene.
+Formas de Evaluación
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará luego de la séptima semana de clases, y el segundo tendría lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La
+exoneración
+del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La
+suficiencia
+se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá
+recursar
+la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

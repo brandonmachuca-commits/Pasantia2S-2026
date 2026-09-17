@@ -1,0 +1,58 @@
+TIP - Programación avanzada
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Programación avanzada
+Docente:
+Lucas Ciceri
+lucas.ciceri
+@utec.edu.uy
+Materia
+Programación.
+Créditos:
+12
+Objetivo de la Asignatura
+El objetivo de la asignatura es introducir elementos necesarios para la construcción de sistemas de software de mediano y gran porte, aplicando para ello el paradigma de desarrollo denominado orientación a objetos.
+Particularmente, la asignatura se enfocará en
+Dar a conocer herramientas para el análisis y diseño de sistemas orientados a objetos basadas en el lenguaje de modelado UML
+Presentar una metodología básica para el uso de dichas herramientas
+Dominar las construcciones de la orientación a objetos en el lenguaje C++
+Adquirir experiencia en el desarrollo de un sistema completamente funcional
+Metodología de enseñanza
+Se dictarán 6 horas semanales de clase, incluyendo presentaciones teóricas, realización de ejercicios prácticos y trabajo en máquina. Además, cada alumno deberá dedicar un promedio de 6 horas semanales para estudio y realización de trabajos de laboratorio propuestos por el docente.
+Temario
+Introducción a la Orientación a Objetos
+Conceptos básicos de la orientación a objetos (objetos, clases, herencia, polimorfismo, etc.).
+Introducción al desarrollo de software (procesos de desarrollo, metodologías)
+Análisis Orientado a Objetos
+Modelos estructurales y de comportamiento, herramientas para el modelado.
+Diseño Orientado a Objetos
+Diseño de colaboraciones, herramientas para el modelado.
+Pautas para el armado de la arquitectura de módulos y su especificación.
+Implementación Orientada a Objetos
+El pasaje del diseño a la implementación.
+Manejo de estructuras de datos dinámicas.
+Desarrollo de una Aplicación
+Trabajo de laboratorio que abarca todos los temas del curso
+Bibliografía
+Applying UML and patterns. Craig Larman. Prentice Hall (2
+Ed. 2001), ISBN 9780130925695
+UML Distilled. Martin Fowler. Addison Wesley (3
+Ed. 2003) , ISBN 9780321193681
+Cómo programar en C/C++. H.M. Deitel y P.J. Deitel. Prentice Hall (1995), ISBN 9688804711
+Previaturas
+Curso de Estructuras de Datos y Algoritmos.
+Anexo:
+Formas de evaluación
+Los estudiantes serán evaluados mediante entregas de trabajos de laboratorio y dos parciales. Laboratorio: Los trabajos propuestos serán de entrega obligatoria. No se les asignará puntaje, solamente se evaluará si se aprueban o no.
+Parciales: El primero se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en las instancias de evaluación surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos. La exoneración del examen final se logra aprobando el laboratorio y acumulando como mínimo 60 puntos entre los dos parciales. La suficiencia se logra aprobando el laboratorio y acumulando como mínimo 25 puntos entre ambos parciales. Quien no apruebe el laboratorio o no obtenga 25 puntos entre ambos parciales deberá recursar la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

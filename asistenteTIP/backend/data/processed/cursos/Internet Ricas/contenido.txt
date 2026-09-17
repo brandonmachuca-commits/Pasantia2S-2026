@@ -1,0 +1,69 @@
+TIP - Taller de Aplicaciones de Internet Ricas
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Taller de Aplicaciones de Internet Ricas
+Docente:
+Maximiliano Fernandez
+maximiliano.fernande
+@utec.edu.uy
+Nombre de la Asignatura:
+Taller de Aplicaciones de Internet Ricas
+Materia:
+Programación
+Créditos:
+Objetivo de la Asignatura
+El objetivo principal de la asignatura es formar al estudiante en el diseño y desarrollo de aplicaciones web ricas (o rich internet applications RIA).
+Los objetivos de la asignatura son:
+Introducir al estudiante en la programación en una plataforma de desarrollo RIA (Flash, Silverlight).
+Fomentar en el estudiante habilidades de trabajo en equipo, y la colaboración entre grupos de trabajo
+Entrenar las capacidades de comunicación y presentación oral del trabajo realizado
+Metodología de enseñanza
+Se dictarán 2 horas semanales de clases teóricas durante la primera mitad del semestre para dictar los contenidos conceptuales planteados en el temario. Adicionalmente cada alumno deberá dedicar un promedio de 2 horas semanales para el estudio y realización de ejercicios prácticos.
+En la segunda mitad del semestre, el estudiante deberá dedicar un promedio de 4 horas semanales para la realización del laboratorio. En este periodo los grupos de trabajo mantendrán clases de consulta con el docente en el horario de clase.
+Temario
+1.       Objetivos generales del curso
+2.       Introduccion a las aplicaciones web
+o         Historia, Protocolo HTTP
+3.       Introduccion a la programación en el navegador de internet
+o         HTML, CSS
+o         XML, XHTML, DOM
+o         Javascript
+o         AJAX, JQuery
+4.       Plataforma RIA (Silverlight o Flex)
+o         Gráficos vectoriales
+o         Manejo de animaciones
+o         Reproducción de contenido multimedia
+5.       Integración con lógica de servidor
+o         Web Services (RPC; SOAP, REST, JSON, SSL, WS*)
+o         Patrones de diseño MVC, MVVM
+Bibliografía
+Dynamic HTML: The Definitive Reference
+· Publisher: O'Reilly Media, Inc.
+· ISBN-13: 978-0596527402
+Data-Driven Services with Silverlight 2
+· Publisher: O'Reilly Media, Inc.
+· ISBN-13: 978-0596523091
+RESTful Web Services
+· Publisher: O'Reilly Media, Inc.
+· ISBN-13: 978-0596529260
+Javascript: The Definitive Guide
+· Publisher: O'Reilly Media, Inc.
+· ISBN-13: 978-0596101992
+Previaturas
+Curso de Programación de Aplicaciones
+Anexo: Formas de evaluación
+El docente se basará en los siguientes elementos para evaluar el rendimiento de los estudiantes:
+·         Calidad del trabajo entregado, realizado en equipo, según los siguientes criterios
+o        Entrega en fecha
+o        Cumplimiento de los requerimientos funcionales obligatorios
+o        Implementación de funcionalidades opcionales
+o        Incorporación y evaluación de nuevas tecnologías
+·         Asistencia, actitud y participación en clase
+·         Presentación oral del trabajo realizado
+En base a esta evaluación el estudiante podrá aprobar completamente el curso o reprobarlo.
+Report abuse
+Page details
+Page updated
+Report abuse

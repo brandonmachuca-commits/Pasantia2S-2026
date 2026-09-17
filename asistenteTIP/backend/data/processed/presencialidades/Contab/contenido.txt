@@ -1,0 +1,10 @@
+Materia: Contabilidad (Contab)
+Presencialidades:
+  - Lunes 9 de Marzo: 18.00 a 20.00
+  - Lunes 23 de Marzo: 18.00 a 20.00
+  - Lunes 6 de Abril: 18.00 a 20.00
+  - Lunes 27 de Abril: 18.00 a 20.00
+  - Viernes 1 de Mayo: Feriado
+  - Lunes 25 de Mayo: 18.00 a 20.00
+  - Lunes 8 de Junio: 18.00 a 20.00
+  - Lunes 22 de Junio: 18.00 a 20.00

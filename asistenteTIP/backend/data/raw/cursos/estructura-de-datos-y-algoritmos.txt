@@ -1,0 +1,64 @@
+TIP - Estructura de Datos y Algoritmos
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Estructura de Datos y Algoritmos
+Docente:
+Nancy López
+nancy.lopez@utec.edu.uy
+Materia:
+Programación.
+Créditos:
+16.
+Objetivo de la Asignatura
+El objetivo de la asignatura es aprender a realizar programas de tamaño medio, partiendo de diseños apropiados, aplicando los conceptos de módulo de programa y tipo abstracto de dato.
+El estudiante aprenderá a trabajar con abstracciones de datos básicas (listas generales, colas, pilas, árboles binarios).
+Se introducirá al estudiante al análisis de algoritmos.
+El estudiante logrará un dominio completo del lenguaje C/C++ (sin manejo de clases y objetos), para lo cual se lo incentivará a investigar y utilizar funciones de biblioteca (cadenas, entrada/salida, archivos, etc).
+Metodología de enseñanza
+Se dictarán 8 horas semanales de clase, incluyendo presentaciones teóricas, realización de ejercicios prácticos y trabajo en máquina. Además, cada alumno deberá dedicar un promedio de 8 horas semanales para estudio y realización de trabajos de laboratorio propuestos por el docente.
+Temario
+Tipos Abstractos de Datos. Diseño de Programas, Módulos de Programa. Implementación de Módulos en Lenguaje C/C++.
+Introducción al Análisis de Algoritmos: Eficiencia en Tiempo de Ejecución y Espacio de Almacenamiento. Algoritmos de Búsqueda y Ordenación.
+Concepto de Recurrencia.
+Implementación de Tipos de Datos Recurrentes: Concepto y Manipulación de Punteros.
+Implementación de Listas.
+Implementación de Funciones Recurrentes.
+Diseño de Programas Mediante Abstracción de Datos. Refinamiento de Funciones y Datos. Casos de Estudio.
+Abstracciones de Datos Básicas:
+Estructuras lineales (listas, pilas, colas, dobles-colas).
+Árboles (árboles binarios de búsqueda, árboles generales, estructuras arborescentes).
+Bibliografía
+Estructuras de datos y algoritmos
+Wirth, N. Algoritmos y Estructuras de Datos. Prentice-Hall. 1987.
+Weiss, M. A. Estructuras de Datos y Algoritmos. Addison-Wesley Iberoamericana. 1995.
+Aho, A. V., J. E. Hopcroft y J. D. Ullman. Estructuras de Datos y Algoritmos. Addison-Wesley Iberoamericana. 1988.
+Lenguaje de programación C/C++
+Kernighan, B. W. y D. M. Ritchie. El lenguaje de programación C. Prentice-Hall. 1991.
+Deitel, H. M. y P. J. Deitel. Cómo programar en C/C++. Prentice-Hall. 1998.
+Previaturas
+Principios de Programación (curso).
+Matemática Discreta y Lógica 1 (curso).
+Formas de evaluación
+Los estudiantes serán evaluados mediante entregas de trabajos de laboratorio y dos parciales.
+Laboratorio: Los trabajos propuestos serán de entrega obligatoria. No se les asignará puntaje, solamente se evaluará si se aprueban o no.
+Parciales: El primero se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La
+exoneración
+del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La
+suficiencia
+se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá
+recursar
+la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

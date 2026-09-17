@@ -1,0 +1,359 @@
+================================================================================
+PRESENCIALIDADES 2026
+================================================================================
+
+Primer semestre
+
+Materia: Matematica Discreta y Logica 1 (MDL1)
+Presencialidades:
+  - Lunes 9 de Marzo: 16:00 - 20:00
+  - Lunes 23 de Marzo: 16:00 - 20:00
+  - Lunes 6 de Abril: 16:00 - 20:00
+  - Lunes 27 de Abril: 16:00 - 20:00
+  - Viernes 1 de Mayo: Feriado
+  - Lunes 25 de Mayo: 16:00 - 20:00
+  - Lunes 8 de Junio: 16:00 - 20:00
+  - Lunes 22 de Junio: 16:00 - 20:00
+
+Materia: Ingles Tecnico 1 (I1)
+Presencialidades:
+  - Martes 10 de Marzo: 18:00 a 20:00
+  - Martes 24 de Marzo: 18;00 a 20;00
+  - Martes 7 de Abril: 18;00 a 20;00
+  - Martes 28 de Abril: 18;00 a 20;00
+  - Viernes 1 de Mayo: Feriado
+  - Martes 26 de Mayo: 18;00 a 20;00
+  - Martes 9 de Junio: 18 a 20
+  - Martes 23 de Junio: 18 a 20
+
+Materia: Matematica Nivelacion (MN)
+Presencialidades:
+  - Jueves 12 de Marzo: 18 a 20
+  - Jueves 26 de Marzo: 18 a 20
+  - Jueves 9 de Abril: 18 a 20
+  - Jueves 30 de Abril: 18 a 20
+  - Viernes 1 de Mayo: Feriado
+  - Lunes 25 de Mayo: 20 a 22
+  - Jueves 28 de Mayo: 18 a 20
+  - Jueves 11 de Junio: 18 a 20
+  - Jueves 25 de Junio: 18 a 20
+
+Materia: Arquitectura del Computador (ARQ)
+Presencialidades:
+  - Miercoles 11 de Marzo: 18:00 a 20:00
+  - Miercoles 25 de Marzo: 18:00 a 20:00
+  - Miércoles 8 de Abril: 18:00 a 20:00
+  - Miercoles 29 de Abril: 18:00 a 20:00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 18:00 a 20:00
+  - Miércoles 10 de Junio: 18:00 a 20:00
+  - Miercoles 24 de Junio: 18:00 a 20:00
+
+Materia: Principios de Programación (PP)
+Presencialidades:
+  - Miercoles 11 de Marzo: 20:00 a 00:00
+  - Miercoles 25 de Marzo: 20:00 a 00:00
+  - Miércoles 8 de Abril: 20:00 a 00:00
+  - Miercoles 29 de Abril: 20:00 a 00:00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 20:00 a 00:00
+  - Miércoles 10 de Junio: 20:00 a 00:00
+  - Miercoles 24 de Junio: 20:00 a 00:00
+
+Materia: Comunicacion Oral y Escrita (COE)
+Presencialidades:
+  - Viernes 13 de Marzo: 18 a 20 hs
+  - Viernes 27 de Marzo: 18 a 20 hs
+  - Viernes 10 de Abril: 18 a 20 hs
+  - Viernes 1 de Mayo: Feriado
+  - Viernes 29 de Mayo: 18 a 20 hs
+  - Viernes 12 de Junio: 18 a 20 hs
+  - Viernes 26 de Junio: 18 a 20 hs
+
+Materia: Base de Datos 2 (BD2)
+Presencialidades:
+  - Lunes 9 de Marzo: 20 a 22
+  - Jueves 12 de Marzo: 18 a 21
+  - Jueves 26 de Marzo: 18 a 21
+  - Jueves 9 de Abril: 18 a 21
+  - Lunes 27 de Abril: 20:00 a 23:00
+  - Viernes 1 de Mayo: Feriado
+  - Lunes 25 de Mayo: 20:00 a 23:00
+  - Lunes 8 de Junio: 20:00 a 23:00
+  - Lunes 22 de Junio: 20:00 a 23:00
+
+Materia: Contabilidad (Contab)
+Presencialidades:
+  - Lunes 9 de Marzo: 18.00 a 20.00
+  - Lunes 23 de Marzo: 18.00 a 20.00
+  - Lunes 6 de Abril: 18.00 a 20.00
+  - Lunes 27 de Abril: 18.00 a 20.00
+  - Viernes 1 de Mayo: Feriado
+  - Lunes 25 de Mayo: 18.00 a 20.00
+  - Lunes 8 de Junio: 18.00 a 20.00
+  - Lunes 22 de Junio: 18.00 a 20.00
+
+Materia: Programación Avanzada (PAvanz)
+Presencialidades:
+  - Martes 10 de Marzo: 20 a 23 hs
+  - Miercoles 11 de Marzo: 18 a 21 hs
+  - Martes 24 de Marzo: 20 a 23 hs
+  - Miercoles 25 de Marzo: 18 a 21 hs
+  - Martes 7 de Abril: 20 a 23
+  - Miércoles 8 de Abril: 18 a 21
+  - Martes 28 de Abril: 20 a 23
+  - Miercoles 29 de Abril: 18 a 21
+  - Viernes 1 de Mayo: Feriado
+  - Martes 26 de Mayo: 20 a 23
+  - Miercoles 27 de Mayo: 18 a 21
+  - Martes 9 de Junio: 20 a 23
+  - Miércoles 10 de Junio: 18 a 21
+  - Martes 23 de Junio: 20 a 23
+  - Miercoles 24 de Junio: 20 a 23
+
+Materia: Redes de Computadoras (Redes)
+Presencialidades:
+  - Miercoles 11 de Marzo: 21 a 00 hs
+  - Miercoles 25 de Marzo: 21 a 00 hs
+  - Miércoles 8 de Abril: 21 a 00
+  - Miercoles 29 de Abril: 21 a 00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 21 a 00
+  - Miércoles 10 de Junio: 21 a 00
+  - Miercoles 24 de Junio: 21 a 00
+
+Materia: Taller de Aplicaciones de Internet Ricas (RIA)
+Presencialidades:
+  - Jueves 12 de Marzo: 22:00 a 00:00
+  - Jueves 26 de Marzo: 22:00 a 00:00
+  - Jueves 9 de Abril: 22:00 a 00:00
+  - Jueves 30 de Abril: 22:00 a 00:00
+  - Viernes 1 de Mayo: Feriado
+  - Jueves 28 de Mayo: 22:00 a 00:00
+  - Jueves 11 de Junio: 22:00 a 00:00
+  - Jueves 25 de Junio: 22:00 a 00:00
+
+Materia: Taller de Sistemas de Información Java EE (JAVA)
+Presencialidades:
+  - Martes 10 de Marzo: 18:00 a 21:00
+  - Martes 24 de Marzo: 18:00 a 21:00
+  - Martes 7 de Abril: 18:00 a 21:00
+  - Martes 28 de Abril: 18:00 a 21:00
+  - Viernes 1 de Mayo: Feriado
+  - Martes 26 de Mayo: 18:00 a 21:00
+  - Martes 9 de Junio: 18:00 a 21:00
+  - Martes 23 de Junio: 18:00 a 21:00
+
+Materia: Administración de Infraestructuras 2 (Adm Infra 2)
+Presencialidades:
+  - Jueves 12 de Marzo: 18:00 a 22:00
+  - Jueves 26 de Marzo: 18:00 a 22:00
+  - Jueves 9 de Abril: 18:00 a 22:00
+  - Jueves 30 de Abril: 18:00 a 22:00
+  - Viernes 1 de Mayo: Feriado
+  - Jueves 28 de Mayo: 18:00 a 22:00
+  - Jueves 11 de Junio: 18:00 a 22:00
+  - Jueves 25 de Junio: 18:00 a 22:00
+
+Materia: Taller de Desarrollo de Aplicaciones Web con PHP (PHP)
+Presencialidades:
+  - Miercoles 11 de Marzo: 18:00 a 21:00
+  - Miércoles 8 de Abril: 18:00 a 21:00
+  - Miercoles 29 de Abril: 18:00 a 21:00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 18:00 a 21:00
+  - Miércoles 10 de Junio: 18:00 a 21:00
+  - Miercoles 24 de Junio: 18:00 a 21:00
+
+Materia: Taller de Desarrollo de Aplicaciones Para Dispositivos Móviles (Móviles)
+Presencialidades:
+  - Miercoles 11 de Marzo: 21:00 a 23:00
+  - Miércoles 8 de Abril: 21:00 a 23:00
+  - Miercoles 29 de Abril: 21:00 a 23:00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 21:00 a 23:00
+  - Miércoles 10 de Junio: 21:00 a 23:00
+  - Miercoles 24 de Junio: 21:00 a 23:00
+
+
+Segundro semestre
+
+Materia: Matematica Discreta y Logica 1 (MDL1)
+Presencialidades:
+  - Viernes 7 de Agosto: 16:00 - 18:00
+  - Martes 25 de Agosto: Feriado
+  - Viernes 28 de Agosto: 16:00 - 18:00
+  - Viernes 18 de Septiembre: 16:00 - 18:00
+  - Lunes 12 de Octubre: Feriado
+  - Viernes 16 de Octubre: 16:00 - 18:00
+  - Viernes 30 de Octubre: 16:00 - 18:00
+  - Viernes 13 de Noviembre: 16:00 - 18:00
+
+Materia: Inglés Técnico 2 (I2)
+Presencialidades:
+  - Viernes 7 de Agosto: 18:00 - 20:00
+  - Martes 25 de Agosto: Feriado
+  - Viernes 28 de :Agosto 18:00 - 20:00
+  - Viernes 18 de Agosto: 18:00 - 20:00
+  - Lunes 12 de Octubre: Feriado
+  - Viernes 16 de Octubre: 18:00 - 20:00
+  - Viernes 30 de Octubre: 18:00 - 20:00
+  - Viernes 13 de Noviembre: 18:00 - 20:00
+
+Materia: Bases de Datos 1 (BD1)
+Presencialidades:
+  - Jueves 6 de Agosto: 18:00 - 21:00
+  - Martes 25 de Agosto: Feriado
+  - Jueves 27 de Agosto: 18:00 - 21:00
+  - Jueves 17 de Septiembre: 18:00 - 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Jueves 15 de Octubre: 18:00 - 21:00
+  - Jueves 29 de Octubre: 18:00 - 21:00
+  - Jueves 12 de Noviembre: 18:00 - 21:00
+
+Materia: Matematica Discreta y Logica 2 (MDL2)
+Presencialidades:
+  - Lunes 3 de Agosto: 19:00 - 21:00
+  - Lunes 24 de Agosto: 19:00 - 21:00
+  - Martes 25 de Agosto: Feriado
+  - Lunes 14 de Septiembre: 19:00 - 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Lunes 26 de Octubre: 19:00 - 21:00
+  - Lunes 9 de Noviembre: 19:00 - 21:00
+
+Materia: Sistemas Operativos (SO)
+Presencialidades:
+  - Miercoles 5 de Agosto: 18:00 - 21:00
+  - Martes 25 de Agosto: Feriado
+  - Miercoles 26 de Agosto: 18:00 - 21:00
+  - Miercoles 16 de Septiembre: 18:00 - 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Miercoles 14 de Octubre: 18:00 - 21:00
+  - Miercoles 28 de Octubre: 18:00 - 21:00
+  - Miercoles 11 de Noviembre: 18:00 - 21:00
+
+Materia: Estructuras de Datos y Algoritmos (EDA)
+Presencialidades:
+  - Miercoles 5 de Agosto: 21:00 - 00:00
+  - Martes 25 de Agosto: Feriado
+  - Miercoles 26 de Agosto: 21:00 - 00:00
+  - Miercoles 16 de Septiembre: 21:00 - 00:00
+  - Lunes 12 de Octubre: Feriado
+  - Miercoles 14 de Octubre: 21:00 - 00:00
+  - Miercoles 28 de Octubre: 21:00 - 00:00
+  - Miercoles 11 de Noviembre: 21:00 - 00:00
+
+Materia: Programación de Aplicaciones (PAplic)
+Presencialidades:
+  - Miercoles 5 de Agosto: 18:00 a 23:00
+  - Jueves 6 de Agosto: 20:00 a 23:00
+  - Martes 25 de Agosto: Feriado
+  - Miercoles 26 de Agosto: 18:00 a 23:00
+  - Jueves 27 de Agosto: 20:00 a 23:00
+  - Miercoles 16 de Septiembre: 18:00 a 23:00
+  - Jueves 17 de Septiembre: 20:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Miercoles 14 de Octubre: 18:00 a 23:00
+  - Jueves 15 de Octubre: 20:00 a 23:00
+  - Miercoles 28 de Octubre: 18:00 a 23:00
+  - Jueves 29 de Octubre: 20:00 a 23:00
+  - Miercoles 11 de Noviembre: 18:00 a 23:00
+  - Jueves 12 de Noviembre: 20:00 a 23:00
+
+Materia: Administración de Infraestructuras 1 (Adm Inf1)
+Presencialidades:
+  - Lunes 3 de Agosto: 19:00 - 21:00
+  - Lunes 24 de Agosto: 19:00 - 21:00
+  - Martes 25 de Agosto: Feriado
+  - Viernes 28 de Agosto: 18:00 a 20:00
+  - Lunes 14 de Septiembre: 19:00 a 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Lunes 26 de Octubre: 19:00 - 21:00
+  - Lunes 9 de Noviembre: 19:00 a 21:00
+
+Materia: Relaciones Personales y Laborales (RPyL)
+Presencialidades:
+  - Martes 4 de Agosto: 18:00 a 20:00
+  - Martes 25 de Agosto: Feriado
+  - Martes 15 de Septiembre: 18:00 a 20:00
+  - Lunes 12 de Octubre: Feriado
+  - Martes 13 de Octubre: 18:00 a 20:00
+  - Martes 27 de Octubre: 18:00 a 20:00
+  - Martes 10 de Noviembre: 18:00 a 20:00
+
+Materia: Probabilidad y Estadística (PyE)
+Presencialidades:
+  - Lunes 3 de Agosto: 21:00 - 23:00
+  - Lunes 24 de Agosto: 21:00 - 23:00
+  - Martes 25 de Agosto: Feriado
+  - Jueves 27 de Agosto: 18:00 a 20:00
+  - Lunes 14 de Septiembre: 21:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Lunes 26 de Octubre: 21:00 - 23:00
+  - Lunes 9 de Noviembre: 21:00 a 23:00
+
+Materia: Ingeniería de Software (IngSoft)
+Presencialidades:
+  - Martes 4 de Agosto: 20:00 a 23:00
+  - Martes 25 de Agosto: Feriado
+  - Martes 15 de Septiembre: 20:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Martes 13 de Octubre: 20:00 a 23:00
+  - Martes 27 de Octubre: 20:00 a 23:00
+  - Martes 10 de Noviembre: 20:00 a 23:00
+
+Materia: Introducción al Desarrollo de Juegos (Juegos)
+Presencialidades:
+  - Lunes 3 de Agosto: 18:00 a 21:00
+  - Lunes 24 de Agosto: 18:00 a 21:00
+  - Martes 25 de Agosto: Feriado
+  - Jueves 17 de Septiembre: 21:00 - 00:00
+  - Lunes 12 de Octubre: Feriado
+  - Jueves 15 de Octubre: 21:00 a 00:00
+  - Lunes 26 de Octubre: 18 a 21
+  - Jueves 29 de Octubre: 21 a 00
+  - Lunes 9 de Noviembre: 18 a 21
+  - Jueves 12 de Noviembre: 21:00 a 00:00
+
+Materia: Taller de Gestión de la Innovación en Tecnologías (Innovación)
+Presencialidades:
+  - Viernes 7 de Agosto: 18:00 a 21:00
+  - Martes 25 de Agosto: Feriado
+  - Viernes 28 de Agosto: 18:00 a 21:00
+  - Viernes 18 de Septiembre: 18:00 a 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Viernes 16 de Octubre: 18:00 a 21:00
+  - Viernes 30 de Octubre: 18:00 a 21:00
+  - Viernes 13 de Noviembre: 18:00 a 21:00
+
+Materia: Introducción a los Sistemas de Control (Control)
+Presencialidades:
+  - Miercoles 5 de Agosto: 21:00 a 0:00
+  - Martes 25 de Agosto: Feriado
+  - Miercoles 26 de Agosto: 21:00 a 0:00
+  - Miercoles 16 de Septiembre: 21:00 a 00:00
+  - Lunes 12 de Octubre: Feriado
+  - Miercoles 14 de Octubre: 21:00 a 0:00
+  - Miercoles 28 de Octubre: 21:00 a 0:00
+  - Miercoles 11 de Noviembre: 21:00 a 00:00
+
+Materia: Sistemas de Gestión de Contenidos (JyM)
+Presencialidades:
+  - Martes 4 de Agosto: 21:00 a 23:00
+  - Martes 25 de Agosto: Feriado
+  - Martes 15 de Septiembre: 21:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Martes 13 de Octubre: 21:00 a 23:00
+  - Martes 27 de Octubre: 21:00 a 23:00
+  - Martes 10 de Noviembre: 21:00 a 23:00
+
+Materia: Taller de Sistemas de Información .NET (.NET)
+Presencialidades:
+  - Martes 4 de Agosto: 18:00 a 21:00
+  - Martes 25 de Agosto: Feriado
+  - Martes 15 de Septiembre: 18:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Martes 13 de Octubre: 18:00 a 21:00
+  - Martes 27 de Octubre: 18:00 a 21:00
+  - Martes 10 de Noviembre: 18:00 a 23:00
+

@@ -1,0 +1,43 @@
+TIP - Pasantía Laboral
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Pasantía Laboral
+Docente:
+Eduardo demichelis
+eduardo.demichelis
+@utec.edu.uy
+Nombre de la Asignatura:
+Pasantía Laboral
+Materia:
+Proyecto y Pasantía Laboral
+Créditos:
+10
+Objetivo de la Asignatura:
+La Pasantía laboral tiene como objetivo fundamental la adquisición directa de experiencia por parte del estudiante, insertándolo en el mundo laboral, en el que deberá enfrentarse a desafíos vinculados a su futura actividad profesional.
+Se busca que el estudiante se familiarice con los métodos y procedimientos obtenidos durante su formación y que esté expuesto a desarrollar sus habilidades en resolución de problemas, trabajo en equipo, etc.
+Metodología de enseñanza:
+El estudiante realizará tareas como pasante en una empresa, organismo o institución y deberán ser reguladas y desarrolladas bajo la supervisión de un técnico responsable de dicho centro. Las actividades deberán tener interés desde el punto de vista tecnológico.
+La Pasantía se podrá desarrollar fuera del período curricular de cursos y consistirá en actividades de como mínimo 160 horas reales y que lleven por lo menos dos meses, con dedicación de tiempo parcial.
+Se deberá confeccionar al iniciar la Pasantía, un plan de trabajo del pasante, que deberá ser aprobado por la Comisión de Carrera del Tecnólogo Informático.
+Temario:
+Deberá existir un plan de trabajo concreto que puede incluir tareas tales como:
+Relevamiento y documentación de programas, procedimientos y sistemas
+Desarrollo de aplicaciones
+Testing y verificación de programas
+Atención a clientes o usuarios
+Tareas de mantenimiento de sistemas
+Bibliografía:
+No existe bibliografía específica.
+En función de las tareas a ser desarrolladas por el pasante descritas en su plan de actividades, el técnico supervisor podrá recomendar cierta bibliografía en particular.
+Previaturas
+Principios de Programación, Estructuras de Datos y Algoritmos, Programación Avanzada, Arquitectura de Computadoras, Sistemas Operativos, Redes de Computadoras, Base de Datos 1, Base de Datos 2.
+Anexo 1:
+Forma de evaluación
+La evaluación se hará de acuerdo al cumplimiento del plan de tareas del pasante, fijado al comienzo de las actividades, y del concepto del técnico supervisor de la empresa.
+Para ello el pasante confeccionará un informe de las actividades desarrolladas, incluyendo en el mismo la carga horaria real que consumió cada tarea. A su vez, el  supervisor técnico confeccionará un informe de evaluación de las actividades del pasante. Con ambos informes, se establecerá la aprobación, o no aprobación de la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

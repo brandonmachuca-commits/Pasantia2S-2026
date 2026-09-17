@@ -1,0 +1,74 @@
+================================================================================
+HORARIOS 2026
+================================================================================
+
+Segundo Semestre
+--------------------------------------------------
+
+.NET
+  - Martes: 18:00 a 21:00
+  - Jueves: 18:00 a 21:00
+
+Adm Inf1
+  - Viernes: 18:00 a 20:00
+  - Lunes: 19:00 a 21:00
+
+Apoyo presencial Matemáticas
+  - Jueves: 16:00
+
+Apoyo presencial PyE
+  - Jueves: 17:00
+
+BD1
+  - Jueves: 18:00 a 21:00
+  - Lunes: 21:00 a 24:00
+
+EDA
+  - Martes: 20:00 a 24:00
+  - Miércoles: 21:00 a 24:00
+  - Jueves: 23:00
+
+I2
+  - Viernes: 18:00 a 20:00
+
+ISC
+  - Lunes: 21:00 a 24:00
+  - Miércoles: 21:00 a 24:00
+
+IngSoft
+  - Martes: 20:00 a 23:00
+  - Viernes: 20:00 a 23:00
+
+Juegos
+  - Lunes: 18:00 a 21:00
+  - Jueves: 21:00 a 24:00
+
+JyM
+  - Martes: 21:00 a 23:00
+
+MDL1
+  - Viernes: 16:00 a 18:00
+  - Martes: 18:00 a 20:00
+  - Jueves: 21:00 a 23:00
+
+MDL2
+  - Lunes: 18:00 a 21:00
+
+ProgAplic
+  - Miércoles: 18:00 a 23:00
+  - Jueves: 20:00 a 23:00
+
+PyE
+  - Jueves: 18:00 a 20:00
+  - Lunes: 21:00 a 23:00
+
+RPyL
+  - Martes: 18:00 a 20:00
+
+SO
+  - Miércoles: 18:00 a 21:00
+  - Viernes: 20:00 a 23:00
+
+Innovacion
+  - Viernes: 18:00 a 21:00
+

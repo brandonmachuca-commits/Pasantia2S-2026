@@ -1,0 +1,10 @@
+Materia: Administración de Infraestructuras 1 (Adm Inf1)
+Presencialidades:
+  - Lunes 3 de Agosto: 19:00 - 21:00
+  - Lunes 24 de Agosto: 19:00 - 21:00
+  - Martes 25 de Agosto: Feriado
+  - Viernes 28 de Agosto: 18:00 a 20:00
+  - Lunes 14 de Septiembre: 19:00 a 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Lunes 26 de Octubre: 19:00 - 21:00
+  - Lunes 9 de Noviembre: 19:00 a 21:00

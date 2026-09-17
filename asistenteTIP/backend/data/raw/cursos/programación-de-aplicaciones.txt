@@ -1,0 +1,54 @@
+TIP - Programación de Aplicaciones
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Programación de Aplicaciones
+Docente:
+Bernardo Firpo
+bernardo.firpo
+@utec.edu.uy
+Materia
+Programación.
+Créditos
+16
+Objetivo de la Asignatura
+El objetivo de la asignatura es integrar conocimientos adquiridos en asignaturas previas de programación y base de datos para la construcción de sistemas de software de mediano y gran porte, aplicando conceptos de la orientación a objetos.
+Particularmente, la asignatura se enfocará en
+Profundizar en el uso de herramientas conceptuales para el análisis y diseño de sistemas orientados a objetos.
+Aplicar una metodología básica para el uso de dichas herramientas
+Poner en evidencia problemas que surgen en la construcción de sistemas de software y plantear herramientas para su solución
+Introducir Java como lenguaje de programación
+Metodología de enseñanza
+La enseñanza estará realizada fundamentalmente en modalidad de taller, o sea, centrada en laboratorios asistidos por un docente. Se dictarán 8 horas semanales de clase, incluyendo presentaciones teóricas, realización de ejercicios prácticos y trabajo en máquina. Además, cada alumno deberá dedicar un promedio de 10 horas semanales para estudio y realización de trabajos de laboratorio.
+Temario
+El curso se basa fuertemente en un trabajo de laboratorio orientado al desarrollo de un sistema de información. El desarrollo apuntará a utilizar de manera integral los conocimientos obtenidos en asignaturas previas así como a abordar aspectos habituales del desarrollo, dentro de los que se encuentran:
+Modelado con UML.
+diagramas de actividad, máquinas de estado.
+Patrones de Diseño.
+Acceso a Base de Datos.
+Atributos de Calidad.
+Distribución, concurrencia, seguridad.
+Interfaz de Usuario.
+Tecnologías web y de escritorio.
+Testing
+Bibliografía
+Applying UML and patterns. Craig Larman. Prentice Hall (2da. Ed. 2001), ISBN 9780130925695
+UML Distilled. Martin Fowler. Addison Wesley (3ra. Ed. 2003) , ISBN 9780321193681
+Design Patterns. Erich Gamma et al. Addison-Wesley (1995), ISBN 0201633612
+Thinking in Java. Bruce Eckell. Prentice Hall, ISBN ISBN 0131002872
+Previaturas
+Estructuras de Datos y Algoritmos
+Bases de Datos 1
+Curso de Programación Avanzada
+Curso de Bases de Datos 2
+Anexo:
+Formas de evaluación
+La evaluación del curso se basa en la realización de un laboratorio grupal. La evaluación es grupal, no individual. Esto no impide que el docente pueda determinar la pérdida de un estudiante individual en base a los resultados de las evaluaciones grupales y al seguimiento que hace del grupo a lo largo del curso.
+Existirán entregas obligatorias de ejercicios así como defensas en máquina a lo largo del curso. Las entregas y defensas realizadas durante la asignatura tendrán un puntaje asignado. El puntaje final será eliminatorio para aquellos estudiantes que no obtengan el nivel de suficiencia. La evaluación será sobre un máximo de 100 puntos. De los resultados obtenidos en las instancias de evaluación surgirán dos posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso (se logra acumulando como mínimo 60 puntos).
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso (en caso de no llegar a 60 puntos).
+Report abuse
+Page details
+Page updated
+Report abuse

@@ -1,0 +1,10 @@
+Materia: Principios de Programación (PP)
+Presencialidades:
+  - Miercoles 11 de Marzo: 20:00 a 00:00
+  - Miercoles 25 de Marzo: 20:00 a 00:00
+  - Miércoles 8 de Abril: 20:00 a 00:00
+  - Miercoles 29 de Abril: 20:00 a 00:00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 20:00 a 00:00
+  - Miércoles 10 de Junio: 20:00 a 00:00
+  - Miercoles 24 de Junio: 20:00 a 00:00

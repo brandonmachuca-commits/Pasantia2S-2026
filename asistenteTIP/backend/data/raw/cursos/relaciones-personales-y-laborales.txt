@@ -1,0 +1,95 @@
+TIP - Relaciones Personales y Laborales
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Relaciones Personales y Laborales
+Docente:
+Sonia Rocha
+sonia.rocha@utec.edu.uy
+Materia
+Ciencias Humanas y Sociales.
+Créditos:
+Objetivo de la Asignatura
+Brindar un panorama de los aspectos técnicos y administrativos más relevantes de la Ingeniería de Software para facilitar su formación posterior en la materia.
+Introducir al estudiante en el uso de algunas técnicas y herramientas particulares para que pueda participar en distintos roles en un proyecto de Ingeniería de Software.
+Metodología de enseñanza
+Se dictarán 2 horas semanales de clase, incluyendo presentaciones teóricas y realización de ejercicios prácticos. Además, cada alumno deberá dedicar un promedio de 2 horas semanales para trabajo domiciliario.
+Temario
+Comunicación, trabajo en equipo y motivación
+El proceso de comunicación
+Fuentes de problemas en la comunicación
+Técnicas y soluciones para los problemas en la comunicación
+Resolucion de conflictos
+Actitudes en la comunicación: sus efectos y como contrarrestarlos
+Los problemas que se pueden suscitar por la adopción de actitudes
+Manejo de lenguaje no verbal
+Escucha Activa
+Motivacion
+Liderazgo y Delegación
+Definir: organización, dirección, jefe y líder
+Enumerar diferentes tipos de liderazgo
+Describir el perfil del líder eficaz
+Reconocer en sí mismo atributos de liderazgo
+El liderazgo basado en principio (Covey)
+Delegación
+Negociación
+Niveles de negociación: competitivo, cooperativo, colaborativo
+Las fuentes de poder en la negociación
+El método Harvard de negociación ( Fisher y Ury )
+Las tácticas del comprador
+Contratácticas del vendedor
+Taller de Negociación
+El proceso de desarrollo de Software
+Definición de proyecto
+Proyectos exitosos y fracasados
+Planes informáticos en organizaciones
+Estudios de factibilidad
+Definición de un proceso de desarrollo de software dentro de una organización
+Planificación de proyectos
+Seguimiento de proyectos
+Gerenciamiento de personal Técnico
+El gerente como líder
+El liderazgo técnico
+La ética del compromiso
+La importancia del profesionalismo
+El respeto hacia el individuo
+Gerenciamiento de profesionales técnicos
+Las metas de los ingenieros y científicos
+La motivación de profesionales y técnicos
+La disciplina profesional
+Identificación y desarrollo de talentos
+La identificación de profesionales con talento
+El desarrollo del talento técnico
+El desarrollo de gerentes con talento
+Innovación
+La importancia de la innovación
+Los innovadores
+La estructura de los grupos innovativos
+El gerenciamiento de grupos innovativos
+El entorno de los grupos innovativos
+Premios y reconocimiento
+El equipo de gerentes
+La organización
+Integración y desintegración
+El tamaño de la organización
+Políticas y poderes
+Gerenciamiento del Cambio
+El cambio estructural
+El proceso del cambio
+Evaluaciones técnicas
+Bibliografía
+Neal Whitten, Managing Software Development Projects, Wiley, 1995.
+Humphrey, Watt S., Managing Technical People, Addison Wesley 1997.
+Previaturas
+Anexo: Formas de evaluación
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará en la mitad del curso y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos. La exoneración del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales. La suficiencia se logra acumulando como mínimo 25 puntos entre ambos parciales. Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá recursar la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

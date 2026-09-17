@@ -1,0 +1,10 @@
+Materia: Probabilidad y Estadística (PyE)
+Presencialidades:
+  - Lunes 3 de Agosto: 21:00 - 23:00
+  - Lunes 24 de Agosto: 21:00 - 23:00
+  - Martes 25 de Agosto: Feriado
+  - Jueves 27 de Agosto: 18:00 a 20:00
+  - Lunes 14 de Septiembre: 21:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Lunes 26 de Octubre: 21:00 - 23:00
+  - Lunes 9 de Noviembre: 21:00 a 23:00

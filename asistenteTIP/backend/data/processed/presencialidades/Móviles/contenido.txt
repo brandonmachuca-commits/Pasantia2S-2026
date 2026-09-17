@@ -1,0 +1,9 @@
+Materia: Taller de Desarrollo de Aplicaciones Para Dispositivos Móviles (Móviles)
+Presencialidades:
+  - Miercoles 11 de Marzo: 21:00 a 23:00
+  - Miércoles 8 de Abril: 21:00 a 23:00
+  - Miercoles 29 de Abril: 21:00 a 23:00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 21:00 a 23:00
+  - Miércoles 10 de Junio: 21:00 a 23:00
+  - Miercoles 24 de Junio: 21:00 a 23:00

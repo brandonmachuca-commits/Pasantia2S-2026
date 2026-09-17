@@ -1,0 +1,11 @@
+
+Materia: Sistemas Operativos (SO)
+Presencialidades:
+  - Miercoles 5 de Agosto: 18:00 - 21:00
+  - Martes 25 de Agosto: Feriado
+  - Miercoles 26 de Agosto: 18:00 - 21:00
+  - Miercoles 16 de Septiembre: 18:00 - 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Miercoles 14 de Octubre: 18:00 - 21:00
+  - Miercoles 28 de Octubre: 18:00 - 21:00
+  - Miercoles 11 de Noviembre: 18:00 - 21:00

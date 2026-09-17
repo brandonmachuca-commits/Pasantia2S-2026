@@ -1,0 +1,10 @@
+Materia: Administración de Infraestructuras 2 (Adm Infra 2)
+Presencialidades:
+  - Jueves 12 de Marzo: 18:00 a 22:00
+  - Jueves 26 de Marzo: 18:00 a 22:00
+  - Jueves 9 de Abril: 18:00 a 22:00
+  - Jueves 30 de Abril: 18:00 a 22:00
+  - Viernes 1 de Mayo: Feriado
+  - Jueves 28 de Mayo: 18:00 a 22:00
+  - Jueves 11 de Junio: 18:00 a 22:00
+  - Jueves 25 de Junio: 18:00 a 22:00

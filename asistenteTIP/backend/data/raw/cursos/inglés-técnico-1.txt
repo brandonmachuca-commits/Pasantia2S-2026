@@ -1,0 +1,167 @@
+TIP - Inglés Técnico 1
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Inglés Técnico 1
+Docente:
+Gonzalo Deleon
+gonzalo.deleon@utec.edu.uy
+Materia:
+Ciencias Humanas y Sociales
+Créditos:
+8.
+Objetivo de la Asignatura
+Acceder a fuentes de información de su interés escritas en Inglés.
+Adquirir habilidad en la interpretación de texto.
+Adquirir un nivel de comprensión lectora que resulte aplicable en la lectura extensiva de temas de Informática.
+Manejar terminología en lectura elemental sin ayuda del diccionario.
+Reconocer estructuras gramaticales de la lengua inglesa.
+Metodología de enseñanza
+Se dictarán clases teóricas destinadas a la presentación formal de los temas, y prácticas destinadas al ejercicio necesario para la incorporación de los contenidos, así como a las aplicaciones prácticas.
+Se dictarán 4 horas semanales de clases teórica/prácticas. Asimismo, cada alumno deberá dedicar un promedio de
+horas semanales de estudio domiciliario.
+Temario
+UNIDAD I:
+Conceptos Básicos de la Comprensión Lectora.
+a)
+Lecto-comprensión:
+a. Técnicas y herramientas de trabajo
+i.  Inferir el significado de palabras desconocidas en un texto.
+ii.
+Identificar la idea principal, ideas secundarias y detalles en un texto escrito.
+iii. Esquematizar las ideas de un texto escrito.
+iv.
+Comparar y contrastar las ideas presentes en un texto escrito.
+v.
+Identificar relaciones causales en un texto escrito.
+vi.
+Identificar el uso de narración y descripción en un texto escrito.
+vii.
+Reconocer expresiones idiomáticas.
+b.
+El diccionario bilingüe. Cómo usarlo, comprender la nomenclatura utilizada, abreviaturas, etc.
+b)
+Frases sustantivas:
+a.
+Su formación y análisis (ejemplos: Console keyboard, System diskette, Disk operating system)
+UNIDAD II:
+Las Técnicas de la Comprensión Lectora.
+a)
+Leer y entender el inglés técnico y científico.
+a. Técnicas para interpretar vocabulario
+i.
+Buscar el significado de, la palabra en un diccionario.
+ii.
+Buscar el significado de la palabra mediante el análisis de la palabra. (ejemplo: colorful = color + full, full = lleno, colorful = lleno de color = colorido
+iii.
+Inferir el significado de una palabra en el texto mediante el uso de claves dentro del texto (estas claves pueden ser una palabra, frases o signos de puntuación próximos a la palabra conocida). Algunas claves son: Definición, Experiencia, Contraste, Inferencia.
+b.
+Técnicas para entender oraciones
+i.
+Análisis de la oración (Identificar verbo principal, sujeto, etc).
+ii.
+Reconocimiento de claves de puntuación.
+iii.
+Reconocimiento de términos referenciales (pronombres personales, pronombres demostrativos, relativos, etc.
+c.
+Técnicas para analizar párrafos
+i.
+Encontrar el tema principal
+ii.
+Encontrar la idea principal.
+iii.
+Encontrar los detalles principales que sustentan el tema.
+d.
+Interpretación de Ilustraciones y Gráficos
+b) La oración simple: orden lógico. Formas afirmativa, negativa e interrogativa.
+Artículos. Formas plurales y singulares. Verbo "to be".
+Ejemplos:
+This computer system is very sophisticated.
+Affirmative
+This computer system is not very sophisticated.
+Negative
+s this computer system very sophisticated?
+Interrogative
+UNIDAD III:
+De la Oración Simple a la Compleja. Verbos “to be” y “to have”.
+a)
+Preposiciones y adverbios de lugar. Palabras interrogativas. Términos referenciales. Verbo “to have”
+a.
+Palabras interrogativas: who, what, where, etc.
+b.
+Preposiciones y adverbios: with, since, at, through, from, to, etc
+c.
+Términos referenciales: these, that, those, etc
+d.
+Verbo to have. Ejercicios de aplicación.
+UNIDAD IV:
+Uso de la Voz Pasiva en Textos Técnicos.
+a)
+Presente Simple. Voz Pasiva con verbos regulares e irregulares.
+b)
+Ejemplo del uso de voz pasiva en la informática.
+UNIDAD V:
+Objetos y sus Cualidades. Adjetivos.
+a)
+Imperativo. Adjetivo calificativo: posición. Comparación de adjetivos.
+b)
+Adjetivos de cantidad: some, any.
+c)
+Ejemplo del uso del modo imperativo en textos informáticos.
+UNIDAD VI:
+Acciones en el Pasado. Tiempos Verbales.
+a)
+Pasado Simple. Presente Perfecto. Futuro.
+b)
+Modalización: habilidad, necesidad, obligación, posibilidad, predicción, inferencia (must, should,  ought to, can, could, may, might,  will, would, have to, need).
+c)
+Ejemplos del uso de los tiempos verbales en textos informáticos.
+UNIDAD VII
+Aplicación de los Conocimientos
+a)
+Traducción de textos técnicos.
+b)
+Instalación de software en inglés.
+Bibliografía
+BIBLIOGRAFÍA GENERAL
+Diccionario bilingüe.
+Publicaciones varias en forma de libros, revistas, manuales, folletos, avisos publicitarios, diarios y documentos en idioma inglés sobre temas de la Informática.
+ARTÍCULOS PUBLICADOS EN INTERNET
+“The Roles of the Teacher in the Reading Classroom”. Arunee Wiriyachitra.Chiang Mai University. Tailandia. 1995.
+http://exchanges.state.gov/forum/vols/vol33/no4/p43.htm
+How Internet Infrastructure Works
+”.
+Artículo de la serie
+Howstuffwoks.
+http://computer.howstuffworks.com/internet-infrastructure.htm/printable
+·“What is multimedia?”. Artículo de
+Wikipedia, the free encyclopedia
+http://www.wikipedia.org/wiki/Multimedia
+·“What is a virus?”. Artículo de la serie
+Searchsecurity
+http://searchsecurity.techtarget.com/sDefinition/0,,sid14_gci213306,00.html
+·“WinZip QuickStart Guide”. Antelope Valley College.
+http://avconline.avc.edu/faculty/kmoore/courses/WinZipQuickStartGuide.htm
+Previaturas
+No Tiene
+Formas de evaluación
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará luego de la séptima semana de clases, y el segundo tendría lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La
+exoneración
+del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La
+suficiencia
+se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá
+recursar
+la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

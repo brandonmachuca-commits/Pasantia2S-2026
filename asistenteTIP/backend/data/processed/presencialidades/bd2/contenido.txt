@@ -1,0 +1,11 @@
+Materia: Base de Datos 2 (BD2)
+Presencialidades:
+  - Lunes 9 de Marzo: 20 a 22
+  - Jueves 12 de Marzo: 18 a 21
+  - Jueves 26 de Marzo: 18 a 21
+  - Jueves 9 de Abril: 18 a 21
+  - Lunes 27 de Abril: 20:00 a 23:00
+  - Viernes 1 de Mayo: Feriado
+  - Lunes 25 de Mayo: 20:00 a 23:00
+  - Lunes 8 de Junio: 20:00 a 23:00
+  - Lunes 22 de Junio: 20:00 a 23:00

@@ -1,0 +1,9 @@
+Materia: Matematica Discreta y Logica 2 (MDL2)
+Presencialidades:
+  - Lunes 3 de Agosto: 19:00 - 21:00
+  - Lunes 24 de Agosto: 19:00 - 21:00
+  - Martes 25 de Agosto: Feriado
+  - Lunes 14 de Septiembre: 19:00 - 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Lunes 26 de Octubre: 19:00 - 21:00
+  - Lunes 9 de Noviembre: 19:00 - 21:00

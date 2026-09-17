@@ -1,0 +1,16 @@
+Materia: Programación de Aplicaciones (PAplic)
+Presencialidades:
+  - Miercoles 5 de Agosto: 18:00 a 23:00
+  - Jueves 6 de Agosto: 20:00 a 23:00
+  - Martes 25 de Agosto: Feriado
+  - Miercoles 26 de Agosto: 18:00 a 23:00
+  - Jueves 27 de Agosto: 20:00 a 23:00
+  - Miercoles 16 de Septiembre: 18:00 a 23:00
+  - Jueves 17 de Septiembre: 20:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Miercoles 14 de Octubre: 18:00 a 23:00
+  - Jueves 15 de Octubre: 20:00 a 23:00
+  - Miercoles 28 de Octubre: 18:00 a 23:00
+  - Jueves 29 de Octubre: 20:00 a 23:00
+  - Miercoles 11 de Noviembre: 18:00 a 23:00
+  - Jueves 12 de Noviembre: 20:00 a 23:00

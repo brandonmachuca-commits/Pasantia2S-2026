@@ -1,0 +1,67 @@
+TIP - Taller de Sistemas de Información .NET
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Taller de Sistemas de Información .NET
+Docente:
+Bernardo Firpo
+bernardo.firpo@utec.edu.uy
+Nombre de la Asignatura:
+Taller de Sistemas de Información .NET
+Materia:
+Programación
+Créditos:
+12
+Objetivo de la Asignatura:
+El objetivo principal de la asignatura es formar al estudiante en el desarrollo de Sistemas Empresariales de porte mediano a grande en la plataforma .NET de Microsoft, poniendo foco en actividades de diseño de arquitectura y programación.
+Los objetivos de la asignatura son:
+Introducir al estudiante en el diseño y desarrollo de sistemas de información en la plataforma NET de Microsoft
+Entrenar en el estudiante las capacidades de autoestudio de tecnologías, y las habilidades de resolución de problemas técnicos
+Fomentar en el estudiante habilidades de trabajo en equipo, y la colaboración entre grupos de trabajo
+Entrenar las capacidades de comunicación y presentación oral del trabajo realizado
+Metodología de enseñanza:
+La materia gira en torno a un proyecto propuesto por el docente para ser desarrollado en equipos de aproximadamente 4 estudiantes. Se dictarán 6 horas semanales de clases teórico-prácticas durante la primera mitad del semestre para dictar los contenidos conceptuales planteados en el temario. Adicionalmente cada alumno deberá dedicar un promedio de 6 horas semanales para el estudio y realización de ejercicios prácticos.
+En la segunda mitad del semestre, el estudiante deberá dedicar un promedio de 12 horas semanales para la realización del laboratorio. En este periodo los grupos de trabajo mantendrán clases de consulta con el docente en el horario de clase.
+Temario:
+1.      Objetivos generales del curso
+2.      Introducción a los Sistemas Empresariales,
+o         Arquitecturas de N capas,
+o         Arquitecturas Orientadas a Servicios
+3.      Tecnologías para construcción de Sistemas Empresariales sobre la plataforma .NET
+o         Lenguaje de programación C#
+ASP.NET
+Windows Communcation Foundation
+LINQ To Entities
+4.      Consideraciones generales en el desarrollo de Sistemas Empresariales
+o         Reutilización de recursos, Logging, Seguridad, Clustering y Balanceo de Carga.
+Bibliografía:
+Programming C#: Building .NET Applications with C#
+Publisher: O'Reilly Media, Inc.; 4 edition (February 22, 2005)
+ISBN-13: 978-0596006990
+Professional ASP.NET 3.5: In C# and VB
+Publisher: Wrox; Pap/Onl edition (March 4, 2008)
+ISBN-13: 978-0470187579
+Pro LINQ: Language Integrated Query in C# 2008
+Publisher: Apress (November 19, 2007)
+ISBN-13: 978-1590597897
+Programming WCF Services
+Publisher: O'Reilly Media, Inc. (February 20, 2007)
+ISBN-13: 978-0596526993
+Previaturas
+Curso de Programación de Aplicaciones, Base de Datos 1 y Base de Datos 2
+Anexo:
+Formas de evaluación
+El docente se basará en los siguientes elementos para evaluar el rendimiento de los estudiantes:
+·         Calidad del trabajo entregado, realizado en equipo, según los siguientes criterios
+o        Entrega en fecha
+o        Cumplimiento de los requerimientos funcionales obligatorios
+o        Implementación de funcionalidades opcionales
+o        Incorporación y evaluación de nuevas tecnologías
+·         Asistencia, actitud y participación en clase
+·         Presentación oral del trabajo realizado
+En base a esta evaluación el estudiante podrá aprobar completamente el curso o reprobarlo.
+Report abuse
+Page details
+Page updated
+Report abuse

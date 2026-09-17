@@ -1,0 +1,147 @@
+TIP - Arquitectura del computador
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Arquitectura del computador
+Docente:
+Jesús Guibert
+jesus.guibert@utec.edu.uy
+Materiales
+Materia:
+Arquitectura, Sistemas Operativos y Redes de Computadoras.
+Créditos:
+0.
+Objetivo de la Asignatura
+El contenido de este programa así como la metodología indicada, pretende al egresado para seleccionar computadoras personales según el uso específico y eventualmente diagnosticar fallas en las mismas.
+Asimismo se lo capacita para comprender mejor el contenido de las demás materias que utilizan esta plataforma de trabajo.
+La asignatura servirá para la nivelación de los estudiantes que ingresen desde el Bachillerato Diversificado.
+Metodología de enseñanza
+Se dictarán clases teóricas destinadas a la presentación formal de los temas, y prácticas destinadas al ejercicio necesario para la incorporación de los contenidos, así como a las aplicaciones prácticas.
+Se ofrecerán a los estudiantes resúmenes teóricos y repartidos con ejercicios prácticos, los cuales no se podrán considerar como sustitutivos de la bibliografía indicada.
+Se dictarán 6 horas semanales de exposiciones teórico/prácticas. Asimismo, cada alumno deberá dedicar un promedio de 6 horas semanales de estudio domiciliario.
+Temario
+Variables Eléctricas.
+Corriente eléctrica, intensidad de la corriente, diferencia de potencial, resistencia.
+Relaciones entre ellas: ley de Ohm y leyes de Kirchoff.
+Solución de circuitos de una y dos mallas.
+Energía y potencia eléctrica, leyes de Watt y Joule.
+Capacidad entre dos conductores, capacidades concentrada y distribuida.
+Carga y descarga de capacitores. Comentar el efecto sobre conductores enfrentados entre sí y excitados por una función escalón y/o una onda cuadrada.
+Corriente alterna senoidal.
+Parámetros de una ca (período, frecuencia, valores pico y eficaz).
+Generación y Trasmisión.  Justificar la conveniencia de generar ca.
+Transformación.
+Otras formas de ca (rectangular, triangular, diente de sierra).
+Componentes Semiconductores.
+El diodo. Características eléctricas y relación i=f(v).
+Efecto rectificador. Rectificadores de media onda y onda completa (punto medio y puente de Graetz).
+Filtrado capacitivo.
+El transistor. Efecto de control de la compuerta y funcionamiento como llave.
+Fuentes conmutadas (circuitos en bloques). Principios de funcionamiento y ventajas.
+Funciones y Compuertas Lógicas.
+Construcción interna de las más simples (AND, OR, inversora).
+Tablas de verdad y expresiones algebraicas.
+Estudio de un circuito combinacional mínimo (ej.: tres entradas, dos compuertas).
+Sistemas de Numeración.
+Decimal, binario, octal y hexadecimal.
+Conversión entre sistemas.
+Sistemas binarios no ponderados y motivos de uso.
+Representación de Valores Continuos Mediante Codificación Numérica.
+Graficar la relación entre variables del mundo real (p.ej.: temperatura) y la codificación en valores decimales.  Evaluar el error de codificación con distintas cantidades de dígitos decimales.
+Graficar la relación entre la variable del item anterior y la codificación en binario natural y binario progresivo.  Evaluar el error de codificación con distintas cantidades de dígitos binarios.
+Analizar la Codificación Binaria de Otros Tipos de Información Analógica (p.ej.: imágenes) y Discreta (p.ej.: código ASCII).
+Uso de Códigos Binarios a Modo de Comando. Visualizarlo Referido a Algún Caso Concreto (p.ej.: multiplexor).
+Arquitecturas Harvard y Von Neuman.
+Arquitectura Elemental Basada en 8086
+Estructura interna del micro.
+Analizar buses de direccionamiento, datos y control.
+Implementación Basada en Chipset.
+Modelos en bloques de placas madre de PCs actuales. Comentar acerca de los chipsets que dan soporte a los distintos modelos y marcas de procesador.
+Relación entre los distintos relojes de la arquitectura.
+Breve reseña histórica de la evolución de buses y de la arquitectura interna de los micros de PC.
+Arquitectura Interna de los Micros Actuales con una Revisión Aproximada de la Funcionalidad y Características de Cada Bloque.
+Arquitectura Superescalar.
+Predicción de Saltos.
+Cachés.
+Modos real, protegido y real virtual.
+Descripción de Características de los Distintos Sócalos y Ranuras para Fijación de Procesadores.
+Tipos de Memoria.
+Características de memorias RAM, ROM, EPROM, EEPROM y flash.
+Aproximación a las tecnologías de fabricación.
+Empaquetados DIP, SIMM, DIMM, RIMM y DDR.
+Analizar ancho de bus de datos, temporizaciones y capacidad de canal, haciendo incapié en las memorias actuales.
+Arquitectura Dual Channel.
+Buses de Expansión que Pueden Encontrarse en los PCs
+ISA de 8 y 16 bits, EISA, VESA LB, PCI y AGP.
+Valores de ancho de datos, variedades de reloj y capacidad de canal de c/u.
+Controlador de Interrupciones.
+Principio de funcionamiento de los dispositivos que utilizan IRQ.
+Mecanismo de carga de las rutinas de servicio, uso de la pila y retorno (IRET).
+Ejemplos y alternativas
+Controlador de DMA. Principio de funcionamiento.  Ejemplos.
+Controladores IDE y SCSI
+Aproximación al Pinout.
+Cantidad de dispositivos por bus y configuración.
+Discos Duros.
+Estructura del MBR.
+Estructura de un sistema de archivos sencillo (p.ej.: FAT 16).
+Herramientas (software) para la preconfiguración del sistema (fdisk, mkfs/format, etc).
+Dispositivos Opticos de Almacenamiento.
+CDs y DVDs tipo RO y RW.
+Principio de funcionamiento de grabadoras y lectoras de CD y DVD.
+Puertos. Pinout y Señales.
+Serial (RS-232).
+Paralelo.
+USB.
+Aproximación al funcionamiento de periféricos de entrada comunes: ratón y teclado.
+Sistema de video.
+Funcionamiento de una tarjeta de video básica.
+Video-RAM, reloj y generación de las señales de sincronismo, DAC.
+Analizar resoluciones y cantidad de colores soportadas dependiendo de los componentes de la tarjeta.
+Cálculo de la capacidad de canal requerida para transferir la información de video a las distintas combinaciones de resolución/profundidad de color.
+Evaluación de las ranuras de expansión disponibles para video.
+Tarjetas aceleradoras. Principio de funcionamiento.
+Monitores de Tubo de Vacío.
+Esquema electromecánico del TRC.
+Máscara, material fosforescente y metalizado frontales y M.A.T.
+Definiciones de pixel y dot-pitch.
+Resoluciones soportadas.
+Esquema electrónico en bloques y principio de funcionamiento.
+Osciladores, flyback y yugo.
+Sincronismo (asumir sincronismo coercitivo).
+Control de los cañones por la señal de video.
+Controles de contraste y brillo.
+Monitores de LCD. Principio de funcionamiento.
+El BIOS.
+La ROM-BIOS.
+El POST y las tarjetas-POST (POST-CARDs) de servicio técnico.
+El programa setup y la flash-RAM.
+Las rutinas de servicio. La actualización del BIOS.
+Bibliografía
+Manual de actualización y reparación de PCs  -  Scott Mueller. 12ª edición o posterior. QUE - Prentice Hall  -  ISBN: 970-26-0102-9
+The indispensable PC hardware book  -  Messmer. 2ª edición o posterior. Addison-Wesley  -  ISBN: 0-201-87697-3
+Organización y Arquitectura de Computadoras  -  William Stallings
+U otros, similares o equivalentes, que se indiquen en el curso
+Previaturas
+No Tiene
+Formas de evaluación
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará luego de la séptima semana de clases, y el segundo tendría lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La
+exoneración
+del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La
+suficiencia
+se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá
+recursar
+la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

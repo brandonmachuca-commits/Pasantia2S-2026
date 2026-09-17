@@ -1,0 +1,17 @@
+Materia: Programación Avanzada (PAvanz)
+Presencialidades:
+  - Martes 10 de Marzo: 20 a 23 hs
+  - Miercoles 11 de Marzo: 18 a 21 hs
+  - Martes 24 de Marzo: 20 a 23 hs
+  - Miercoles 25 de Marzo: 18 a 21 hs
+  - Martes 7 de Abril: 20 a 23
+  - Miércoles 8 de Abril: 18 a 21
+  - Martes 28 de Abril: 20 a 23
+  - Miercoles 29 de Abril: 18 a 21
+  - Viernes 1 de Mayo: Feriado
+  - Martes 26 de Mayo: 20 a 23
+  - Miercoles 27 de Mayo: 18 a 21
+  - Martes 9 de Junio: 20 a 23
+  - Miércoles 10 de Junio: 18 a 21
+  - Martes 23 de Junio: 20 a 23
+  - Miercoles 24 de Junio: 20 a 23

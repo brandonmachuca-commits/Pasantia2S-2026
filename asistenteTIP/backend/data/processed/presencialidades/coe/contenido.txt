@@ -1,0 +1,9 @@
+Materia: Comunicacion Oral y Escrita (COE)
+Presencialidades:
+  - Viernes 13 de Marzo: 18 a 20 hs
+  - Viernes 27 de Marzo: 18 a 20 hs
+  - Viernes 10 de Abril: 18 a 20 hs
+  - Viernes 1 de Mayo: Feriado
+  - Viernes 29 de Mayo: 18 a 20 hs
+  - Viernes 12 de Junio: 18 a 20 hs
+  - Viernes 26 de Junio: 18 a 20 hs

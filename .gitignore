@@ -1,0 +1,4 @@
+asistenteTIP/backend/venv/
+venv/
+*.pyc
+__pycache__/

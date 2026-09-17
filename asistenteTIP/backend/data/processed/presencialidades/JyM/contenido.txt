@@ -1,0 +1,9 @@
+Materia: Sistemas de Gestión de Contenidos (JyM)
+Presencialidades:
+  - Martes 4 de Agosto: 21:00 a 23:00
+  - Martes 25 de Agosto: Feriado
+  - Martes 15 de Septiembre: 21:00 a 23:00
+  - Lunes 12 de Octubre: Feriado
+  - Martes 13 de Octubre: 21:00 a 23:00
+  - Martes 27 de Octubre: 21:00 a 23:00
+  - Martes 10 de Noviembre: 21:00 a 23:00

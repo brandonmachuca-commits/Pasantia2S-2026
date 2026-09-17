@@ -1,0 +1,78 @@
+TIP - Matemática Discreta y lógica
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Matemática Discreta y lógica
+Docente:
+Fernando Gerfauo
+fernando.gerfauo
+@utec.edu.uy
+Materiales
+Materia:
+Matemática
+Créditos:
+12
+Objetivo de la Asignatura
+Desarrollar en el estudiante la capacidad de expresar sus ideas en forma precisa y sin ambigüedades, fomentando la rigurosidad y la formalidad en sus razonamientos y demostraciones.
+Proveer al estudiante de conocimientos teóricos, prácticos y aplicados sobre:
+Teoría de conjuntos y relaciones
+Inducción, recursión, relaciones de recurrencia y sus aplicaciones en programación
+Álgebra booleana y su aplicación en la construcción de circuitos digitales
+Lógica proposicional y su aplicación en lenguajes de programación
+Lógica de predicados
+Metodología de enseñanza
+Se dictarán clases teóricas destinadas a la presentación formal de los temas, y prácticas destinadas al ejercicio necesario para la incorporación de los contenidos, así como a las aplicaciones prácticas en el campo de la computación.
+Se ofrecerán a los estudiantes resúmenes teóricos y repartidos con ejercicios prácticos, los cuales no se podrán considerar como sustitutivos de la bibliografía indicada.
+Se dictarán  3  horas semanales de exposiciones teóricas y 3 horas semanales de clases prácticas.  Asimismo, cada alumno deberá dedicar un promedio de 6 horas semanales de estudio domiciliario.
+Temario
+Presentación del curso. Conjuntos, producto cartesiano, definición de relación (2hs)
+Propiedades de simetría, reflexividad y transitividad (2hs)
+Representación de relaciones: matrices, dígrafos, diagramas de Hasse (2hs)
+Operaciones con relaciones (2hs)
+Relaciones de orden, relaciones de equivalencia, particiones, aplicaciones (2hs)
+Inducción matemática (2hs)
+Relaciones de recurrencia (2hs)
+Definiciones recursivas, aplicaciones (2hs)
+Sistemas de numeración. Sistemas con base. Cambio de base. Sistemas binario y hexadecimal (2hs)
+Álgebra de Boole. Axiomas. Modelo aritmético. Suma y producto (2hs)
+Modelo lógico del álgebra de Boole. Funciones booleanas (2hs)
+Mapas de Karnaugh (2hs)
+Introducción a los circuitos combinatorios. Compuertas lógica s(2hs)
+Introducción al diseño lógico. Bloques constructivos: semisumador, sumador, decodificador (2hs)
+Construcción de circuitos más complejos: multiplexores, demultiplexores, ALUs, memorias (2hs)
+Introducción a la lógica, problemas que se tratan, paradoja de Russell. Sintaxis y semántica (2hs)
+Sintaxis de la lógica proposicional: el conjunto PROP. Principio de inducción en PROP (2hs)
+Secuencia de formación. Definiciones por recursión, ejemplos (árbol de parsing y rango) (2hs)
+Ejemplos (árbol de parsing y rango). Aplicación: analizadores lexicográficos (2hs)
+Semántica de la lógica proposicional, tablas de verdad (2hs)
+Valuaciones, sustitución (2hs)
+Propiedades de la lógica proposicional (2hs)
+Deducción natural (2hs)
+Nociones de completitud y consistencia (2hs)
+Bibliografía
+Logic and Structure. Dirk van Dalen. Ed. Springer-Verlag. ISBN: 3-540-57839-0 (2a. edición), 3-540-12831-X (1a. edición).
+Matemáticas Discreta y Combinatoria. Ralph P. Grimaldi. Ed. Addison Wesley
+U otros, similares o equivalentes, que se indiquen en el curso
+Previaturas
+No Tiene
+Formas de evaluación
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará luego de la séptima semana de clases, y el segundo tendría lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La
+exoneración
+del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La
+suficiencia
+se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá
+recursar
+la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

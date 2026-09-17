@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asistente Virtual - Tecnólogo en Informática</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="static/img/logo-utec.jpg">
+</head>
+
+<body>
+  <div class="logo-container">
+    <img src="static/img/logo.png" alt="logo de UTEC" class="logo-utec">
+  </div>
+
+  <div id="canvas-wrap">
+
+    <div class="hologram-container inactive" id="hologram">
+
+      <div class="hologram-ring ring-1"></div>
+      <div class="hologram-ring ring-2"></div>
+
+      <div class="hologram-core"></div>
+
+      <div class="particles"></div>
+
+      <div class="sound-waves" id="sound-waves">
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+      </div>
+
+    </div>
+
+    <div id="ui-panel">
+      <div id="status-bar">Sistema listo · Habla o escribe tu pregunta</div>
+      <div id="transcript" style="display: none;"></div>
+      <div id="chat-messages">
+        <div class="message assistant">
+          <div class="bubble">Hola, soy tu asistente virtual. Puedes hacerme preguntas sobre calendario, cursos,
+            horarios, parciales y presencialidades.</div>
+        </div>
+      </div>
+      <div id="controls">
+        <input type="text" id="text-input" placeholder="Escribe tu pregunta…">
+        <button id="mic-btn" title="Hablar con el asistente">
+          <span id="mic-icon">🎤</span>
+          <span id="mic-label">Hablar</span>
+        </button>
+        <button class="btn" onclick="sendText()">Enviar</button>
+      </div>
+    </div>
+  </div>
+  <!-- MediaPipe Face Detection -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="app.js"></script>
+
+</body>
+
+</html>

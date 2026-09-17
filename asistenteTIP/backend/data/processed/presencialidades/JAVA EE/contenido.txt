@@ -1,0 +1,10 @@
+Materia: Taller de Sistemas de Información Java EE (JAVA)
+Presencialidades:
+  - Martes 10 de Marzo: 18:00 a 21:00
+  - Martes 24 de Marzo: 18:00 a 21:00
+  - Martes 7 de Abril: 18:00 a 21:00
+  - Martes 28 de Abril: 18:00 a 21:00
+  - Viernes 1 de Mayo: Feriado
+  - Martes 26 de Mayo: 18:00 a 21:00
+  - Martes 9 de Junio: 18:00 a 21:00
+  - Martes 23 de Junio: 18:00 a 21:00

@@ -1,0 +1,88 @@
+TIP - Base de Datos 2
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Base de Datos 2
+Docente:
+Martín Severgnini
+martin.savergnini@utec.edu.uy
+Materia
+Bases de Datos y Sistemas de Información.
+Créditos
+12
+Objetivo de la Asignatura
+Dar conocimientos básicos de tareas de administración de una base de datos relacional.
+Dar conceptos básicos sobre las técnicas utilizadas por un manejador de base de datos relacional para el procesamiento de transacciones, control de concurrencia y recuperación.
+Que el estudiante adquiera práctica tanto en tareas básicas de administración de la base de datos, como en la programación de aplicaciones con acceso a base de datos en ambiente multi-usuario.
+Integrar los conocimientos adquiridos en esta asignatura con otras.
+Metodología de enseñanza
+Se dictarán 6 horas semanales de clase, incluyendo presentaciones teóricas, realización de ejercicios prácticos y trabajos de laboratorio. Además, cada alumno deberá dedicar un promedio de 6 horas semanales para trabajo domiciliario.
+Temario
+UNIDAD I:
+Profundización en Modelo Relacional
+Álgebra Relacional
+Consultas avanzadas en SQL
+UNIDAD II:
+Conceptos relacionados con administración de un SGBD relacional
+Catalogo del sistema
+Seguridad y autorización
+Tipos de seguridad
+Concesión / revocación de privilegios
+Arquitectura de Manejadores de Base de Datos (componentes de un SGBD)
+UNIDAD III:
+Procesamiento de consultas y optimización.
+Índices
+Conceptos generales de organización y acceso a los datos
+Tipos de índices
+Algoritmos básicos para el procesamiento de consultas
+Heurísticas para optimización de consultas
+UNIDAD IV:
+Transacciones
+Conceptos de transacciones
+Sistemas multiusuario
+Por qué es necesario el control de concurrencia
+Propiedades deseables en las transacciones
+Operaciones de transacciones (read, write, begin, end, commit, rollback)
+Control de concurrencia
+Conceptos básicos de historias y recuperabilidad
+Técnicas de bloqueo para el control de concurrencia
+Conceptos básicos de recuperación
+UNIDAD V:
+Programación con acceso a base de datos
+Procedimientos almacenados y
+triggers
+SQL embebido en un lenguaje de programación
+Bibliografía
+Elmasri, R. & Navathe, S. , Fundamentals of Database Systems.
+Ullman, J. & Widom, J., A first course in Database Systems.
+Ullman, J., Principles of Database and Knowledge-base Systems.
+Date, C.J., An introduction to Database Systems. Ed. Prentice-Hall.
+Previaturas
+Curso de bases de Datos 1.
+Anexo 1:
+Formas de evaluación
+Los estudiantes serán evaluados mediante entregas de trabajos de laboratorio y dos parciales. Laboratorio: Los trabajos propuestos serán de entrega obligatoria. No se les asignará puntaje, solamente se evaluará si se aprueban o no.
+Parciales: El primero se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en las instancias de evaluación surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos. La exoneración del examen final se logra aprobando el laboratorio y acumulando como mínimo 60 puntos entre los dos parciales. La suficiencia se logra aprobando el laboratorio y acumulando como mínimo 25 puntos entre ambos parciales. Quien no apruebe el laboratorio o no obtenga 25 puntos entre ambos parciales deberá recursar la asignatura.
+Anexo 2:
+Propuesta de trabajos a desarrollar en el laboratorio
+Se propone utilizar el manejador de base de datos PostgreSQL. Como lenguaje de programación se propone utilizar C. Unidad temática Trabajo en laboratorio
+Unidad I
+Ejecución de consultas SQL en forma interactiva en el manejador.
+Unidad II
+Consultas al catálogo. Tareas de creación de usuarios y asignación/revocación de privilegios.
+Unidad III
+Ejercicios de creación de tablas e índices. Mirar y estudiar distintos planes propuestos para el manejador para una consulta.
+Unidad IV y V
+Creación de procedimientos almacenados.
+Creación de triggers.
+Programación en C con SQL embebido, para ambiente multiusuario.
+Report abuse
+Page details
+Page updated
+Report abuse

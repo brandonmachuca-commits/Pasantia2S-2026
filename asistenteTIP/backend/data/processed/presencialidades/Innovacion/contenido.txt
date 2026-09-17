@@ -1,0 +1,11 @@
+
+Materia: Taller de Gestión de la Innovación en Tecnologías (Innovación)
+Presencialidades:
+  - Viernes 7 de Agosto: 18:00 a 21:00
+  - Martes 25 de Agosto: Feriado
+  - Viernes 28 de Agosto: 18:00 a 21:00
+  - Viernes 18 de Septiembre: 18:00 a 21:00
+  - Lunes 12 de Octubre: Feriado
+  - Viernes 16 de Octubre: 18:00 a 21:00
+  - Viernes 30 de Octubre: 18:00 a 21:00
+  - Viernes 13 de Noviembre: 18:00 a 21:00

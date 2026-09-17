@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración del Asistente TIP</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>Administración del Asistente TIP</h1>
+            <div class="acciones">
+                <h2>Actualización automática</h2>
+                <button id="updateAll" class="btn-principal">
+                    Actualizar TODO
+                </button>
+                <p class="descripcion">
+                    Descarga todos los documentos, procesa la información y recarga los agentes.
+                </p>
+            </div>
+            <hr>
+            <div class="acciones">
+                <h2>Actualizar individualmente</h2>
+                <div class="grid-botones">
+                    <button data-cat="cursos">
+                        Cursos
+                    </button>
+
+                    <button data-cat="horarios">
+                        Horarios
+                    </button>
+
+                    <button data-cat="docentes">
+                        Docentes
+                    </button>
+
+                    <button data-cat="parciales">
+                        Parciales
+                    </button>
+
+                    <button data-cat="calendario">
+                        Calendario
+                    </button>
+
+                    <button data-cat="presencialidades">
+                        Presencialidades
+                    </button>
+
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="acciones">
+
+                <button id="reloadBtn">
+                    Recargar agentes
+                </button>
+
+            </div>
+
+            <div id="resultado">
+
+                Esperando una acción...
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="admin.js?v=3"></script>
+</body>
+
+</html>

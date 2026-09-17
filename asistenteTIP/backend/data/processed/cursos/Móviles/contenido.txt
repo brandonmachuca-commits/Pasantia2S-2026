@@ -1,0 +1,75 @@
+TIP - Taller de aplicaciones para Dispositivos Móviles
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Taller de aplicaciones para Dispositivos Móviles
+Docente:
+Bernardo Firpo
+bernardo.firpo@utec.edu.uy
+Nombre de la Asignatura
+Taller de Aplicaciones para Dispositivos Móviles
+Materia
+Programación
+Créditos
+Objetivos de la Asignatura:
+Formar al estudiante en los conceptos y tecnologías vinculados con la programación de aplicaciones para dispositivos móviles.
+Metodología de Enseñanza:
+El curso tendrá una modalidad de Taller, con algunas clases iniciales de introducción a los temas del curso y un proyecto a desarrollar a lo largo del mismo con seguimiento de los docentes.
+Se dictarán 2 horas semanales de clases teórico-prácticas durante la primera mitad del semestre para presentar los conceptos planteados en el temario. Adicionalmente cada alumno deberá dedicar un promedio de 2 horas semanales para el estudio y realización de ejercicios prácticos.
+En la segunda mitad del semestre, el estudiante deberá dedicar un promedio de 4 horas semanales para la realización de un proyecto grupal. En este período, los grupos de trabajo mantendrán clases de consulta con el docente en el horario de clase.
+Temario:
+1 Introducción a los dispositivos móviles.
+1.1 Tipos de dispositivos móviles. Resoluciones de pantalla. Sistemas operativos.
+1.2 Particularidades del desarrollo para móviles: interfaces, conectividad, capacidad de procesamiento, almacenamiento.
+2 Tecnologías de desarrollo.
+2.1 Web.
+2.2 Nativo (ej. Android, iOS, Windows Phone, etc.).
+2.3 Híbrido.
+2.4 Web vs Nativo vs Híbrido.
+3 Profundización en una de las tecnologías estudiadas.
+3.1 Arquitectura de las aplicaciones.
+3.2 Frameworks de desarrollo existentes.
+3.3 Diseño de interfaz y navegabilidad.
+3.4 Almacenamiento de datos en el dispositivo.
+3.5 Acceso a servicios, características y configuración del dispositivo.
+3.6 Comunicación con redes sociales y otros servicios en línea.
+Bibliografía:
+Mobile HTML5 E. Weyl
+(O`Reilly Media)
+HTML5 Mobile Development Cookbook S. Chuan
+(Packt Publishing)
+Beginning Android 3 M. Murphy
+(Apress)
+Professional Android 4 Application Development R. Meier
+(Wrox)
+Pro jQuery Mobile B. Broulik
+(Apress)
+Pro iOS Web Design and Development A. Picchi
+(Apress)
+Programming in Objective-C S. G. Kochan
+(Addison-Wesley Professional)
+iOS 6 Development Unleashed: Developing Mobile Applications for Apple iPhone, iPad, and iPod Touch R. McGovern
+(Sams Publishing)
+Pro Android 4 S. Komatineni, D. MacLean
+(Apress)
+Windows Phone 8 in Action T. Binkley-Jones, M. Perga, M.Sync, A. Benoit
+(Manning Publications)
+Mobile Platforms and Development Environments S. Helal, R. Bose, W. Li
+(Morgan & Claypool Publishers)
+Professional Mobile Application Development J. McWherter , S. Gowell
+(John Wiley & Sons)
+Previaturas:
+Se deberán tener aprobadas completamente (curso y examen) las siguientes asignaturas:
+Programación Avanzada
+Base de datos 1
+Anexo:
+Formas de Evaluación:
+Participación en clase y realización de ejercicios prácticos.
+Realización del proyecto grupal.
+Defensa final grupal, incluyendo presentación oral y demostración del producto logrado.
+En base a esta evaluación el estudiante podrá aprobar completamente el curso o reprobarlo.
+Report abuse
+Page details
+Page updated
+Report abuse

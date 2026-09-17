@@ -1,0 +1,10 @@
+Materia: Arquitectura del Computador (ARQ)
+Presencialidades:
+  - Miercoles 11 de Marzo: 18:00 a 20:00
+  - Miercoles 25 de Marzo: 18:00 a 20:00
+  - Miércoles 8 de Abril: 18:00 a 20:00
+  - Miercoles 29 de Abril: 18:00 a 20:00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 18:00 a 20:00
+  - Miércoles 10 de Junio: 18:00 a 20:00
+  - Miercoles 24 de Junio: 18:00 a 20:00

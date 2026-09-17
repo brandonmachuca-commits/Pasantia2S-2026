@@ -1,0 +1,10 @@
+Materia: Redes de Computadoras (Redes)
+Presencialidades:
+  - Miercoles 11 de Marzo: 21 a 00 hs
+  - Miercoles 25 de Marzo: 21 a 00 hs
+  - Miércoles 8 de Abril: 21 a 00
+  - Miercoles 29 de Abril: 21 a 00
+  - Viernes 1 de Mayo: Feriado
+  - Miercoles 27 de Mayo: 21 a 00
+  - Miércoles 10 de Junio: 21 a 00
+  - Miercoles 24 de Junio: 21 a 00

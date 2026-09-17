@@ -1,0 +1,57 @@
+TIP - Probabilidad y Estadística
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Probabilidad y Estadística
+Docente:
+Fernando Gerfauo
+fernando.gerfauo@utec.edu.uy
+Materiales
+Materia
+Matemática.
+Créditos:
+Objetivo de la Asignatura
+El objetivo de la asignatura es lograr que los estudiantes comprendan y manejen los conceptos y técnicas relacionados con el cálculo estadístico y la modelación probabilística.
+Metodología de enseñanza
+Se dictarán 4 horas semanales de clase, incluyendo presentaciones teóricas y la realización de ejercicios prácticos. Además, cada alumno deberá dedicar un promedio de 4 horas semanales para estudio y realización de ejercicios.
+Temario
+PROBABILIDAD
+Espacios de probabilidad, el modelo clásico, álgebras de conjuntos, algunos cálculos probabilísticos elementales, ejemplos.
+PROBABILIDAD CONDICIONAL
+Probabilidad condicional, independencia.
+VARIABLES ALEATORIAS
+Variables aleatorias, funciones de distribución, algunas distribuciones particulares: Hipergeométrica, Binomial, Geométrica, Poisson, Uniforme, Normal, Exponencial.
+ESPERANZA, VARIANZA
+Valor esperado: ejemplos, propiedades, varianza, covarianza, coeficiente de correlación: interpretación.
+LEYES, LÍMITES, ESTIMACIÓN
+Leyes de grandes números, teorema central del límite, teorema de Glivenko-Cantelli. Aplicaciones: Estimación (puntual y por intervalos) de parámetros de posición, robustez.
+PRUEBAS DE HIPÓTESIS
+Pruebas de hipótesis simples, algunas pruebas de hipótesis compuestas.
+ESTADÍSTICA NO PARAMÉTRICA
+Pruebas de aleatoriedad, de ajuste y de comparación (Rachas, Spearman, Kolmogorov-Smirnov, Ji-cuadrado, D'Agostino, Lilliefors).
+Bibliografía
+Perera, G., "Probabilidad y Estadística Matemática, un primer encuentro", Oficina de Publicaciones CEI. 2001.
+Cabaña, E., "Probabilidad y Estadística", Oficina de Publicaciones CEI.
+Previaturas
+Matemática Discreta y Lógica 1 y
+Matemática Discreta y Lógica 2
+Anexo 1: Formas de evaluación
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará en la mitad del curso y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos. La exoneración del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales, La suficiencia se logra acumulando como mínimo 25 puntos entre ambos parciales. Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá recursar la asignatura.
+Anexo 2: Dedicación horaria sugerida
+Probabilidad: 8 horas.
+Probabilidad condicional: 4 horas.
+Variables aleatorias: 8 horas.
+Esperanza, varianza: 4 horas.
+Leyes, límites, estimación: 8 horas.
+Pruebas de hipótesis: 8 horas.
+Estadística no paramétrica: 10 horas.
+Report abuse
+Page details
+Page updated
+Report abuse

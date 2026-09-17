@@ -1,0 +1,90 @@
+TIP - Taller de Gestión de la Innovación en Tecnologías
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Taller de Gestión de la Innovación en Tecnologías
+Docente:
+Sonia Rocha
+sonia.rocha@utec.edu.uy
+Nombre de la unidad curricular:
+Taller de Gestión de la Innovación en Tecnología
+Materia:
+Ciencias Sociales
+Créditos:
+Objetivos de la unidad curricular
+El objetivo principal de la UC es sensibilizar al estudiante sobre la importancia de la innovación  y respecto al potencial que poseen como Tecnólogos en Informática para propiciar y participar  en ese proceso, poniendo foco en actividades prácticas y orientadas a la realidad. Los objetivos de la asignatura son:
+Introducir al estudiante en metodologías de innovación aplicadas a la resolución de  problemas concretos y reales.
+Sensibilizar al estudiante sobre el crecimiento del alcance de la informática en diversos  ámbitos de la sociedad.
+Ayudar a que el estudiante comprenda la amplitud de posibilidades involucradas a la  informática, para contemplar otras oportunidades además del desarrollo de software  y aplicaciones.
+Promover la relación del estudiante con el entorno para generar propuestas  innovadoras orientadas a la realidad.
+Fomentar la capacidad de innovación en el estudiante considerando su futura inserción  laboral o la creación de su propio emprendimiento.
+Promover una actitud activa en el estudiante, ubicándolo en un rol propositivo que  fortalezca sus competencias orientadas el mercado laboral.
+Contribuir a la exploración de nuevos intereses por parte del estudiante que lo lleven  a la continuación de su formación y a la especialización en diferentes áreas  relacionadas con su profesión.
+Entrenar en el estudiante las capacidades de detección y resolución de problemas,  desafíos o necesidades no articuladas.
+Fomentar en el estudiante habilidades de trabajo en equipo y la colaboración entre  grupos de trabajo.
+Entrenar las capacidades de exposición y presentación oral del trabajo realizado.
+Metodología de enseñanza
+La asignatura gira en torno a un proyecto de innovación propuesto y trabajado por los  estudiantes en el transcurso del semestre. Se dictarán 3 horas semanales de clases teórico prácticas. Adicionalmente cada alumno deberá dedicar un promedio de 3 horas semanales  para el estudio y realización de actividades prácticas en el contexto del proyecto.
+Temario
+1. La innovación
+a) Definición y abordajes.
+b) Ser innovador. Perfil innovador.
+c) Características, objetivos y ámbitos de la innovación.
+d) Innovar para emprender.
+e) Ser emprendedor en el sector tecnológico.
+f) Innovación colaborativa (importancia del trabajo en equipo).
+g) Innovar a través del Design Thinking (o Pensamiento de Diseño).
+2. Introducción a la metodología del pensamiento de diseño
+a) Preparar la mente para innovar.
+b) Investigación.
+c) Exploración y evaluación de la realidad para la detección de oportunidades de  innovación. Empatizar con el entorno.
+d) Identificación de stakeholders (interesados y destinatarios) de la innovación. 3. Creatividad y generación de ideas
+a) Definición de creatividad.
+b) Proceso de generación de ideas.
+c) Técnicas de generación de ideas (brainstorming, mind mapping, scamper, etc.). d) Definición de ideas y de stakeholders de la innovación.
+e) Escenarios persona. Mapa de empatía.
+f) Desarrollo del concepto de innovación (o idea de negocios).
+4. Experimentación
+a) Prototipado de conceptos.
+b) Testeo de conceptos con stakeholders.
+c) Aplicación de cambios.
+d) Iteración del proceso.
+5. Planificación
+a) Estimación de recursos para aplicar la innovación.
+b) Identificación de actores y actividades clave para realizar e implementar la  innovación.
+c) Cronograma de acciones.
+d) Modelo Canvas (para ideas de negocios).
+e) Plan de innovación.
+Bibliografía
+Básica
+1. Ries, Eric. (2011). "El método Lean Startup". España: Deusto.
+2. Kelly, Tom. (2010). "Las diez caras de la innovación". España: Ediciones Paidós 3. Jarvis, Jeff. (2009). "Y Google, ¿cómo lo haría?". España: Gestión 2000
+4. Fros Campelo, Federico. (2018). "El genio que llevamos dentro". Argentina:  Sudamericana
+5. Condom-Vilà, Pere. (2020). “Ciencia, tecnología y startups”. España: Universidad  de Barcelona.
+6. Diamandis, P., Kotler, S. (2020). “El futuro va más rápido de lo que crees”. España:  Editorial Planeta S.A.
+7. Bachrach, E. (2012). “Ágilmente”. Argentina: Sudamericana.
+8. De Bono, E. (1985). “Seis sombreros para pensar”. España: Paidós.
+9. Zaragozá, R., Gasca, J. (2017). “Designpedia: 80 Herramientas Para Construir Tus  Ideas”. España: LID Editorial.
+10. Brown, T. (2020). “Diseñar el cambio”. España: Empresa Activa.
+11. Delgado Coto, S. (2014). “Fundadores.uy”. Uruguay: daVinci editores.
+Complementaria
+12. Lundvall, BA y Borrás, S (2005). Science, Technology, and Innovation Policy. En:  Oxford. Handbook of Innovation. Oxford University Press. (Traducción al español).
+13. Morlacchi & Martin (2009) Special Issue: Emerging Challenges for Science,  Technology and Innovation Policy Research: A Reflexive Overview. Volume 38,  Issue 4,Pages 571-694. Research Policy
+14. Bianchi, C., Snoeck, M. (2009) Ciencia, Tecnología e Innovación en Uruguay:  desafíos estratégicos, objetivos de política e instrumentos. Propuesta para el  PENCTI 2010-2030. Capítulo 1: Perspectiva global
+Modalidad del curso y procedimiento de evaluación
+La asignatura gira en torno a un proyecto de innovación propuesto y trabajado por los  estudiantes en el transcurso del semestre. Se dictarán 3 horas semanales de clases teórico prácticas. Adicionalmente cada alumno deberá dedicar un promedio de 3 horas semanales  para el estudio y realización de actividades prácticas en el contexto del proyecto.
+El docente se basará en los siguientes elementos para evaluar el rendimiento de los  estudiantes:
+• Calidad del trabajo entregado, realizado en equipo, según los siguientes criterios: • Entrega en fecha
+• Asistencia, actitud y participación en clase
+• Prototipo de idea innovadora
+• Documentación del proceso de trabajo
+• Presentación oral y defensa del trabajo realizado
+En base a esta evaluación el estudiante podrá aprobar completamente el curso o reprobarlo.
+Previas
+Curso: No tiene.
+Examen: No aplica.
+Report abuse
+Page details
+Page updated
+Report abuse

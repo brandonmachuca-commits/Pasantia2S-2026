@@ -1,0 +1,14 @@
+[Unit]
+Description=Asistente Virtual - TIP
+After=network.target
+
+[Service]
+User=pilar.perez.s
+WorkingDirectory=/home/pilar.perez.s@tipy.prod/repo/asistenteTIP/backend
+ExecStart=/home/pilar.perez.s@tipy.prod/repo/asistenteTIP/backend/venv/bin/python /home/pilar.perez.s@tipy.prod/repo/asistenteTIP/backend/main.py
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

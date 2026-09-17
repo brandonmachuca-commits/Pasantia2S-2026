@@ -1,0 +1,95 @@
+TIP - Redes de computadoras
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Redes de computadoras
+Docente:
+Diego Caballero
+diego.caballero
+@utec.edu.uy
+Materia:
+Arquitectura, Sistemas Operativos y Redes de Computadoras.
+Créditos:
+12.
+Objetivo de la Asignatura
+Conocer los problemas que se plantean al interconectar computadores. Comprender los modelos de referencia OSI y TCP/IP, y adquirir conocimientos aplicables a los protocolos y aplicaciones en uso.
+El estudiante se capacitará, mediante trabajos prácticos, para realizar tareas de configuración y administración básicas de pequeñas redes con o sin conexión a Internet.
+Metodología de enseñanza
+Se dictarán 6 horas de clase semanales, destinadas a presentación de aspectos teóricos, realización de ejercicios prácticos y trabajo de laboratorio.
+Además, cada alumno deberá dedicar un promedio de 6 horas semanales de trabajo domiciliario.
+Temario
+Primera Parte: Acercamiento Teórico y Adquisición de Vocabulario Técnico
+El modelo de capas OSI de ISO
+La capa de aplicación. Ejemplos. (conceptos de presentación, compactación y encriptado como capas 5 y 6 del modelo OSI y su presencia en TCP/IP)
+La capa de transporte. Protocolos con conexión y sin conexión. Primitivas.
+La capa de red. Funciones. Redes y subredes. Algoritmos de enrutamiento.
+La capa de enlace. Tramas. Detección y corrección de errores.
+Control de acceso al medio de transmisión de tipo "broadcast". Familia de redes Ethernet (10, 100, 1.000, 10.000 Mbps)
+La capa Física. Características de los canales de comunicación. Canales sin ruido y con ruido. Formas de Modulación.
+Segunda Parte: Trabajo en Laboratorio
+Familiarización con componentes de cableado estructurado. Elementos básicos de las normas EIA/TIA 568 A/B. Componentes activos (switches, hubs, routers, etc.) y pasivos (cajas de superficie, cables derechos y cruzados, parcheras, etc).
+Configuración de Red en sistemas operativos standard (Windows y Linux). Tipos de configuración (Automática / Manual). Opciones de Ruteo. Herramientas de diagnóstico y configuración:
+Windows ping, tracert, net.
+Linux ping, traceroute, dig, ip, otros.
+Monitoreo en IP: SNMP. Diferentes versiones (SNMP v1, v2 y v3). Configuración de agentes SNMP en Windows (Servicio SNMP) y Linux (net-snmp). Configuración de MRTG.
+Monitorización de servicios en redes IP: nagios.
+Análisis de protocolos: Wireshark. Capturas de tráfico de diferentes protocolos (ICMP, HTTP, FTP, SMTP, POP, etc.). Familiarización con las diferentes opciones de análisis, estadísticas y herramientas ofrecidas por la herramienta.
+Configuración de un PC (Windows y/o Linux) como router. Configuración de opciones de routing, DNS, NAT. Configuración de PPPoE.
+Instalación de servidor proxy HTTP. Configuración de extracción de estadísticas del mismo: SARG. Configuracíon de módulos de autenticación. Configuración de plugins de filtrado: squidguard.
+Configuración de NTOP y su utilización para conocer la distribución de tráfico.
+Configuración de Firewall:
+Linux: conceptos básicos de iptables, herramienta fw-builder.
+Windows: Windows Firewall, ZoneAlarm.
+Bibliografía
+Computer Networking: A Top-Down Approach 4
+th
+Edition Jim Kurose, Keith Ross, Addison-Wesley, July 2007. ISBN-10: 0321497708, ISBN-13: 9780321497703
+Computer Networks, 3
+rd
+Edition. Andrew S. Tanenbaum
+Data Networks, 2
+nd
+Edition. Dimitri Bertsekas & Robert Gallager.
+Internetworking with TCP/IP Vol. I: Principles, Protocols, and Architecture , 3
+rd
+Edition. Douglas E. Comer.
+Previaturas
+Arquitectura del Computador (Curso).
+Anexo 1:
+Formas de evaluación
+Los estudiantes serán evaluados mediante entregas de carpetas e informes correspondientes a los trabajos de laboratorio y a través de la realización de dos parciales.
+Laboratorio:
+Los trabajos propuestos serán obligatorios. No se les asignará puntaje, solamente se evaluará si se aprueban o no.
+Parciales:
+El primero se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en las instancias de evaluación surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La exoneración del examen final se logra aprobando el laboratorio y acumulando como mínimo 60 puntos entre los dos parciales.
+La suficiencia se logra aprobando el laboratorio y acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no apruebe el laboratorio o no obtenga 25 puntos entre ambos parciales deberá recursar la asignatura.
+Anexo 2:
+Propuesta de Trabajos de Investigación y Laboratorio
+Trabajo de investigación 1:
+Instalación completa de un equipo en red e integración a un dominio:
+Windows: Configuración IP estática y dinámica, DNS, WINS, servicios de impresión, etc.
+Linux: Configuración IP estática y dinámica, DNS, SaMBa, CUPS, NIS, NFS, Automounter, etc.
+Trabajo de investigación 2:
+Detección de problemas de configuración de red. Uso de herramientas como ping, dig, nslookup, archivo hosts, traceroute/tracert, etc.
+Aprendizaje de la secuencia de pruebas: ping localhost, ping local_address, ping link_accessible_ address, ping remote_address, ping hostname.
+Trabajo de investigación 3:
+Configuración de un servidor de red con servicios de: DNS, DHCP, router, NAT tanto Linux como Windows.
+Trabajo de investigación 4:
+Interoperabilidad entre sistemas Windows y Linux: configurar entornos estándar en los que puedan coexistir servidores y clientes Windows y Linux.
+Autenticación cruzada, coexistencias de servidores de red, configuración de servicios de impresión (LPD, IPP, SMB).
+Se recomienda utilizar un enfoque esencialmente práctico, orientado a la realización de trabajos de laboratorio. Para cada práctica propuesta:
+Los estudiantes deben presentar un informe de cada tema que incluya la información manejada en la clase teórica, información agregada que especifique mejor la temática (por ej.: otras opciones de configuración) y toda información recopilada durante la práctica (procedimiento, ensayos realizados y sus resultados, etc.).
+Se aconseja solicitar aspectos de configuración agregados que no se hayan tratado en clase y que los estudiantes deban investigar (deben estar claramente especificados con anticipación).
+Se aconseja dar para la entrega de los trabajos un plazo claramente delimitado desde el principio e igual para todas las entregas (resulta adecuado un plazo de 2 semanas para dar oportunidad al planteo de consultas al docente).
+Report abuse
+Page details
+Page updated
+Report abuse

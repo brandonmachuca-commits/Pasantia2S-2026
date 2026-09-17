@@ -1,0 +1,43 @@
+================================================================================
+DOCENTES 2026
+================================================================================
+
+Docente: Nancy López
+Dicta: PP (Principios de Programación)
+
+Docente: Fernando Gerfauo
+Dicta: MDL1 (Matemática Discreta y Lógica 1)
+
+Docente: Marcelo Suárez
+Dicta: MDL1 (Matemática Discreta y Lógica 1), MN (Matemática Nivelación)
+
+Docente: Jesús Guibert
+Dicta: Arq (Arquitectura del Computador), Adm Inf1 (Administración de Infraestructuras)
+
+Docente: Gonzalo De León
+Dicta: I1 (Inglés Técnico 1)
+
+Docente: Luis Panizza
+Dicta: Contab (Contabilidad)
+
+Docente: Eduardo Demichelis
+Dicta: Redes (Redes de Computadoras)
+
+Docente: Sonia Rocha
+Dicta: COE (Comunicación Oral y Escrita)
+
+Docente: Lucas Cíceri
+Dicta: ProgAvanz (Programación Avanzada)
+
+Docente: Martin Severgnini
+Dicta: BD2 (Bases de Datos 2), BD1 (Base de Datos 1)
+
+Docente: Nicolás Mannise
+Dicta: JAVA EE (Taller de Sistemas de Información Java EE)
+
+Docente: Maximiliano Fernández
+Dicta: Internet Ricas (Taller de Aplicaciones de Internet Ricas)
+
+Docente: Bernardo Firpo
+Dicta: PHP (Taller de Desarrollo de Aplicaciones Web con PHP), Móviles (Taller de Desarrollo de Aplicaciones Para Dispositivos Móviles)
+

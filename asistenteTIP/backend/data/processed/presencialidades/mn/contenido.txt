@@ -1,0 +1,11 @@
+Materia: Matematica Nivelacion (MN)
+Presencialidades:
+  - Jueves 12 de Marzo: 18 a 20
+  - Jueves 26 de Marzo: 18 a 20
+  - Jueves 9 de Abril: 18 a 20
+  - Jueves 30 de Abril: 18 a 20
+  - Viernes 1 de Mayo: Feriado
+  - Lunes 25 de Mayo: 20 a 22
+  - Jueves 28 de Mayo: 18 a 20
+  - Jueves 11 de Junio: 18 a 20
+  - Jueves 25 de Junio: 18 a 20

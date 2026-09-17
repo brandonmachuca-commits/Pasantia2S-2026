@@ -1,0 +1,42 @@
+TIP - Proyecto
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Proyecto
+Docente:
+Marcelo Scotto
+marcelo.scotto
+@utec.edu.uy
+Nombre de la Asignatura:
+Proyecto
+Materia:
+Proyecto y Pasantía Laboral
+Créditos:
+Objetivo de la Asignatura
+Servir de síntesis de conocimientos adquiridos y ejecutar una actividad creadora en Informática.
+Que el estudiante sea capaz de encarar y resolver un problema de complejidad adecuada a su formación, o participar en proyectos más complejos bajo supervisión cercana.
+Metodología de enseñanza
+Se realizará un trabajo en grupo, de estilo profesional, durante un período de 4 meses. La carga semanal que debe cumplir el estudiante en el período es promedialmente de 20 horas.
+Cada grupo contará con el seguimiento de un docente que se reunirá con él semanalmente.
+Temario
+No se incluye un temario detallado ya que los temas varían según el proyecto. Entre las posibles actividades a desarrollar en los proyectos se encuentran:
+Estudios de estado del arte en la problemática específica al proyecto.
+Análisis y especificación de requerimientos.
+Especificación de Arquitectura, Diseño general y Diseño detallado de una solución.
+Estudio, comparación y posible selección de herramientas software.
+Estudio, comparación y posible selección de herramientas hardware.
+Prototipación de soluciones.
+Programación y testeo.
+Documentación detallada de las diferentes actividades.
+Bibliografía
+La bibliografía sera específica de cada proyecto que se realice.
+Previaturas
+Se deberá tener aprobadas completamente (curso y examen) todas las asignaturas de los semestres 1 a 4, sin incluir las actividades complementarias, tomando como referencia el currículo básico que se encuentra en el plan
+Anexo:
+Formas de evaluación
+Para la aprobación del proyecto el o los estudiantes deberán presentar una monografía o “Informe final” del mismo, junto a los anexos conteniendo la documentación desarrollada a lo largo del proyecto. Deberá además realizar una presentación pública del Proyecto en donde se le podrán realizar preguntas. Para la evaluación de la misma se designará a tales efectos un tribunal de 3 miembros que incluya al docente supervisor.
+Report abuse
+Page details
+Page updated
+Report abuse
