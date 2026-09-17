@@ -326,6 +326,6 @@ if __name__ == "__main__":
     print("\n" + "═"*55)
     print("  Asistente Virtual TIP — Backend")
     print("═"*55)
-    print(f"  Frontend: http://localhost:9000")
+    print(f"  Frontend: http://localhost:9014")
     print("═"*55 + "\n")
-    uvicorn.run(app, host="0.0.0.0", port=9000, reload=False)
+    uvicorn.run(app, host="0.0.0.0", port=9014, reload=False)

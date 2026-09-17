@@ -24,7 +24,7 @@ echo "  Instalando/verificando dependencias…"
 pip install -q -r backend/requirements.txt
 
 echo ""
-echo "  Servidor: http://localhost:9000"
+echo "  Servidor: http://localhost:9014"
 echo "  Abre esa URL en tu navegador."
 echo "  Presiona Ctrl+C para detener."
 echo "══════════════════════════════════════════════════════"
