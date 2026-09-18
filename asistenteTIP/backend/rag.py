@@ -653,15 +653,51 @@ class RAGSystem:
 
     def detectar_materia(self, pregunta: str) -> Optional[str]:
         pregunta = quitar_acentos(pregunta).lower()
-
         for sigla, datos in MATERIAS.items():
             for alias in datos["aliases"]:
-                alias = quitar_acentos(alias).lower()
-
-                if alias in pregunta:
+                alias_norm = quitar_acentos(alias).lower()
+                if re.search(rf"\b{re.escape(alias_norm)}\b", pregunta):
                     return sigla
-
         return None
+
+    def filtrar_bloques_por_materia(self, contenido: str, materia: str) -> Optional[str]:
+        bloques = re.split(r"\n\s*\n", contenido)
+        materia_norm = quitar_acentos(materia).lower()
+        resultado = [
+            b.strip() for b in bloques
+            if re.search(rf"\b{re.escape(materia_norm)}\b", quitar_acentos(b).lower())
+        ]
+        return "\n\n".join(resultado) if resultado else None
+
+
+    def filtrar_parciales_por_materia(self, contenido: str, materia: str) -> Optional[str]:
+        materia_norm = quitar_acentos(materia).lower()
+        parcial_actual = semestre_actual = None
+        parcial_agregado = semestre_agregado = False
+        resultado = []
+
+        for linea in contenido.split("\n"):
+            l = linea.strip()
+
+            if re.match(r"\d+(er|do)\.\s*Parcial\s*-\s*Mes:", l):
+                parcial_actual, parcial_agregado = l, False
+                continue
+
+            if re.match(r"\d+(er|do|to)\.\s*Semestre", l):
+                semestre_actual, semestre_agregado = l, False
+                continue
+
+            m = re.match(r"-\s*(\S+)\s*\|", l)
+            if m and quitar_acentos(m.group(1)).lower() == materia_norm:
+                if not parcial_agregado:
+                    resultado.append(f"\n{parcial_actual}")
+                    parcial_agregado = True
+                if not semestre_agregado:
+                    resultado.append(semestre_actual)
+                    semestre_agregado = True
+                resultado.append(l)
+
+        return "\n".join(resultado) if resultado else None
 
     def detectar_agente(self, pregunta: str) -> Optional[str]:
         pregunta_norm = quitar_acentos(pregunta.lower())
@@ -938,8 +974,14 @@ class RAGSystem:
 
         else:
             print(f"[RAG] Contexto: {nombre_agente}")
+            contexto_completo = self.contextos.get(nombre_agente, "")
 
-            contexto = self.contextos.get(nombre_agente, "")
+            if materia and nombre_agente == "parciales":
+                contexto = self.filtrar_parciales_por_materia(contexto_completo, materia) or contexto_completo
+            elif materia and nombre_agente in ("horarios", "docentes"):
+                contexto = self.filtrar_bloques_por_materia(contexto_completo, materia) or contexto_completo
+            else:
+                contexto = contexto_completo
 
 
         print("\n=== CONTEXTO ===")
