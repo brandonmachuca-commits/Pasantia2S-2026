@@ -15,7 +15,8 @@ MATERIAS = {
         "aliases": [
             "PP",
             "Principios de Programación",
-            "Principios de Programacion"
+            "Principios de Programacion",
+            "principios de programacion"
         ]
     },
 
@@ -24,7 +25,9 @@ MATERIAS = {
         "aliases": [
             "MDL1",
             "Matemática Discreta y Lógica 1",
-            "Matematica Discreta y Logica 1"
+            "Matematica Discreta y Logica 1",
+            "mdl1",
+            "discreta 1"
         ]
     },
 
@@ -33,6 +36,8 @@ MATERIAS = {
         "aliases": [
             "ARQ",
             "Arquitectura del Computador",
+            "arquitectura",
+            "arq"
         ]
     },
 
@@ -41,7 +46,8 @@ MATERIAS = {
         "aliases": [
             "I1",
             "Inglés Técnico 1",
-            "Ingles Tecnico 1"
+            "Ingles Tecnico 1",
+            "ingles 1"
         ]
     },
 
@@ -51,6 +57,9 @@ MATERIAS = {
             "MN",
             "Matemática Nivelación",
             "Matematica Nivelacion"
+            "matematica",
+            "mn",
+            "nivelacion"
         ]
     },
     # segundo semestre
@@ -60,6 +69,9 @@ MATERIAS = {
         "aliases": [
             "BD1",
             "Bases de Datos 1",
+            "bd1",
+            "bases",
+            "BD"
         ]
     },
 
@@ -68,7 +80,9 @@ MATERIAS = {
         "aliases": [
             "I2",
             "Inglés Técnico 2",
-            "Ingles Tecnico 2"
+            "Ingles Tecnico 2",
+            "ingles 2",
+            "I2"
         ]
     },
 
@@ -77,7 +91,8 @@ MATERIAS = {
         "aliases": [
             "EDA",
             "Estructuras de Datos y Algoritmos",
-            "Estructuras de Datos y Algoritmos"
+            "Estructuras de Datos y Algoritmos",
+            "eda"
         ]
     },
 
@@ -86,7 +101,9 @@ MATERIAS = {
         "aliases": [
             "MDL2",
             "Matemática Discreta y Lógica 2",
-            "Matematica Discreta y Logica 2"
+            "Matematica Discreta y Logica 2",
+            "mdl2",
+            "discreta 2"
         ]
     },
 
@@ -94,7 +111,7 @@ MATERIAS = {
         "oficial": "Sistemas Operativos",
         "aliases": [
             "SO",
-            "Sistemas Operativos",
+            "Sistemas Operativos"
         ]
     },
 
@@ -105,6 +122,8 @@ MATERIAS = {
         "aliases": [
             "BD2",
             "Bases de Datos 2",
+            "bases 2",
+            "bd2"
         ]
     },
 
@@ -113,7 +132,8 @@ MATERIAS = {
         "aliases": [
             "COE",
             "Comunicación Oral y Escrita",
-            "Comunicacion Oral y Escrita"
+            "Comunicacion Oral y Escrita",
+            "coe"
         ]
     },
 
@@ -121,7 +141,8 @@ MATERIAS = {
         "oficial": "Contabilidad",
         "aliases": [
             "Contab",
-            "Contabilidad"
+            "Contabilidad",
+            "contab"
         ]
     },
 
@@ -130,6 +151,7 @@ MATERIAS = {
         "aliases": [
             "Redes",
             "Redes de Computadoras",
+            "redes"
         ]
     },
 
@@ -140,6 +162,7 @@ MATERIAS = {
             "Prog Avanz",
             "Programación Avanzada",
             "Programacion Avanzada",
+            "PA"
         ]
     },
 
@@ -151,7 +174,8 @@ MATERIAS = {
             "Adm Inf1",
             "infra 1",
             "Administración de Infraestructuras",
-            "Administracion de Infraestructuras"
+            "Administracion de Infraestructuras",
+            "admininfra"
         ]
     },
 
@@ -175,7 +199,8 @@ MATERIAS = {
             "probabilidad",
             "estadistica",
             "Probabilidad y Estadistica",
-            "Probabilidad y Estadística"
+            "Probabilidad y Estadística",
+            "pye"
         ]
     },
 
@@ -184,7 +209,8 @@ MATERIAS = {
         "aliases": [
             "ProgAplic",
             "Programacion de Aplicaciones",
-            "Programación de Aplicaciones"
+            "Programación de Aplicaciones",
+            "PApl"
         ]
     },
 
@@ -193,7 +219,8 @@ MATERIAS = {
         "aliases": [
             "RPyL",
             "Relaciones Personales y Laborales",
-            "Relaciones Personales y Laborales"
+            "Relaciones Personales y Laborales",
+            "rpyl"
         ]
     },
 
@@ -204,7 +231,10 @@ MATERIAS = {
         "aliases": [
             "RIA",
             "Internet Ricas",
-            "Taller de Aplicaciones de Internet Ricas"
+            "Taller de Aplicaciones de Internet Ricas",
+            "ricas",
+            "Ricas",
+            "intricas"
         ]
     },
 
@@ -215,7 +245,8 @@ MATERIAS = {
             "JAVAEE",
             "Java",
             "Java EE",
-            "Taller de Sistemas de Información Java EE"
+            "Taller de Sistemas de Información Java EE",
+            "java"
         ]
     },
 
@@ -225,7 +256,9 @@ MATERIAS = {
             "ADMINFII",
             "infra 2",
             "Administración de Infraestructuras 2",
-            "Administracion de Infraestructuras 2"
+            "Administracion de Infraestructuras 2",
+            "admin infra 2",
+            "admininfra2"
         ]
     },
 
@@ -242,7 +275,8 @@ MATERIAS = {
         "oficial": "Taller de Desarrollo de Aplicaciones Web con PHP",
         "aliases": [
             "PHP",
-            "Taller de Desarrollo de Aplicaciones Web con PHP"
+            "Taller de Desarrollo de Aplicaciones Web con PHP",
+            "php"
         ]
     },
 
@@ -853,19 +887,10 @@ class RAGSystem:
             print(f"[MEMORIA] Reutilizando materia: {materia}")
 
         if memoria["last_entity"]:
-            question = re.sub(
-                r"\bsus\b",
-                memoria["last_entity"],
-                question,
-                flags=re.IGNORECASE
-                )
-                
-            question = re.sub(
-                r"\bsu\b",
-                memoria["last_entity"],
-                question,
-                flags=re.IGNORECASE
-                )
+            if re.search(r"\bsus\b|\bsu\b", question, flags=re.IGNORECASE):
+                materia = memoria["last_entity"]  # NUEVO: sincronizar materia con la sustitución
+            question = re.sub(r"\bsus\b", memoria["last_entity"], question, flags=re.IGNORECASE)
+            question = re.sub(r"\bsu\b", memoria["last_entity"], question, flags=re.IGNORECASE)
 
        
 

@@ -205,6 +205,18 @@ body {
   transition: all .2s;
   white-space: nowrap;
 }
+#stop-btn {
+  border-color: #ff4d4d;
+  color: #ff4d4d;
+  display: none;
+  align-items: center;
+  gap: 6px;
+}
+
+#stop-btn:hover {
+  background: rgba(255, 77, 77, 0.15);
+  box-shadow: 0 0 12px rgba(255, 77, 77, 0.5);
+}
 
 #mic-btn:hover {
   background: var(--c-dim);

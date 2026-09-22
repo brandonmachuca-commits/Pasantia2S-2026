@@ -38,6 +38,30 @@
           : '';
   }
 
+  function showStopButton() {
+    const btn = document.getElementById('stop-btn');
+    if (btn) btn.style.display = 'flex';
+  }
+
+  function hideStopButton() {
+      const btn = document.getElementById('stop-btn');
+      if (btn) btn.style.display = 'none';
+  }
+
+  window.stopResponse = function () {
+    if (currentController) {
+      currentController.abort();
+      currentController = null;
+    }
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
+    }
+    onSpeakingEnd();
+    setStatus('Respuesta detenida');
+    hideStopButton();
+  };
+
   // Holograma 
   function setHologramState(state) {
     if (!hologram) return;
@@ -84,6 +108,7 @@
 
   // Síntesis de voz 
   let currentAudio = null;
+  let currentController = null;
 
   async function speak(text) {
     const clean = cleanForSpeech(text);
@@ -117,6 +142,7 @@
         onSpeakingEnd();
         URL.revokeObjectURL(url);
         currentAudio = null;
+         hideStopButton(); // NUEVO
       };
 
       await currentAudio.play();
@@ -140,17 +166,19 @@
     setHologramState('thinking');
 
     setStatus('Procesando…', true);
-    // $response().textContent = '▋';
-    // $source().textContent = '';
+    showStopButton(); // NUEVO
 
     let fullText = '';
     let source = '';
+
+    currentController = new AbortController(); // NUEVO
 
     try {
       const res = await fetch(`${API}/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question, session_id: sessionId }),
+        signal: currentController.signal, // NUEVO
       });
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -174,11 +202,7 @@
           if (data.type === 'chunk') {
             fullText += data.text;
             source = data.source;
-            // $response().textContent = fullText + '▋';
-            // $response().scrollTop = $response().scrollHeight;
           } else if (data.type === 'done') {
-            // $response().textContent = fullText;
-            // $source().textContent = sourceLabel(source);
             agregarMensaje(fullText, 'assistant');
             setStatus('Respondiendo…');
             speak(fullText);
@@ -188,13 +212,19 @@
         }
       }
     } catch (err) {
+      if (err.name === 'AbortError') {  // NUEVO: no mostrar esto como error real
+        setStatus('Sistema listo · Habla o escribe');
+        onSpeakingEnd();
+        hideStopButton();
+        return;
+      }
       console.error(err);
       agregarMensaje(`Error: ${err.message}. ¿Está el servidor corriendo en localhost:9000?`, 'assistant');
-      // $response().textContent = `Error: ${err.message}. ¿Está el servidor corriendo en localhost:9000?`;
       setStatus('Error de conexión');
       onSpeakingEnd();
+      hideStopButton(); // NUEVO
     }
-  }
+}
 
   // Entrada por teclado 
   window.sendText = function () {
