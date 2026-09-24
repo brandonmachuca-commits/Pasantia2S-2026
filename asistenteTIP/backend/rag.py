@@ -1031,10 +1031,11 @@ Pregunta: {question}
 Instrucciones:
 - La respuesta siempre está en el contexto.
 - Buscá primero coincidencias por código de materia (por ejemplo PP, BD2, COE, MDL1).
+- Si la pregunta tiene varias partes (por ejemplo pide dos datos distintos) y el contexto solo permite responder una de ellas, respondé esa parte con la información disponible y aclará brevemente que la otra parte no está disponible en este contexto. No respondas "No encontré esa información" si al menos una parte de la pregunta sí se puede responder con el contexto.
 - Si la consulta es sobre presencialidades, respondé únicamente con las fechas y horarios que aparecen en el contexto. No infieras días ni hagas resúmenes generales. Si la pregunta es general, listá todas las fechas disponibles. Si es sobre una materia, listá solo las de esa materia.
 - Si encontrás una línea "Dicta: ...", respondé con el nombre del docente correspondiente.
 - Si encontrás varias coincidencias, elegí la que responda exactamente la pregunta.
-- Solo respondé "No encontré esa información, te sugiero consultar en Secretaría." si el dato realmente no aparece en el contexto.
+- Solo respondé "No encontré esa información, te sugiero consultar en Secretaría." si ninguna parte del dato pedido aparece en el contexto.
 - No digas que no encontraste información si el código o el nombre de la materia aparece en el contexto.
 Respuesta:"""
 
