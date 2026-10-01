@@ -193,8 +193,7 @@ async def actualizar_todo():
                 check=True
             )
 
-        for agente in rag.agentes.values():
-            agente.load()
+        rag.reload_category()
 
         return {
             "ok": True,
@@ -213,6 +212,14 @@ async def actualizar_todo():
 @app.post("/admin/update/{categoria}")
 async def actualizar_categoria(categoria: str):
 
+    categorias_txt = {"info_general", "perfil_ingreso", "perfil_egreso"}
+    if categoria in categorias_txt:
+        rag.reload_category(categoria)
+        return {
+            "ok": True,
+            "mensaje": f"{categoria} recargado desde sus archivos de texto"
+        }
+
     categorias = {
         "cursos": "process_cursos.py",
         "horarios": "process_horarios.py",
@@ -228,7 +235,7 @@ async def actualizar_categoria(categoria: str):
         "parciales": "download_parciales.py",
         "calendario": "download_calendario.py",
         "presencialidades": "download_presencialidades.py",
-        "docentes": "download_horarios.py",
+        "docentes": "download_docentes.py",
     }
 
     if categoria not in categorias:
@@ -249,25 +256,39 @@ async def actualizar_categoria(categoria: str):
     )
 
     try:
-        subprocess.run(
-            ["python3", str(script_descarga)],
-            check=True
-        )
+        avisos = []
+        if script_descarga.exists():
+            subprocess.run(
+                ["python3", str(script_descarga)],
+                check=True
+            )
+        elif categoria == "docentes":
+            # No usar por error el descargador de horarios para actualizar docentes.
+            avisos.append(
+                "No existe download_docentes.py; se procesarán los archivos de docentes ya descargados."
+            )
+        else:
+            raise FileNotFoundError(f"No existe el script de descarga: {script_descarga}")
         subprocess.run(
             ["python3", str(script)],
             check=True
         )
 
-        if categoria in rag.agentes:
-            rag.agentes[categoria].load()
+        rag.reload_category(categoria)
 
         return {
             "ok": True,
-            "mensaje": f"{categoria} actualizado correctamente"
+            "mensaje": f"{categoria} actualizado correctamente",
+            "avisos": avisos,
         }
 
     except subprocess.CalledProcessError as e:
 
+        return {
+            "ok": False,
+            "error": str(e)
+        }
+    except FileNotFoundError as e:
         return {
             "ok": False,
             "error": str(e)
@@ -279,8 +300,7 @@ async def reload():
 
     try:
 
-        for agente in rag.agentes.values():
-            agente.load()
+        rag.reload_category()
 
         return {
             "ok": True,
@@ -298,7 +318,7 @@ async def reload():
 @app.post("/reset-memory")
 async def reset_memory():
 
-    rag.last_topic = None
+    rag.reset_memory()
     print("[MEMORY] Memoria de contexto reiniciada")
     return {
         "ok": True

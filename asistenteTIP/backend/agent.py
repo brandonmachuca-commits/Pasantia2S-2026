@@ -1,306 +1,216 @@
-import re
-import numpy as np
+"""Agente especialista: carga documentos, crea fragmentos y recupera evidencia."""
 
+from __future__ import annotations
+
+import re
+import unicodedata
 from pathlib import Path
-from typing import List, Tuple, Optional
+from typing import Optional
+
+try:
+    import numpy as np
+except ImportError:  # La búsqueda por palabras sigue funcionando sin NumPy.
+    np = None
+
+
+def _normalizar(texto: str) -> str:
+    texto = unicodedata.normalize("NFKD", texto.casefold())
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return re.sub(r"[^\w\s]", " ", texto)
 
 
 class Agent:
+    """Busca en una categoría. Mantiene el contrato Agent.search() del backend."""
 
-    def __init__(self, nombre: str, carpeta: str, model):
+    CARPETAS_COMPATIBLES = {
+        "cursos": ("cursos", "presencialidades"),
+        "horarios": ("horarios",),
+        "info_general": ("info_general", "calendario"),
+    }
+
+    def __init__(self, nombre: str, carpeta: str, model=None):
         self.nombre = nombre
         self.carpeta = carpeta
         self.model = model
-
-        self.tipo_busqueda = (
-            "semantico"
-            if nombre == "cursos"
-            else "keywords"
-        )
-
-        self.chunks: List[str] = []
-        self.embeddings: Optional[np.ndarray] = None
-
+        self.tipo_busqueda = "semantico" if nombre == "cursos" else "keywords"
+        self.chunks: list[str] = []
+        self.chunk_sources: list[str] = []
+        self.embeddings = None
         self.load()
 
-    # ─────────────────────────────────────────────
+    def _candidate_roots(self) -> list[Path]:
+        """Ubica tanto los datos procesados del backend como los TXT del prototipo."""
+        here = Path(__file__).resolve().parent
+        project = here.parent if here.name.lower() == "backend" else here
+        processed = here / "data" / "processed"
+        if not processed.exists():
+            processed = project / "backend" / "data" / "processed"
+
+        names = self.CARPETAS_COMPATIBLES.get(self.carpeta, (self.carpeta,))
+        roots = [processed / name for name in names]
+        for name in names:
+            carpeta_procesada = processed / name
+            tiene_procesado = bool(list(carpeta_procesada.rglob("*.txt"))) if carpeta_procesada.is_dir() else False
+            # Conserva el corpus ya procesado. El prototipo aporta como respaldo
+            # los perfiles y la tabla general nueva si aún no existen en processed.
+            if not tiene_procesado or self.carpeta == "info_general":
+                roots.append(project / "backend-v2" / "Documentos" / name)
+        roots.extend(here / "Documentos" / name for name in names)
+        # No leer dos veces la misma ubicación.
+        return list(dict.fromkeys(path.resolve() for path in roots))
+
+    def _files_in(self, root: Path) -> list[Path]:
+        if not root.is_dir():
+            return []
+        # Incluye archivos de texto del nivel raíz y todas sus subcarpetas.
+        files = sorted(root.rglob("*.txt"))
+        return files
 
     def load(self):
-        data_path = (
-            Path(__file__).parent.parent
-            / "backend"
-            / "data"
-            / "processed"
-        )
+        self.chunks = []
+        self.chunk_sources = []
+        self.embeddings = None
+        vistos: set[Path] = set()
+        chunks_vistos: set[str] = set()
 
-        archivo = (
-            data_path
-            / self.carpeta
-            / "contenido.txt"
-        )
+        for root in self._candidate_roots():
+            for archivo in self._files_in(root):
+                archivo = archivo.resolve()
+                if archivo in vistos:
+                    continue
+                vistos.add(archivo)
+                try:
+                    texto = archivo.read_text(encoding="utf-8-sig", errors="replace")
+                except OSError as error:
+                    print(f"[AGENT:{self.nombre}] No se pudo leer {archivo.name}: {error}")
+                    continue
+                etiqueta = f"{root.name}/{archivo.relative_to(root).as_posix()}"
+                for chunk in self._chunk_text(texto):
+                    clave = _normalizar(chunk)
+                    if clave in chunks_vistos:
+                        continue
+                    chunks_vistos.add(clave)
+                    self.chunks.append(chunk)
+                    self.chunk_sources.append(etiqueta)
 
-        print("\n===================================")
-        print(f"[AGENT] {self.nombre}")
-        print(f"[AGENT] Archivo: {archivo.resolve()}")
-        print("===================================\n")
-
-        if not archivo.exists():
-            print(f"[AGENT] ERROR: No existe {archivo}")
-            return
-
-        with open(archivo, "r", encoding="utf-8") as f:
-            texto = f.read()
-
-        print(f"[AGENT] {self.nombre}: {len(texto)} caracteres")
-        print(f"[AGENT] {self.nombre}: {texto.count(chr(10))} líneas")
-
-        # chunking
-        self.chunks = self._chunk_text(texto)
-
-        print(f"[AGENT] {self.nombre}: {len(self.chunks)} chunks")
-
-        if not self.chunks:
-            print("[AGENT] WARNING: No se generaron chunks")
-            return
-
-        # debug
-        print("\n[AGENT] Primeros chunks:\n")
-        for i, chunk in enumerate(self.chunks[:3]):
-            print(f"--- CHUNK {i+1} ---")
-            print(chunk[:400])
-            print()
-
-        # embeddings solo si es semántico
-        if self.model and self.tipo_busqueda == "semantico":
+        if self.model is not None and self.tipo_busqueda == "semantico" and self.chunks:
             try:
                 self.embeddings = self.model.encode(
-                    self.chunks,
-                    convert_to_numpy=True
+                    self.chunks, convert_to_numpy=True, show_progress_bar=False
                 )
-                print(f"[AGENT] {self.nombre}: embeddings generados")
-            except Exception as e:
-                print(f"[AGENT] ERROR embeddings: {e}")
+            except Exception as error:
+                print(f"[AGENT:{self.nombre}] Búsqueda semántica no disponible: {error}")
                 self.embeddings = None
 
-    # ─────────────────────────────────────────────
+        print(f"[AGENT:{self.nombre}] {len(self.chunks)} fragmentos cargados")
+        if not self.chunks:
+            print(f"[AGENT:{self.nombre}] No se encontraron documentos para {self.carpeta}")
 
-    def _chunk_text(
-        self,
-        text: str,
-        max_chars: int = 700,
-        overlap: int = 120
-    ) -> List[str]:
+    @staticmethod
+    def _chunk_text(text: str, max_chars: int = 900, overlap: int = 120) -> list[str]:
+        text = text.replace("\r", "").strip()
+        if not text:
+            return []
 
-        text = text.replace("\r", "")
-
-        bloques = re.split(
-            r"(?:={10,}|-{10,}|\n\s*\n)",
-            text
-        )
-
-        chunks = []
-
+        chunks: list[str] = []
+        bloques = re.split(r"(?:={8,}|-{8,}|\n\s*\n)", text)
         for bloque in bloques:
             bloque = bloque.strip()
-
-            if len(bloque) < 20:
+            if len(bloque) < 15:
                 continue
-
-            if len(bloque) <= max_chars:
-                chunks.append(bloque)
-                continue
-
             inicio = 0
             while inicio < len(bloque):
-                fin = inicio + max_chars
-
+                fin = min(inicio + max_chars, len(bloque))
                 if fin < len(bloque):
-                    corte = bloque.rfind("\n", inicio, fin)
-                    if corte != -1:
-                        fin = corte
-
-                chunk = bloque[inicio:fin].strip()
-                if len(chunk) > 20:
-                    chunks.append(chunk)
-
-                inicio = fin - overlap
-
+                    corte = max(bloque.rfind("\n", inicio, fin), bloque.rfind(". ", inicio, fin))
+                    if corte > inicio + max_chars // 2:
+                        fin = corte + (1 if bloque[corte:corte + 2] == ". " else 0)
+                fragmento = bloque[inicio:fin].strip()
+                if len(fragmento) >= 15:
+                    chunks.append(fragmento)
+                if fin >= len(bloque):
+                    break
+                inicio = max(inicio + 1, fin - overlap)
         return chunks
 
-    # ─────────────────────────────────────────────
-
-    def search(
+    def search_with_source(
         self,
         query: str,
-        top_k: int = 5,
-        threshold: float = 0.22
-    ) -> List[Tuple[str, float]]:
-
-        print(f"[SEARCH] Query: {query}")
-
-        if not self.chunks:
+        top_k: int = 4,
+        threshold: float = 0.18,
+        must_contain: Optional[list[str]] = None,
+    ) -> list[dict]:
+        if not self.chunks or top_k <= 0:
             return []
 
-        # BÚSQUEDA POR KEYWORDS
+        query_norm = _normalizar(query)
+        palabras = [
+            p for p in query_norm.split()
+            if len(p) > 2 and p not in {
+                "para", "por", "con", "que", "como", "cuando", "donde",
+                "quien", "cual", "materia", "asignatura", "decime", "dime",
+                "quiero", "saber", "puedes", "podrias", "necesito",
+            }
+        ]
+        scores = [0.0] * len(self.chunks)
+        admitidos = [True] * len(self.chunks)
+        for i, chunk in enumerate(self.chunks):
+            texto = re.sub(r"[^\w]+", " ", _normalizar(
+                chunk + " " + self.chunk_sources[i]
+            )).strip()
+            if must_contain:
+                entidades = [
+                    re.sub(r"[^\w]+", " ", _normalizar(alias)).strip()
+                    for alias in must_contain if alias
+                ]
+                if not any(
+                    re.search(rf"(?<!\w){re.escape(alias)}(?!\w)", texto)
+                    for alias in entidades if alias
+                ):
+                    admitidos[i] = False
+                    continue
+            if query_norm and len(query_norm) > 3 and query_norm in texto:
+                scores[i] += 8.0
+            for palabra in palabras:
+                if re.search(rf"\b{re.escape(palabra)}\b", texto):
+                    scores[i] += 2.0 if len(palabra) >= 5 else 1.0
 
-        if self.tipo_busqueda == "keywords":
-            print("[SEARCH] usando búsqueda por keywords")
+        if (
+            self.tipo_busqueda == "semantico"
+            and self.model is not None
+            and self.embeddings is not None
+            and np is not None
+        ):
+            try:
+                q_emb = self.model.encode([query], convert_to_numpy=True)
+                emb = np.asarray(self.embeddings)
+                denom = np.linalg.norm(emb, axis=1) * np.linalg.norm(q_emb) + 1e-8
+                sims = (np.dot(emb, q_emb.T).flatten() / denom).tolist()
+                scores = [
+                    max(score, float(sim) * 5.0) if admitido else 0.0
+                    for score, sim, admitido in zip(scores, sims, admitidos)
+                ]
+            except Exception as error:
+                print(f"[AGENT:{self.nombre}] Falló búsqueda semántica: {error}")
 
-            resultados = []
+        ranking = sorted(enumerate(scores), key=lambda par: par[1], reverse=True)
+        resultados = []
+        for index, score in ranking:
+            if score <= 0 or (self.tipo_busqueda == "semantico" and score < threshold):
+                continue
+            resultados.append({
+                "chunk": self.chunks[index],
+                "fuente": self.chunk_sources[index],
+                "score": float(score),
+                "categoria": self.nombre,
+            })
+            if len(resultados) >= top_k:
+                break
+        return resultados
 
-            query_clean = re.sub(
-                r"[^\w\s]",
-                "",
-                query.lower()
-            )
-
-            palabras = query_clean.split()
-            
-            STOPWORDS = {"las", "los", "una", "uno", "del", "que", "como", "cual",
-                     "cuales", "para", "por", "con", "sus", "mis", "hay", "son",
-                     "este", "esta", "estos", "estas", "cuando", "donde", "quien"}
-
-             # Solo palabras de más de 2 letras y que no sean stopwords
-            palabras_filtradas = [p for p in palabras if len(p) > 2 and p not in STOPWORDS] 
-
-            print(f'[SEARCH] palabras filtradas: {palabras_filtradas}')
-
-            # if (
-            #     self.nombre == "parciales"
-            #     and "parcial" in query_clean
-            #     and "semestre" not in query_clean
-            # ):
-
-            #     resultados = []
-
-            #     for chunk in self.chunks:
-            #         if "semestre" in chunk.lower():
-            #             resultados.append((chunk, 1000))
-
-            #     if resultados:
-            #         print("[SEARCH] consulta general de parciales")
-            #         return resultados[:top_k]
-
-            # ------------------------------------------
-            # 2. Buscar meses
-            # ------------------------------------------
-            meses = [
-                "enero", "febrero", "marzo", "abril",
-                "mayo", "junio", "julio", "agosto",
-                "septiembre", "octubre",
-                "noviembre", "diciembre"
-            ]
-
-            for mes in meses:
-                if mes in query_clean:
-                    resultados = []
-                    for chunk in self.chunks:
-                        if mes in chunk.lower():
-                            resultados.append((chunk, 1000))
-                    if resultados:
-                        print("[SEARCH] match por mes")
-                        return resultados[:top_k]
-
-
-            # ------------------------------------------
-            # 1. Buscar siglas exactas
-            # ------------------------------------------
-            siglas = [
-                s for s in re.findall(
-                    r"\b[A-Z0-9]{2,6}\b",
-                    query.upper()
-                )
-                if len(s) <= 6 and s.lower() not in STOPWORDS
-            ]   
-            
-
-            if siglas:
-                for chunk in self.chunks:
-                    texto = chunk.upper()
-                    score = 0
-                    for sigla in siglas:
-                        if re.search(
-                            rf"\b{re.escape(sigla)}\b",
-                            texto
-                        ):
-                            score += 1000
-                    if score > 0:
-                        resultados.append((chunk, score))
-
-                if resultados:
-                    print("[SEARCH] match por siglas")
-                    return resultados[:top_k]
-
-           
-
-            # ------------------------------------------
-            # 3. Keywords
-            # ------------------------------------------
-            for chunk in self.chunks:
-                texto = chunk.lower()
-                score = 0
-
-                if query_clean in texto:
-                    score += 100
-
-                for palabra in palabras_filtradas:
-                    # if len(palabra) <= 2:
-                    #     continue
-                    if palabra in texto:
-                        score += 10
-
-                if score > 0:
-                    resultados.append((chunk, float(score)))
-
-            resultados.sort(
-                key=lambda x: x[1],
-                reverse=True
-            )
-
-            print(f"[SEARCH] resultados: {len(resultados)}")
-            return resultados[:top_k]
-
-        # BÚSQUEDA SEMÁNTICA
-
-        print("[SEARCH] usando embeddings")
-
-        if self.embeddings is None:
-            return []
-
-        try:
-            q_emb = self.model.encode(
-                [query],
-                convert_to_numpy=True
-            )
-
-            emb_norm = np.linalg.norm(
-                self.embeddings,
-                axis=1
-            )
-            q_norm = np.linalg.norm(q_emb)
-
-            sims = (
-                np.dot(self.embeddings, q_emb.T).flatten()
-                / (emb_norm * q_norm + 1e-8)
-            )
-
-            top = np.argsort(sims)[::-1][:top_k]
-
-            resultados = []
-
-            for i in top:
-                score = float(sims[i])
-                print(f"[SEARCH] score={score:.3f}")
-                if score >= threshold:
-                    resultados.append(
-                        (
-                            self.chunks[i],
-                            score
-                        )
-                    )
-
-            return resultados
-
-        except Exception as e:
-            print(f"[SEARCH] ERROR: {e}")
-            return []
+    def search(self, query: str, top_k: int = 5, threshold: float = 0.22):
+        """Compatibilidad con el contrato anterior: lista de (fragmento, puntaje)."""
+        return [
+            (r["chunk"], r["score"])
+            for r in self.search_with_source(query, top_k=top_k, threshold=threshold)
+        ]

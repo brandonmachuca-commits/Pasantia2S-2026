@@ -1,0 +1,12 @@
+PERFIL DE INGRESO — TECNÓLOGO EN INFORMÁTICA
+
+Síntesis en texto plano del sitio institucional TIP. La página enumera estas vías de ingreso:
+- Egreso del Bachillerato Tecnológico de Mantenimiento y Procesamiento Informático de UTU.
+- Egreso de bachilleratos de Educación Secundaria que habiliten el ingreso a la Facultad de Ingeniería.
+- Ciclo Inicial Optativo (CIO), según las carreras habilitadas y las condiciones de su programa, independientemente del bachillerato cursado.
+- Estudiantes de Udelar con estudios equivalentes a 80 créditos o un año aprobado, sujeto a los requisitos que establezca el servicio universitario.
+- Egresados de Udelar, que según la página pueden ingresar a Facultad sin requisitos adicionales.
+
+La página incluye el encabezado “Documentación requerida para los postulantes a ingreso”, pero no muestra una lista de documentos debajo del encabezado. Por eso, este archivo no agrega requisitos documentales: deben confirmarse en la convocatoria de ingreso vigente.
+
+Fuente institucional: https://sites.google.com/utec.edu.uy/tecnoinf/perfiles?authuser=0
