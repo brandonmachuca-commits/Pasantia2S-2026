@@ -2,3 +2,10 @@ asistenteTIP/backend/venv/
 venv/
 *.pyc
 __pycache__/
+**/env/
+**/venv/
+**/myvenv/
+**/.venv/
+**/__pycache__/
+*.py[cod]
+asistenteTIP/backend/prueba1directorio.py
