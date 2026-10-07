@@ -1,0 +1,67 @@
+TIP - Principios de Programación
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Principios de Programación
+Docente:
+Nancy López
+nancy
+lopez
+@utec.edu.uy
+Materia:
+Programación.
+Créditos:
+0.
+Objetivo de la Asignatura
+El objetivo de la asignatura es aprender a realizar buenos programas, según el paradigma de la programación imperativa, abordando la resolución de problemas mediante el uso de algoritmos y manejo de estructuras de datos, aprendiendo a utilizar los conceptos de abstracción de operaciones  y de datos.
+La asignatura servirá para la nivelación de los estudiantes que ingresen desde el Bachillerato Diversificado.
+Metodología de enseñanza
+Se dictarán 8 horas semanales de clase, incluyendo presentaciones teóricas, realización de ejercicios prácticos y trabajo en máquina.
+Además, cada alumno deberá dedicar un promedio de 8 horas semanales para estudio y realización de trabajos de laboratorio propuestos por el docente.
+Temario
+Introducción a la programación:
+Lenguajes de programación
+Algoritmos
+Pseudocódigos
+Proceso para la obtención de un programa ejecutable en lenguaje de alto nivel
+El lenguaje C
+Identificadores, constantes y variables.
+Tipos de datos simples.
+Instrucción de asignación y expresiones aritméticas.
+Instrucciones de control:
+Secuencia
+Selección
+Iteración
+Subprogramas.
+Alcance de identificadores.
+Tipos de datos estructurados: arreglos y estructuras.
+Caso de estudio: búsqueda y ordenación.
+Recursión.
+Bibliografía
+Kernighan, B. W. y D. M. Ritchie. El lenguaje de programación C. Prentice-Hall. 1991.
+Deitel, H. M. y P. J. Deitel. Cómo programar en C/C++. Prentice-Hall Hispanoamericana. 1998.
+Previaturas
+No Tiene
+Formas de evaluación
+Los estudiantes serán evaluados mediante entregas de trabajos de laboratorio y dos parciales.
+Laboratorio: Los trabajos propuestos serán de entrega obligatoria. No se les asignará puntaje, solamente se evaluará si se aprueban o no.
+Parciales: El primero de ellos se realizará luego de la séptima semana de clases, y el segundo tendría lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La
+exoneración
+del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La
+suficiencia
+se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá
+recursar
+la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

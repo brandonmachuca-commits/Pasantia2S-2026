@@ -9,3 +9,4 @@ __pycache__/
 **/__pycache__/
 *.py[cod]
 asistenteTIP/backend/prueba1directorio.py
+**/.env

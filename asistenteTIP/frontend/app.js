@@ -2,461 +2,222 @@
   'use strict';
 
   const API = '';
-
+  const $ = (id) => document.getElementById(id);
+  const hologram = $('hologram');
   let recognition = null;
   let isListening = false;
+  let currentAudio = null;
+  let currentController = null;
+  let finalTranscript = '';
 
-  // Generar ID de sesión
-  let sessionId = sessionStorage.getItem("session_id");
+  let sessionId = sessionStorage.getItem('session_id');
   if (!sessionId) {
-    sessionId = crypto.randomUUID();
-    sessionStorage.setItem("session_id", sessionId);
+    sessionId = window.crypto?.randomUUID?.() || `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    sessionStorage.setItem('session_id', sessionId);
   }
 
-  // Elementos del DOM 
-  const $status = () => document.getElementById('status-bar');
-  const $transcript = () => document.getElementById('transcript');
-  const $response = () => document.getElementById('response-box');
-  const $source = () => document.getElementById('source-tag');
-  const $mic = () => document.getElementById('mic-btn');
-  const $textInput = () => document.getElementById('text-input');
-  const hologram = document.getElementById('hologram');
-
-  // Helpers 
-  function setStatus(txt, pulse = false) {
-    const el = $status();
-    if (el) {
-      el.textContent = txt;
-      el.classList.toggle('pulse', pulse);
-    }
+  function setStatus(text, pulse = false) {
+    const status = $('status-bar');
+    status.textContent = text;
+    status.classList.toggle('pulse', pulse);
   }
 
-  function sourceLabel(src) {
-    return src === 'document' ? '[ fuente: documento ]'
-      : src === 'web' ? '[ fuente: búsqueda web ]'
-        : src === 'training' ? '[ fuente: conocimiento del modelo ]'
-          : '';
-  }
-
-  function showStopButton() {
-    const btn = document.getElementById('stop-btn');
-    if (btn) btn.style.display = 'flex';
-  }
-
-  function hideStopButton() {
-      const btn = document.getElementById('stop-btn');
-      if (btn) btn.style.display = 'none';
-  }
-
-  window.stopResponse = function () {
-    if (currentController) {
-      currentController.abort();
-      currentController = null;
-    }
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio = null;
-    }
-    onSpeakingEnd();
-    setStatus('Respuesta detenida');
-    hideStopButton();
-  };
-
-  // Holograma 
-  function setHologramState(state) {
-    if (!hologram) return;
-    hologram.classList.remove('listening', 'thinking', 'speaking', 'inactive');
+  function setHologram(state) {
+    hologram.classList.remove('inactive', 'listening', 'thinking', 'speaking');
     hologram.classList.add(state);
   }
 
-  function onSpeakingStart() {
-    setHologramState('speaking');
+  function addMessage(text, type) {
+    const article = document.createElement('article');
+    article.className = `message ${type}`;
+    if (type === 'assistant') {
+      const avatar = document.createElement('div');
+      avatar.className = 'assistant-avatar';
+      const image = document.createElement('img');
+      image.src = '/static/img/logo-utec.jpg';
+      image.alt = '';
+      avatar.append(image);
+      article.append(avatar);
+    }
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    // Text-only rendering prevents document/model output from becoming HTML.
+    bubble.textContent = text;
+    article.append(bubble);
+    $('chat-messages').append(article);
+    $('chat-messages').scrollTop = $('chat-messages').scrollHeight;
   }
 
-  function onSpeakingEnd() {
-    setHologramState('inactive');
-  }
-
-  function onListeningStart() {
-    setHologramState('listening');
-  }
-
-  function onListeningEnd() {
-    setHologramState('inactive');
-  }
-
-  // Limpieza de texto para voz 
   function cleanForSpeech(text) {
-    return text
-      .replace(/```[\s\S]*?```/g, 'código')
-      .replace(/`([^`]+)`/g, '$1')
-      .replace(/\*\*([^*]+)\*\*/g, '$1')
-      .replace(/\*([^*]+)\*/g, '$1')
-      .replace(/__([^_]+)__/g, '$1')
-      .replace(/_([^_]+)_/g, '$1')
-      .replace(/#{1,6}\s+/g, '')
-      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-      .replace(/^\s*[-*+•]\s+/gm, '')
-      .replace(/^\s*\d+\.\s+/gm, '')
-      .replace(/^>\s*/gm, '')
-      .replace(/---+/g, ', ')
-      .replace(/\n{2,}/g, '. ')
-      .replace(/\n/g, ' ')
-      .replace(/\s{2,}/g, ' ')
-      .trim();
+    return text.replace(/```[\s\S]*?```/g, 'código').replace(/[*_#>`]/g, ' ')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\s+/g, ' ').trim();
   }
-
-  // Síntesis de voz 
-  let currentAudio = null;
-  let currentController = null;
 
   async function speak(text) {
     const clean = cleanForSpeech(text);
     if (!clean) return;
-
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio = null;
-    }
-
     try {
-      const res = await fetch(`${API}/speak`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(`${API}/speak`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: clean }),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const url = URL.createObjectURL(await response.blob());
       currentAudio = new Audio(url);
-
-      currentAudio.onplay = () => onSpeakingStart();
+      currentAudio.onplay = () => setHologram('speaking');
       currentAudio.onended = () => {
-        onSpeakingEnd();
-        URL.revokeObjectURL(url);
-        currentAudio = null;
-        setStatus('Sistema listo · Habla o escribe');
+        URL.revokeObjectURL(url); currentAudio = null;
+        setHologram('inactive'); setStatus('Sistema listo · Escribe o pulsa el micrófono');
+        $('stop-btn').hidden = true;
       };
       currentAudio.onerror = () => {
-        onSpeakingEnd();
-        URL.revokeObjectURL(url);
-        currentAudio = null;
-         hideStopButton(); // NUEVO
+        URL.revokeObjectURL(url); currentAudio = null; setHologram('inactive');
+        $('stop-btn').hidden = true;
       };
-
       await currentAudio.play();
-    } catch (err) {
-      console.error('TTS error:', err);
-      onSpeakingEnd();
+    } catch (error) {
+      console.warn('No se pudo reproducir la respuesta en voz:', error);
+      setHologram('inactive'); $('stop-btn').hidden = true;
     }
   }
 
-  // Pregunta al asistente (streaming) 
   async function sendQuestion(question) {
-    if (!question.trim()) return;
+    const cleanQuestion = question.trim();
+    if (!cleanQuestion) return;
+    if (currentController) currentController.abort();
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
 
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio = null;
-    }
-
-    onSpeakingEnd();
-    onListeningEnd();
-    setHologramState('thinking');
-
-    setStatus('Procesando…', true);
-    showStopButton(); // NUEVO
-
+    setHologram('thinking'); setStatus('Procesando la consulta…', true);
+    $('stop-btn').hidden = false;
+    currentController = new AbortController();
     let fullText = '';
-    let source = '';
-
-    currentController = new AbortController(); // NUEVO
-
+    let doneReceived = false;
     try {
-      const res = await fetch(`${API}/ask`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, session_id: sessionId }),
-        signal: currentController.signal, // NUEVO
+      const response = await fetch(`${API}/ask`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: cleanQuestion, session_id: sessionId }),
+        signal: currentController.signal,
       });
+      if (!response.ok) throw new Error(`El servidor respondió HTTP ${response.status}`);
+      if (!response.body) throw new Error('El servidor no inició la respuesta en streaming.');
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const reader = res.body.getReader();
+      const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
-
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
         buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop();
-
-        for (const line of lines) {
-          if (!line.startsWith('data:')) continue;
-          const data = JSON.parse(line.slice(5).trim());
-
-          if (data.type === 'chunk') {
-            fullText += data.text;
-            source = data.source;
-          } else if (data.type === 'done') {
-            agregarMensaje(fullText, 'assistant');
-            setStatus('Respondiendo…');
-            speak(fullText);
-          } else if (data.type === 'error') {
-            throw new Error(data.text);
-          }
+        const events = buffer.split('\n\n');
+        buffer = events.pop() || '';
+        for (const event of events) {
+          const line = event.split('\n').find((item) => item.startsWith('data:'));
+          if (!line) continue;
+          const payload = JSON.parse(line.slice(5).trim());
+          if (payload.type === 'chunk') fullText += payload.text || '';
+          if (payload.type === 'error') throw new Error(payload.text || 'Error del asistente.');
+          if (payload.type === 'done') doneReceived = true;
         }
       }
-    } catch (err) {
-      if (err.name === 'AbortError') {  // NUEVO: no mostrar esto como error real
-        setStatus('Sistema listo · Habla o escribe');
-        onSpeakingEnd();
-        hideStopButton();
-        return;
+      if (!fullText.trim()) throw new Error(doneReceived ? 'El asistente devolvió una respuesta vacía.' : 'La conexión terminó antes de recibir respuesta.');
+      addMessage(fullText, 'assistant');
+      setStatus('Respuesta lista · reproduciendo voz');
+      await speak(fullText);
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error(error);
+        addMessage(`No pude completar la consulta: ${error.message}`, 'assistant');
+        setStatus('No se pudo completar la consulta');
+        setHologram('inactive'); $('stop-btn').hidden = true;
       }
-      console.error(err);
-      agregarMensaje(`Error: ${err.message}. ¿Está el servidor corriendo en localhost:9000?`, 'assistant');
-      setStatus('Error de conexión');
-      onSpeakingEnd();
-      hideStopButton(); // NUEVO
-    }
-}
-
-  // Entrada por teclado 
-  window.sendText = function () {
-    const el = $textInput();
-    if (!el) return;
-    const txt = el.value.trim();
-    if (!txt) return;
-
-    agregarMensaje(txt, 'user');
-
-    $transcript().textContent = txt;
-    el.value = '';
-    sendQuestion(txt);
-  };
-
-  const textInput = $textInput();
-  if (textInput) {
-    textInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') window.sendText();
-    });
-  }
-
-  function agregarMensaje(texto, tipo) {
-    let container = document.getElementById('chat-messages');
-
-    // Si no existe, lo creamos y lo agregamos al DOM
-    if (!container) {
-      console.warn('No se encontró #chat-messages, creando contenedor...');
-      container = document.createElement('div');
-      container.id = 'chat-messages';
-      // Lo insertamos en algún lugar, por ejemplo dentro de #ui-panel o antes de #controls
-      const panel = document.getElementById('ui-panel');
-      if (panel) {
-        panel.insertBefore(container, document.getElementById('controls'));
-      } else {
-        // Si no hay #ui-panel, lo agregamos al body
-        document.body.appendChild(container);
-      }
-    }
-
-    const div = document.createElement('div');
-    div.className = `message ${tipo}`;
-    div.innerHTML = `<div class="bubble">${texto}</div>`;
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
-  }
-
-
-  // DETECCIÓN DE PRESENCIA CON MEDIAPIPE.JS
-
-  let presenceTimer = null;
-  let personPresent = false;
-  let camera = null;
-
-  function startFaceDetection() {
-    // Verificar que las clases globales de MediaPipe existan
-    if (typeof FaceDetection === 'undefined' || typeof Camera === 'undefined') {
-      console.warn('MediaPipe no cargado correctamente. Se omite detección facial.');
-      setStatus('Cámara no disponible (scripts no cargados).', false);
-      return;
-    }
-
-    const videoElement = document.createElement('video');
-    videoElement.style.display = 'none';
-    document.body.appendChild(videoElement);
-
-    const faceDetection = new FaceDetection({
-      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`,
-    });
-
-    faceDetection.setOptions({
-      model: 'short',
-      minDetectionConfidence: 0.5,
-    });
-
-    faceDetection.onResults(onFaceResults);
-
-    const cameraInstance = new Camera(videoElement, {
-      onFrame: async () => {
-        try {
-          await faceDetection.send({ image: videoElement });
-        } catch (err) {
-          console.warn('Error en frame de detección:', err);
-        }
-      },
-      width: 640,
-      height: 480,
-    });
-
-    // Iniciar cámara con manejo de errores y timeout
-    cameraInstance.start()
-      .then(() => {
-        console.log('Cámara iniciada correctamente');
-        setStatus('Cámara activa · Detección de presencia', false);
-      })
-      .catch((err) => {
-        console.error('Error al iniciar cámara:', err);
-        setStatus('Cámara no disponible. Usá texto o voz.', false);
-      });
-  }
-
-
-  function quickQuestion(question) {
-
-    document.getElementById("text-input").value = question;
-
-    sendText();
-  }
-
-  function onFaceResults(results) {
-
-    if (results.detections.length > 0) {
-
-      if (!personPresent) {
-
-        personPresent = true;
-
-        console.log('✅ Persona detectada');
-
-        // reiniciar memoria
-        fetch(`${API}/reset-memory`, {
-          method: 'POST'
-        }).catch(console.error);
-
-        // iniciar micrófono
-        if (recognition && !isListening) {
-          recognition.start();
-        }
-      }
-
-      clearTimeout(presenceTimer);
-      presenceTimer = null;
-
-    } else {
-
-      if (personPresent && !presenceTimer) {
-
-        presenceTimer = setTimeout(() => {
-
-          personPresent = false;
-
-          console.log("❌ Persona ausente");
-
-          if (recognition && isListening) {
-            recognition.stop();
-          }
-
-          onListeningEnd();
-
-        }, 5000);
-      }
+    } finally {
+      currentController = null;
     }
   }
 
-  // Esperar a que el DOM esté listo y luego iniciar detección
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      startFaceDetection();
-    }, 500);
+  function stopResponse() {
+    if (currentController) { currentController.abort(); currentController = null; }
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    if (isListening && recognition) recognition.stop();
+    setHologram('inactive'); setStatus('Respuesta detenida'); $('stop-btn').hidden = true;
+  }
+
+  $('composer').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const input = $('text-input');
+    const question = input.value.trim();
+    if (!question) return;
+    addMessage(question, 'user'); input.value = ''; $('transcript').textContent = '';
+    sendQuestion(question);
+  });
+  $('stop-btn').addEventListener('click', stopResponse);
+  document.querySelectorAll('[data-question]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const question = button.dataset.question;
+      addMessage(question, 'user'); sendQuestion(question);
+    });
   });
 
-  // Reconocimiento de voz 
-  function initSpeech() {
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) {
-      const micBtn = $mic();
-      if (micBtn) {
-        micBtn.title = 'Voz no disponible en este navegador. Usa Chrome o Chromium.';
-        micBtn.style.opacity = '0.4';
-        micBtn.addEventListener('click', () =>
-          alert('Tu navegador no soporta reconocimiento de voz.\nUsa Google Chrome o Chromium para activar el micrófono.')
-        );
-      }
+  function setMicButton(listening) {
+    isListening = listening;
+    $('mic-btn').classList.toggle('active', listening);
+    $('mic-btn').setAttribute('aria-pressed', String(listening));
+    $('mic-label').textContent = listening ? 'Escuchando…' : 'Hablar';
+    $('mic-icon').textContent = listening ? '⏹' : '🎤';
+  }
+
+  function initSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      $('mic-btn').disabled = true;
+      $('voice-hint').textContent = 'Este navegador no ofrece reconocimiento de voz. Puedes escribir tu consulta.';
+      $('mic-btn').title = 'Reconocimiento de voz no disponible';
       return;
     }
-
-    recognition = new SpeechRec();
-    recognition.lang = 'es-ES';
+    recognition = new SpeechRecognition();
+    recognition.lang = 'es-UY';
     recognition.interimResults = true;
     recognition.continuous = false;
 
     recognition.onstart = () => {
-      isListening = true;
-      const micBtn = $mic();
-      if (micBtn) micBtn.classList.add('active');
-      const lbl = document.getElementById('mic-label');
-      if (lbl) lbl.textContent = 'Escuchando…';
-      setStatus('Escuchando… habla ahora', true);
-      onListeningStart();
+      finalTranscript = ''; setMicButton(true); setStatus('Escuchando… habla ahora', true); setHologram('listening');
     };
-
-    recognition.onresult = (e) => {
+    recognition.onresult = (event) => {
       let interim = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        interim += e.results[i][0].transcript;
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) finalTranscript += `${transcript} `;
+        else interim += transcript;
       }
-      if ($transcript()) $transcript().textContent = interim;
-      if (e.results[e.results.length - 1].isFinal) {
-        agregarMensaje(interim, 'user');
-        sendQuestion(interim);
+      $('transcript').textContent = `${finalTranscript}${interim}`.trim();
+      if (finalTranscript.trim()) {
+        const question = finalTranscript.trim(); finalTranscript = '';
+        addMessage(question, 'user'); $('transcript').textContent = '';
+        recognition.stop(); sendQuestion(question);
       }
     };
-
-    recognition.onerror = () => stopListening();
-    recognition.onend = () => stopListening();
+    recognition.onerror = (event) => {
+      setMicButton(false); setHologram('inactive');
+      if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+        setStatus('Permite el uso del micrófono en el navegador para hablar.');
+      } else if (event.error !== 'no-speech' && event.error !== 'aborted') {
+        setStatus('No se pudo usar el micrófono; puedes escribir la consulta.');
+      }
+    };
+    recognition.onend = () => {
+      setMicButton(false); setHologram('inactive');
+      if ($('status-bar').textContent.startsWith('Escuchando')) setStatus('Sistema listo · Escribe o pulsa el micrófono');
+    };
   }
 
-  function stopListening() {
-    isListening = false;
-    const micBtn = $mic();
-    if (micBtn) micBtn.classList.remove('active');
-    const lbl = document.getElementById('mic-label');
-    if (lbl) lbl.textContent = 'Hablar';
-    setStatus('Sistema listo · Habla o escribe');
-    onListeningEnd();
-  }
-
-  window.toggleMic = function () {
-    if (!recognition) {
-      alert('Reconocimiento de voz no disponible en este navegador.');
-      return;
+  $('mic-btn').addEventListener('click', () => {
+    if (!recognition) return;
+    if (isListening) recognition.stop();
+    else {
+      $('transcript').textContent = '';
+      try { recognition.start(); }
+      catch (error) { console.warn('No se pudo activar el micrófono:', error); }
     }
-    if (isListening) {
-      recognition.stop();
-    } else {
-      if ($transcript()) $transcript().textContent = '';
-      recognition.start();
-    }
-  };
-
-  const micBtn = $mic();
-  if (micBtn) micBtn.addEventListener('click', window.toggleMic);
-
-  initSpeech();
+  });
+  initSpeechRecognition();
 })();

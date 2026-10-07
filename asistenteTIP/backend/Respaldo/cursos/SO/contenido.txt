@@ -1,0 +1,171 @@
+Docente: Jesús Guibert jesus.guibert@utec.edu.uy
+
+
+Materia   Arquitectura, Sistemas Operativos y Redes de Computadoras.
+
+ 
+
+Créditos   12.
+
+ 
+
+Objetivo de la Asignatura El contenido de este programa así como la metodología indicada, pretenden familiarizar al estudiante con los conceptos teóricos básicos relativos a los diferentes tipos de sistemas operativos y sus características principales. Asimismo se lo capacita, mediante trabajos prácticos, para realizar tareas de instalación, configuración y administración de sistemas operativos, en particular de sistemas basados en UNIX.
+
+ 
+
+Metodología de enseñanza Se dictarán 6 horas de clase semanales, destinadas a presentación de aspectos teóricos, realización de ejercicios prácticos y trabajo de laboratorio. Además, cada alumno deber� dedicar un promedio de 6 horas semanales de trabajo domiciliario.
+
+ 
+
+Temario
+
+Primera parte: acercamiento teórico y adquisición de vocabulario técnico
+
+Arquitectura de un S.O., modelos: monolítico, en capas, de máquinas virtuales, exokernels, cliente-servidor y microkernel (comentar S.O.s extensibles). Llamadas al sistema. Estándar POSIX.
+
+Procesos y subprocesos. Espacio de direcciones. Tabla de procesos. Scheduler (calendarizador). Comunicación entre procesos. Canalizaciones (tuberías). UID, GID, superusuario. Bloqueos, bloqueos irreversibles y soluciones. Administración de la memoria.
+
+Entrada-Salida. Dispositivos físicos. Capas de software. Acceso por sondeo, por IRQ y por DMA.
+
+Archivos. Sistemas de archivos. Directorios y nombres de ruta. Redireccionamiento. Archivos especiales de bloques y de caracteres. Seguridad de archivos. Bits de atributos. Estructura de algún sistema de archivos sencillo (por ejemplo, FAT16). Comparación con sistemas de archivo que brindan seguridad.
+
+Recubrimientos. De tipo consola. Resumen de comandos. De tipo gráfico. Control por eventos e interfaz subyacente. (Retomar llamadas al sistema). Llamadas de administración de procesos, archivos, directorios, etc. API. Contraste entre modelos UNIX (biblioteca estándar y GUI) y Windows. Nociones de shellscripting.
+
+
+Segunda parte: trabajo en laboratorio
+
+Evaluación de los componentes hardware a instalar en equipos de escritorio y servidores.
+
+Evaluación de la plataforma software que debería instalarse en equipos de escritorio y de servidor considerando distintas opciones para S.O., aplicaciones y servicios. Pros y contras de sistemas de código abierto contra sistemas propietarios.
+
+Instalación de un S.O. compatible con POSIX que soporte todos los requerimientos de la presente currícula.
+
+Configuración de los periféricos y la conexión a la red a través de algún entorno gráfico y mediante la edición de los archivos de configuración. Análisis de los niveles de ejecución, la personalización de los servicios de arranque y la administración de procesos.
+
+Prueba de software de red estándar: telnet, ssh, ftp, etc. Instalación y prueba de software cliente de comunicaciones: VoIP (Skipe, Ekiga), mensajería instantánea (Gaim, Kopete), correo electrónico (Evolution, Thunderbird), fax (Kfax, Fax2send), SMS (GnomeSMSend).
+
+Discusión sobre elementos a tener en cuenta en la seguridad física y lógica del sistema, incluyendo seguridad frente a la terminal, paradigma basado en usuarios (fortalezas y debilidades), archivo shadow y aseguramiento del arranque del sistema. Problema de la ingeniería social y los usuarios huérfanos. Uso de comandos de identificación de usuarios: finger, whois, whoami, etc. Administración de usuarios y permisos de archivo. Sistemas de monitoreo. Monitoreo utilizando syslog.
+
+Instalación, configuración, activación y desactivación de servidores: FTP, Telnet, SSH, DHCP, DNS, Samba.
+
+Instalación de la plataforma LAMP (agregando y configurando Apache, MySQL y PHP) u otra plataforma web equivalente.
+
+Seguridad en red. Tipos de ataque. Instalación y configuración de firewall con iptables (reglas básicas). Configuración utilizando fw-builder.
+
+Instalación y configuración de un proxy con el agregado de un antivirus corporativo.
+
+Instalación y configuración de un servidor de correo interno. Acceso a un servidor público a través del FW.
+
+Evaluación de alternativas para instalar una VPN. Instalación, configuración y prueba de la alternativa seleccionada.
+
+Evaluación de los usos posibles de un servicio LDAP. Configuración de un servidor LDAP para autenticación de usuarios.
+
+ 
+
+Bibliografía
+
+Tanenbaum, A. Sistemas operativos modernos. ISBN 970-26-0315-3.
+
+Stallings, W. Sistemas operativos.
+
+Stallings, W. Organización y arquitectura de computadoras.
+
+Bautts, Dawson y Purdy. Linux. Guía para administradores de redes. ISBN 84-415-1868-8.
+
+Von Hagen, Jones. Linux server. Los mejores trucos. ISBN 84-415-2034-8.
+
+Kroah-Hartman. Linux kernel. In a nutshell. (Disponible para descarga desde internet).
+
+Arena, H. Linux a fondo. MP Ediciones. USERS Linux. ISBN 987-526-245-5.
+
+Previaturas
+
+Curso de Arquitectura de Sistemas
+
+ 
+
+Anexo 1:
+Formas de evaluación
+
+Los estudiantes serán evaluados mediante entregas de carpetas e informes correspondientes a los trabajos de laboratorio y a través de la realización de dos parciales.
+Laboratorio: Los trabajos propuestos serán obligatorios. No se les asignará puntaje, solamente se evaluará si se aprueban o no.
+Parciales: El primero se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+
+De los resultados obtenidos en las instancias de evaluación surgirán tres posibilidades:
+
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos. La exoneración del examen final se logra aprobando el laboratorio y acumulando como mínimo 60 puntos entre los dos parciales. La suficiencia se logra aprobando el laboratorio y acumulando como mínimo 25 puntos entre ambos parciales. Quien no apruebe el laboratorio o no obtenga 25 puntos entre ambos parciales deberá recursar la asignatura.
+
+ 
+
+Anexo 2:
+Propuesta de trabajos de investigación y laboratorio
+
+Trabajo de investigación 1(al finalizarse el punto 7 del temario):
+Informar la factibilidad de migrar un ambiente productivo (propuesto por el docente) de una plataforma cerrada a una abierta, incluyendo componentes requeridos en la plataforma resultante y la evaluación del tiempo de paro para lograrlo.
+
+ 
+
+Trabajo de investigación 2 (al finalizarse el punto 7 del temario):
+Informar la compatibilidad del hardware propuesto con el S.O. seleccionado.
+
+ 
+
+Trabajo de investigación 3 (al finalizarse el punto 8 del temario):
+Informe sobre los comandos de consola habitualmente usados en la plataforma seleccionada, incluyendo parámetros y funcionalidades.
+
+ 
+
+Trabajo de investigación 4(al finalizarse el punto 8 del temario):
+Informe sobre la lista de comandos del editor vi.
+
+ 
+
+Trabajo de investigación 5 (al finalizarse el punto 9 del temario):
+Informar sobre la secuencia de encendido del sistema, los archivos de configuración y scripts que se cargan y el significado de sus parámetros.
+
+ 
+
+Trabajo de investigación 6 (al finalizarse el punto 10 del temario): Presentar informe y demostración práctica de sistemas de videoconferencia sobre la plataforma estudiada.
+
+ 
+
+Trabajo de investigación 7 (al finalizarse el punto 11 del temario):
+Presentar informe y demostración práctica sobre modos de obtener el archivo de contraseñas y mecanismos para romper su seguridad.
+
+ 
+
+Trabajo de investigación 8 (al finalizarse el punto 14 del temario):
+Informar sobre la historia de vulnerabilidades encontradas en el FW discutido, comparándolas con las de otro FW e identificando vulnerabilidades graves en uno y otro. (Cada grupo comparará con un FW diferente).
+
+ 
+
+Trabajo de investigación 9 (al finalizarse el punto 18 del temario):
+Informar sobre otros servicios de red no vistos en el curso y las alternativas disponibles.
+
+ 
+
+Se recomienda utilizar un enfoque esencialmente práctico, orientado a la realización de trabajos de laboratorio. Para cada práctica propuesta:
+
+Los estudiantes deben presentar un informe de cada tema que incluya la información manejada en la clase teórica, información agregada que especifique mejor la temática (por ej.: otras opciones de configuración) y toda información recopilada durante la práctica (procedimiento, ensayos realizados y sus resultados, etc.).
+
+Se aconseja solicitar aspectos de configuración agregados que no se hayan tratado en clase y que los estudiantes deban investigar (deben estar claramente especificados con anticipación).
+
+Se aconseja dar para la entrega de los trabajos un plazo claramente delimitado desde el principio e igual para todas las entregas (resulta adecuado un plazo de 2 semanas para dar oportunidad al planteo de consultas al docente).
+
+ 
+
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.

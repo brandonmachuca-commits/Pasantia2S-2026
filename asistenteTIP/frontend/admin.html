@@ -1,80 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración del Asistente TIP</title>
-    <link rel="stylesheet" href="admin.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <title>Administración · UTEC</title>
+  <link rel="stylesheet" href="admin.css">
 </head>
-
 <body>
+  <header class="admin-topbar">
+    <a class="brand" href="/"><img src="/static/img/logo.png" alt=""><span><b>UTEC</b><small>Administración académica</small></span></a>
+    <a class="back-link" href="/">← Volver al asistente</a>
+  </header>
+  <main class="page">
+    <section class="card login-card" id="login-view">
+      <div class="eyebrow">ACCESO RESTRINGIDO</div>
+      <h1>Panel de administración</h1>
+      <p>Inicia sesión para actualizar los documentos que consulta el asistente.</p>
+      <form id="login-form">
+        <label for="admin-password">Contraseña de administrador</label>
+        <input id="admin-password" type="password" autocomplete="current-password" required>
+        <button class="primary" type="submit">Entrar al panel</button>
+      </form>
+      <div class="notice" id="login-message" role="status"></div>
+    </section>
 
-    <div class="container">
-
-        <div class="card">
-
-            <h1>Administración del Asistente TIP</h1>
-            <div class="acciones">
-                <h2>Actualización automática</h2>
-                <button id="updateAll" class="btn-principal">
-                    Actualizar TODO
-                </button>
-                <p class="descripcion">
-                    Descarga todos los documentos, procesa la información y recarga los agentes.
-                </p>
+    <section class="dashboard" id="dashboard" hidden>
+      <div class="heading-row">
+        <div><div class="eyebrow">GESTIÓN DE DOCUMENTOS</div><h1>Panel de administración</h1><p>Sube una versión nueva y elige qué archivo existente sustituir.</p></div>
+        <button id="logout-btn" class="secondary" type="button">Cerrar sesión</button>
+      </div>
+      <div class="dashboard-grid">
+        <section class="card upload-card">
+          <div class="section-title"><span class="step">01</span><div><h2>Actualizar información</h2><p>PDF, DOCX, TXT, MD, CSV o HTML · máximo 25 MB</p></div></div>
+          <form id="upload-form">
+            <label for="category">Categoría</label>
+            <select id="category" name="categoria" required></select>
+            <label for="replace-target">Archivo que se reemplaza</label>
+            <select id="replace-target" name="reemplazar"><option value="">Agregar como archivo nuevo</option></select>
+            <div class="drop-zone" id="drop-zone">
+              <input id="file-input" name="archivo" type="file" accept=".pdf,.docx,.txt,.md,.markdown,.csv,.html,.htm" required>
+              <span class="upload-icon">↑</span>
+              <strong id="file-label">Selecciona un archivo</strong>
+              <small>Se guardará en backend/Documentos/&lt;categoría&gt;</small>
             </div>
-            <hr>
-            <div class="acciones">
-                <h2>Actualizar individualmente</h2>
-                <div class="grid-botones">
-                    <button data-cat="cursos">
-                        Cursos
-                    </button>
+            <button class="primary" type="submit" id="upload-submit">Subir y actualizar agente</button>
+          </form>
+          <div class="notice" id="upload-message" role="status"></div>
+        </section>
 
-                    <button data-cat="horarios">
-                        Horarios
-                    </button>
-
-                    <button data-cat="docentes">
-                        Docentes
-                    </button>
-
-                    <button data-cat="parciales">
-                        Parciales
-                    </button>
-
-                    <button data-cat="calendario">
-                        Calendario
-                    </button>
-
-                    <button data-cat="presencialidades">
-                        Presencialidades
-                    </button>
-
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="acciones">
-
-                <button id="reloadBtn">
-                    Recargar agentes
-                </button>
-
-            </div>
-
-            <div id="resultado">
-
-                Esperando una acción...
-
-            </div>
-
-        </div>
-
-    </div>
-    <script src="admin.js?v=3"></script>
+        <section class="card status-card">
+          <div class="section-title"><span class="step">02</span><div><h2>Documentos cargados</h2><p>Estado actual de los agentes RAG.</p></div></div>
+          <div id="status-list" class="status-list"><div class="empty">Inicia sesión para consultar el estado.</div></div>
+          <button id="reload-btn" class="secondary full-width" type="button">↻ Recargar agentes</button>
+          <div class="notice" id="status-message" role="status"></div>
+        </section>
+      </div>
+      <p class="footnote">Los archivos estáticos de <code>data/processed</code> no se modifican desde este panel.</p>
+    </section>
+  </main>
+  <script src="admin.js"></script>
 </body>
-
 </html>

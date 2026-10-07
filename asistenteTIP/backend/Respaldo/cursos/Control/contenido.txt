@@ -1,0 +1,99 @@
+TIP - Introducción a los Sistemas de Control
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Introducción a los Sistemas de Control
+Docente:
+Jesús Guibert
+jesus.guibert@utec.edu.uy
+Nombre de la Asignatura
+: Introducción a los Sistemas de Control
+Créditos
+: 12
+Objetivos de la Asignatura:
+El objetivo principal de la asignatura es introducir al estudiante en el estudio de los sistemas de control, su aplicación en la automatización de procesos y la implementación de un proyecto simple que permita aplicar los conocimientos adquiridos sobre un simulador de PLC.
+Los objetivos de la asignatura son:
+Desarrollar conocimientos básicos necesarios para el análisis y diseño de sistemas de control.
+•Desarrollar las capacidades en el modelado de sistemas físicos con el objeto de implementar sistemas de control y automatización de procesos.
+•Introducir conocimientos en el uso de controladores lógicos programables para la solución de problemas de automatización de procesos.
+•Entrenar las capacidades de autoestudio de tecnologías y las habilidades necesarias para la resolución de problemas técnicos.
+•Fomentar las habilidades de trabajo en equipo y la colaboración entre grupos de trabajo.
+Entrenar las capacidades de comunicación y presentación oral en la presentación de trabajos.
+La asignatura se focaliza en los siguientes aspectos:
+•El desarrollo de conocimientos básicos sobre los sistemas de control que permitan la comprensión y posterior modelado de sistema o físicos.
+•La presentación de situaciones reales y la necesidad de implementar sistemas de control.
+•La diversidad de dispositivos programables que existen en el campo de la automatización y los diferentes sistemas de programación utilizados por los mismos.
+•La búsqueda y selección de documentación técnica necesaria para el estudio de los diferentes elementos que componen los sistemas de control y automatización.
+•Las capacidades de los controladores lógicos programables: como elementos de automatización y su uso a nivel industrial.
+La implementación de un sistema de control de pequeño porte que permita aplicar los conocimientos adquiridos en el curso.
+Metodología de Enseñanza:
+Se dictarán 6 horas semanales de clases teórico-prácticas durante ambas mitades del semestre. Adicionalmente cada alumno deberá dedicar un promedio de 6 horas semanales para el estudio y realización de ejercicios prácticos.
+En la primera mitad del semestre se dictarán los contenidos conceptuales planteados en el
+temario. En la segunda mitad del semestre se harán visitas a establecimientos industriales con el objeto de observar procesos productivos y sistemas de automatización, las mismas serán de carácter obligatorio. Simultáneamente se irán incorporando los elementos necesarios para la implementación de un proyecto de automatización. El mismo será a instancia de los alumnos con la aprobación previa del docente.
+Temario:
+1-Introducción a los sistemas de control
+Conceptos y terminología básicos:
+breve historia y necesidad de los sistemas de control; diagramas de bloque y funciones de transferencia; control en lazo abierto y lazo cerrado (realimentación); diagramas de sistemas de control, sistemas lineales y no lineales; cambios en la carga. •
+Tipos de control:
+control analógico y digital; sistemas reguladores; control de procesos; servomecanismos; control secuencial; control numérico; robótica; evolución de los sistemas de control, ejemplos de sistemas de control.
+Concepto de autómatas finitos, transición de estados discretos.
+Mención de modelado de sistemas físicos:
+sistemas mecánicos, neumáticos, hidráulicos y eléctricos; transformada de Laplace y sistemas de transferencia: relaciones de entrada-salida, transformada de Laplace; propiedades de la transformada; función de transferencia; aplicaciones.
+2-Sensores y medidas
+Características de los instrumentos de medida:
+características operativas y dinámicas; linealidad.
+Acondicionamiento de señales:
+digitalización de señales analógicas, muestreo y cuantización; Teorema de Shannon-Nyquist; convertidores A/Ei y D/A.
+•Sensores:
+sensores de temperatura, posición, velocidad, aceleración, fuerza, flujo, nivel, presión.
+3-Actuadores
+•Motores eléctricos:
+conceptos básicos, motores de corriente alterna, motores de corriente continua motores paso a paso.
+•Neumática:
+nociones de neumática, pistones de accionamiento neumático.
+•Hidráulica:
+nociones de hidráulica, elementos de un circuito hidráulico.
+•Actuadores genéricos:
+llaves mecánicas y eléctricas; válvulas de control.
+4-Control de procesos
+•Control de procesos discretos:
+control secuencial activado por tiempo; control secuencial activado por eventos.
+•Control de procesos continuos:
+modos de control, nociones de! control avanzado.
+5-Controladores lógicos programables
+•Dispositivos de entrada-salida:
+dispositivos de entrada; dispositivos de salida; ejemplos de aplicaciones; problemas.
+•Procesamiento  de entradas y salidas:
+unidades de entrada  y salida;  acondicionamiento de señales; conexiones remotas, redes; unidades de procesamiento; direcciones I/O; problemas.
+•Programación escalera y bloque funcional:
+diagramas escalera; funciones lógicas;
+latching; salidas múltiples; bloques de función; ejemplos de programas; problemas.
+•Relés internos:
+tipos de relés, relés con respaldo de batería, ejemplos de programación de relés.
+•Saltos y llamadas:
+saltos; subrutinas; ejemplos; problemas.
+•Temporizadores:
+tipos de temporizadores; temporizadores programables; temporizadores; ejemplos de programación, problemas.
+Contadores:
+formas de contar; contadores ascendentes y descendentes; programación de contadores; problemas.
+•Registros de corrimiento:
+programación; aplicaciones; problemas.
+•Manejo de datos: registros y bits; funciones aritméticas; control de lazo cerrado.
+Bibliografía:
+Sitios web de fabricantes.
+Previaturas:
+Examen aprobado de Arquitectura de Computadoras, Sistemas Operativos y Redes de Computadoras. Curso de Administración de Infraestructuras.
+Formas de Evaluación:
+El docente se basara en los siguientes elementos para evaluar el rendimiento de los estudiantes:
+Calidad del trabajo entregado, realizado en equipo, según los siguientes criterios
+Entrega en fecha
+Cumplimiento de los requerimientos funcionales obligatorios
+Irriplementación de funcionalidades opcionales
+Incorporación y evaluación de nuevas tecnologías
+Asistencia, actitud y participación en clase
+Presentación oral del trabajo realizado
+Report abuse
+Page details
+Page updated
+Report abuse

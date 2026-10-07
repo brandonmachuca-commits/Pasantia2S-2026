@@ -1,0 +1,11 @@
+PERFIL DE EGRESO — TECNÓLOGO EN INFORMÁTICA
+
+Síntesis en texto plano del sitio institucional TIP. La página describe que la formación combina fundamentos teóricos de Computación con práctica y profundización en una subárea. Incluye el uso de tecnologías actualizadas y la experiencia de desarrollar una solución informática para un problema real, preferentemente mediante un proyecto o pasantía en una empresa.
+
+Al egresar, se espera que la persona pueda:
+- Desarrollar sistemas informáticos de pequeño y mediano porte e integrarse a equipos que trabajen en proyectos de mayor escala.
+- Construir, probar, documentar y evaluar soluciones informáticas, incluso integrando diferentes tecnologías.
+- Comunicar soluciones a personas del área informática y a profesionales de otras áreas o al público general.
+- Trabajar en equipo en las distintas etapas de su actividad profesional.
+
+Fuente institucional: https://sites.google.com/utec.edu.uy/tecnoinf/perfiles?authuser=0

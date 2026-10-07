@@ -1,0 +1,77 @@
+INFORMACIÓN GENERAL — TECNÓLOGO EN INFORMÁTICA
+
+Vigencia y prioridad de las reglas
+Este archivo reúne información de documentos institucionales de distintas fechas y una regla de aprobación confirmada por el responsable del prototipo el 2 de octubre de 2026. La regla de aprobación de la sección 1 es la referencia que debe usarse para responder en este prototipo sobre las materias que cumplen su alcance. Los documentos históricos de las secciones siguientes no deben reemplazar ni contradecir esa regla. La regla fue aportada para el asistente; este archivo no la presenta como una verificación independiente de la normativa institucional vigente.
+
+1. Regla de aprobación informada para materias obligatorias
+Alcance: materias obligatorias de primer, segundo, tercer y cuarto semestre que no sean talleres y que se rijan por dos parciales y un examen final. Esta regla NO se debe aplicar automáticamente a Programación de Aplicaciones ni a Ingeniería en Software. Para esas dos materias, consultar la información específica de cursos. Tampoco extrapolar esta regla a materias opcionales, talleres o materias de otros semestres si no hay información específica.
+
+Parciales:
+- Hay dos parciales.
+- Los dos parciales suman un máximo conjunto de 100 puntos en total. No son 100 puntos cada uno.
+- Puntaje total de 60 a 100: exonera la materia; no necesita rendir examen final.
+- Puntaje total de 25 a 59: obtiene derecho a rendir examen final. No exonera la materia todavía.
+- Puntaje total de 0 a 24: reprueba la cursada, debe recursar y no obtiene derecho a examen.
+
+Examen final:
+- El examen final es una prueba independiente con un máximo de 100 puntos.
+- Puntaje de 60 a 100: aprueba el examen final.
+- Puntaje de 0 a 59: no aprueba el examen final.
+- Esta regla solo establece aprobado/reprobado. No establece una nota numérica para cada puntaje del examen.
+- No confundir “exonerar la materia” mediante el total de los dos parciales con “aprobar el examen final”. Si la persona pregunta si 60 puntos en el examen “exoneran”, explicar que, según la regla informada, 60 o más aprueban el examen; la exoneración de la materia se obtiene con 60 o más en el total de ambos parciales.
+- La regla no especifica fechas de exámenes, períodos, recuperatorios, distribución de puntos entre los dos parciales ni reglas particulares por asignatura.
+
+Ejemplos para interpretar la regla:
+- 78 puntos sumando los dos parciales: exonera la materia, si esta está dentro del alcance de la regla.
+- 78 puntos en el examen final: aprueba el examen. Esta información por sí sola no permite asignar una nota numérica.
+- 24 puntos sumando los dos parciales: reprueba la cursada y no tiene derecho a examen.
+- 25 puntos sumando los dos parciales: tiene derecho a rendir examen.
+- 59 puntos sumando los dos parciales: tiene derecho a rendir examen.
+- 60 puntos sumando los dos parciales: exonera la materia.
+- 59 puntos en el examen final: no aprueba el examen.
+- 60 puntos en el examen final: aprueba el examen.
+
+Al responder sobre puntajes, identificar primero si la consulta es sobre la suma de los dos parciales o sobre el examen final. Indicar el resultado y el alcance de la regla. No deducir cuándo es el examen a partir de fechas de parciales.
+
+2. La carrera y las instituciones
+La carrera de Tecnólogo en Informática se desarrolló mediante cooperación entre instituciones públicas de educación terciaria. Los acuerdos incluidos describen la participación de Udelar, UTU/CETP-ANEP y, en documentos posteriores, UTEC. Los acuerdos distribuyen tareas académicas y administrativas, prevén coordinación entre instituciones y sedes, y procuran continuidad de estudios y colaboración entre las ofertas terciarias.
+
+El acuerdo específico de 2006 presenta la carrera como una formación terciaria conjunta y menciona trayectos diferenciados en el primer semestre según la formación previa. Describe la posibilidad de continuar estudios en Facultad de Ingeniería y en especializaciones de UTU. Es un antecedente histórico.
+
+El documento de formalización fechado en diciembre de 2017 y el acuerdo específico firmado en febrero de 2018 documentan una etapa de coordinación entre UTEC, UTU/ANEP y Udelar. El acuerdo de 2018 propone una Comisión Nacional de Carrera para coordinar lineamientos académicos y seguimiento en las distintas sedes. También describe objetivos de ampliar la cobertura y facilitar la continuidad educativa. Indica que desde marzo de 2018 la titulación se otorgaría conjuntamente, al cumplir los requisitos del plan de estudios. Estos documentos describen el arreglo institucional de ese período y no confirman por sí solos cómo se gestiona hoy.
+
+3. Datos del plan de estudios incluido
+El plan de estudios compartido describe una carrera de tres años lectivos, organizados en seis semestres, con aproximadamente 2.400 horas presenciales y 252 créditos totales. Define un crédito como 15 horas de dedicación del estudiante, incluyendo actividades presenciales y trabajo personal.
+
+Las áreas formativas que enumera son Matemática; Programación; Arquitectura, Sistemas Operativos y Redes de Computadoras; Bases de Datos y Sistemas de Información; Desarrollo de Software; Ciencias Humanas y Sociales; y Proyecto/Pasantía. El documento describe recorridos diferentes en el primer semestre según el bachillerato de ingreso.
+
+El plan señala que la evaluación puede combinar aprobación de curso, examen final, parciales u otras formas definidas para cada asignatura y aprobadas por la Comisión de Carrera. Los laboratorios y el trabajo práctico forman parte de la evaluación de las asignaturas correspondientes. Para información de materias, previaturas y créditos, consultar también los documentos específicos de la carpeta cursos.
+
+4. Antecedentes históricos y escalas sin vigencia confirmada
+Una resolución del Consejo de la Facultad de Ingeniería fechada el 28 de mayo de 2009 describe criterios históricos para la carrera:
+- Según el puntaje y el programa de cada asignatura, el estudiante podía exonerar el curso, obtener derecho a examen o reprobar.
+- La exoneración aprobaba la asignatura. El derecho a examen permitía presentarse a tres períodos; si no aprobaba, debía volver a cursar. Reprobar también implicaba recursar.
+- El documento establecía un mínimo de 80% de asistencia para exonerar o ganar derecho a examen.
+- Indicaba un máximo de dos cursadas por asignatura y un mecanismo de lista de espera para algunos casos, con excepciones que podía evaluar la Comisión de Carrera.
+
+Estos criterios son de 2009 y no deben usarse para contradecir la regla de aprobación informada en la sección 1. No asumir que siguen vigentes fuera del alcance descrito en esa sección. Confirmar con la institución antes de responder sobre asistencia, recursado, períodos de examen o calidad de libre.
+
+Una tabla sin fecha ni identificación visible de asignatura titulada “Puntajes Parciales/Exámenes” contiene rangos de nota. Como no se conoce su vigencia ni a qué asignaturas corresponde, NO usar sus notas numéricas como regla actual ni para asignar una nota de examen. La sección 1 solo permite responder aprobado/reprobado y exoneración/derecho a examen según el puntaje y tipo de evaluación.
+
+Una hoja sin fecha sobre asignaturas “libres” agrega listas por condición de aprobación previa. Para algunas asignaturas, dice que se podía quedar libre tras cursar y reprobar dos veces. Para otras, indica que la condición se aplicaba tras dos cursadas solo si se había aprobado el curso alguna vez; de lo contrario, el estudiante quedaba en lista de espera. La hoja también advierte que quedar libre no equivale a tener el curso aprobado y que pueden existir previaturas. Es información sin fecha visible: validar la regla actual antes de usarla.
+
+5. Reválidas hacia Ingeniería en Computación
+Una propuesta de la Comisión de Carrera de Ingeniería en Computación, fechada en diciembre de 2010, analiza posibles créditos a reconocer por estudios del Tecnólogo en Informática. Propone hasta 159 créditos en distintas áreas, pero aclara que el reconocimiento no sería automático: la comisión debía revisar los programas y resolver cada solicitud, especialmente para opcionales de Matemática y tecnológicas. Es una propuesta histórica, no una garantía de reválida actual.
+
+6. Material de formación que corresponde a cursos
+El PDF “Tecnólogo Informático de Paysandú” es un compendio de 141 páginas de capacitación docente en modalidad b-learning. Incluye material de áreas y cursos informáticos, no un calendario ni una guía administrativa general. Corresponde a Documentos/cursos o debe excluirse si no se usará como fuente del agente cursos.
+
+Fuentes institucionales proporcionadas
+- Plan de Estudios: https://drive.google.com/file/d/1Ewn7WswAQrHHTAwibRmREeMxwZxIB3qQ/view
+- Acuerdo específico de 2006: https://drive.google.com/file/d/1G3hFwTqb6JxGuWk1BcLMOzcysHHWTVgg/view
+- Formalización de acuerdos (2017): https://drive.google.com/file/d/1m9AxlcE_8SypxePXSJLVO6-pkbUJJhOI/view
+- Acuerdo específico de cooperación (2018): https://drive.google.com/file/d/1LDG0gI5qlE8nluxYrUVlnXfesevCJxTr/view
+- Reglamento de cursos y exámenes (resolución de 2009): https://drive.google.com/file/d/1lRSz6uiQ9NKA0xMVQ7TQyzfggtcCsU8W/view
+- Propuesta de reválidas (2010): https://drive.google.com/file/d/1NHLUKQAGoLHlnwnZPtiEVOREDiR2B4SN/view
+- Asignaturas con condición de libre (sin fecha visible): https://drive.google.com/file/d/1bkLqdYrRxJxfEb8UYc1V20VWeSbSD7L6/view
+- Compendio de capacitación Tecnólogo Informático de Paysandú: https://drive.google.com/file/d/1bMW_QQX2YglAP1c6SJciZuEIzu2tBJsc/view

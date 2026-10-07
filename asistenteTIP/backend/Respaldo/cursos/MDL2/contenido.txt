@@ -1,0 +1,60 @@
+TIP - Matemática Discreta y Lógica 2
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Matemática Discreta y Lógica 2
+Docente:
+Fernando Gerfauo
+fernando.gerfauo@utec.edu.uy
+Materiales
+Materia
+Matemática
+Créditos
+Objetivo de la Asignatura
+Desarrollar en el estudiante la capacidad de expresar sus ideas en forma precisa y sin ambigüedades, fomentando la rigurosidad y la formalidad en sus razonamientos y demostraciones.
+Proveer al estudiante de conocimientos teóricos, prácticos y aplicados sobre:
+Lógica de predicados
+Conceptos básicos de la Teoría de Grafos
+Metodología de enseñanza
+Se dictarán clases teóricas destinadas a la presentación formal de los temas, y prácticas destinadas al ejercicio necesario para la incorporación de los contenidos, as� como a las aplicaciones prácticas en el campo de la computación.
+Se ofrecerán a los estudiantes resúmenes teóricos y repartidos con ejercicios prácticos, los cuales no se podrán considerar como sustitutivos de la bibliógrafa indicada.
+Se dictarán 1,5 horas semanales de exposiciones teóricas y 1,5 horas semanales de clases prácticas.  Asimismo, cada alumno deber� dedicar un promedio de 3 horas semanales de estudio domiciliario.
+Temario
+Lógica de predicados
+Cuantificadores
+Estructuras
+Semántica básica
+Propiedades básicas de la Lógica de Predicados
+Conceptos básicos de la Teoría de Grafos
+Definiciones
+Subgrafo, complementos, isomorfismo
+Árboles
+Grado de un vértice, recorrido y circuitos Eulerianos
+Caminos y ciclos Hamiltonianos
+Bibliografía
+Logic and Structure. Dirk van Dalen. Ed. Springer-Verlag. ISBN: 3-540-57839-0 (2a. edición), 3-540-12831-X (1a. edición).
+Matemáticas Discreta y Combinatoria. Ralph P. Grimaldi. Ed. Addison Wesley
+U otros, similares o equivalentes, que se indiquen en el curso
+Previaturas
+Curso de Matemática Discreta y Lógica 1
+Formas de evaluación
+Los estudiantes serán evaluados mediante dos parciales. El primero de ellos se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en los parciales surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen, hasta que el curso sea dictado nuevamente.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La
+exoneración
+del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La
+suficiencia
+se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no llegue a 25 puntos obtenidos entre ambos parciales deberá
+recursar
+la asignatura.
+Report abuse
+Page details
+Page updated
+Report abuse

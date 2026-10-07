@@ -1,0 +1,84 @@
+TIP - Taller de Sistemas de Información Java EE
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Taller de Sistemas de Información Java EE
+Docente:
+Nicolas Mannise
+nicolas.mannise
+@utec.edu.uy
+Nombre de la Asignatura:
+Taller de Sistemas de Información Java EE
+Materia:
+Programación
+Créditos:
+Objetivo de la Asignatura:
+El objetivo principal de la asignatura es formar al estudiante en el desarrollo de Sistemas Empresariales de porte mediano a grande en la plataforma Java EE, poniendo foco en actividades de diseño de arquitectura y programación.
+Los objetivos de la asignatura son:
+Introducir al estudiante en el diseño y desarrollo de sistemas de información en la plataforma Java EE
+Entrenar en el estudiante las capacidades de autoestudio de tecnologías, y las habilidades de resolución de problemas técnicos
+Fomentar en el estudiante habilidades de trabajo en equipo, y la colaboración entre grupos de trabajo
+Entrenar las capacidades de comunicación y presentación oral del trabajo realizado
+La asignatura se focaliza  en los siguientes aspectos:
+Presentar la problemática actual de los Sistemas Empresariales así como su evolución histórica.
+Presentar diferentes tipos de arquitecturas de Sistemas Empresariales.
+Introducir la plataforma Java EE (Enterprise Edition) y las tecnologías que conforman ésta.
+Construcción de un Sistema Empresarial de porte mediano, en donde se puedan plasmar los conocimientos adquiridos durante el trayecto del curso.
+Metodología de enseñanza:
+La materia gira en torno a un proyecto propuesto por el docente para ser desarrollado en equipos de aproximadamente 4 estudiantes. Se dictarán 6 horas semanales de clases teórico-prácticas durante la primera mitad del semestre para dictar los contenidos conceptuales planteados en el temario. Adicionalmente cada alumno deberá dedicar un promedio de 6 horas semanales para el estudio y realización de ejercicios prácticos.
+En la segunda mitad del semestre, el estudiante deberá dedicar un promedio de 12 horas semanales para la realización del laboratorio. En este periodo los grupos de trabajo mantendrán clases de consulta con el docente en el horario de clase.
+Temario:
+1.      Objetivos generales del curso
+2.      Introducción a los Sistemas Empresariales y su evolución histórica.
+3.      Introducción a la Arquitectura Java EE 5.
+o         Contenedores, Clientes, Servidores de Aplicaciones.
+4.      Tecnologías para construcción de Sistemas Empresariales sobre la plataforma Java EE 5
+Java Server Faces
+(Modelo de Aplicación Web, Componentes, Navegabilidad, Implementaciones).
+Enterprise Java Beans 3.0
+(Implementación de componentes de negocio, Session Beans, Entity Beans, Message Driven Beans).
+Java Persistente API
+(Implementación de modelos de dominio)
+5.      Consideraciones generales en el desarrollo de Sistemas Empresariales
+o         Reutilización de recursos, Logging, Seguridad, Clustering y Balanceo de Carga.
+Bibliografía
+Enterprise JavaBeans 3.0 (5th Edition)
+· Publisher: O'Reilly Media, Inc.; 5 edition
+· ISBN-13: 978-0596009786
+Mastering in Enterprise JavaBeans 3.0
+· Publisher: Wiley Publishing, Inc.
+· ISBN 13: 978-0471785415
+Java Server Faces in Action
+· Publisher: Manning Publications Co.
+· ISBN: 1932394125
+Pro EJB 3 Java Persistence API
+· Publisher: Apress.
+· ISBN 13: 978-1590596456
+Java EE APIs & Docs
+· url:
+http://java.sun.com/javaee/reference/
+· url:
+http://java.sun.com/javaee/5/docs/api/
+· url:
+http://java.sun.com/javaee/5/docs/tutorial/doc/
+Java EE Technologies at a Glance
+· url:
+http://java.sun.com/javaee/technologies/index.jsp
+Previaturas
+Curso de Programación de Aplicaciones, Base de Datos 1 y Base de Datos 2
+Anexo:
+Formas de evaluación
+El docente se basará en los siguientes elementos para evaluar el rendimiento de los estudiantes:
+·         Calidad del trabajo entregado, realizado en equipo, según los siguientes criterios
+o        Entrega en fecha
+o        Cumplimiento de los requerimientos funcionales obligatorios
+o        Implementación de funcionalidades opcionales
+o        Incorporación y evaluación de nuevas tecnologías
+·         Asistencia, actitud y participación en clase
+·         Presentación oral del trabajo realizado
+En base a esta evaluación el estudiante podrá aprobar completamente el curso o reprobarlo.
+Report abuse
+Page details
+Page updated
+Report abuse

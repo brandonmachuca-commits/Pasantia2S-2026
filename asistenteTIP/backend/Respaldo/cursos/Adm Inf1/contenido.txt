@@ -1,0 +1,170 @@
+TIP - Administración de Infraestructuras
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Administración de Infraestructuras
+Docente:
+Jesús Guibert
+jesus.guibert@utec.edu.uy
+Materiales
+Materia
+Arquitectura, Sistemas Operativos y Redes de Computadoras.
+Créditos:
+Objetivo de la Asignatura
+Conocer los distintos tipos de servicios que pueden estar presentes en un Centro de Cómputos, su instalación, configuración, interacciones y sus mejores prácticas de administración.
+Metodología de enseñanza
+Se dictarán 4 horas de clase semanales, destinadas a la presentación de aspectos teóricos, realización de ejercicios prácticos y trabajos de laboratorio. Además cada alumno deberá dedicar un promedio de 4 horas semanales de trabajo domiciliario.
+Temario
+Primera Parte
+: Acercamiento teórico y adquisición de vocabulario.
+Durante la primera parte del curso, se plantearán los conceptos teóricos básicos necesarios para la comprensión.
+Servicios de archivos e impresión
+Distintos protocolos (NFS, SMB, LPD, IPP, etc.), sus características principales y escenarios de aplicación.
+Servidores HTTP
+El protocolo HTTP, características principales.
+Funciones del servidor HTTP.
+¿Cómo funciona el cliente HTTP?
+Servicios de Correo electrónico
+Protocolos SMTP, POP, IMAP. Características generales de cada protocolo y de cada servicio.
+Webmails.
+Servicios de Directorio
+Características de cada servicio (DNS, Active Directory, LDAP, etc.).
+Escenarios de uso.
+Herramientas de colaboración
+Motivación.
+Características generales.
+Distintos tipos de Servicios.
+Respaldos
+Motivación
+¿Qué respaldar?
+¿Cuándo respaldar?
+¿Cómo respaldar?
+Almacenamiento de respaldos
+Verificación de respaldos
+Monitoreo de respaldos
+Restauración de respaldos
+Hardware para respaldos
+Segunda parte
+: Trabajos de Laboratorio.
+Una vez obtenidos los conceptos de la primera parte, se realizarán prácticas guiadas por el docente para profundizar los conocimientos. Para los trabajos de laboratorio, el docente escogerá una plataforma (Windows o Linux siempre que sea posible) donde realizar las prácticas.
+Sistema Operativo Base.
+Instalación
+Configuración
+Administración de usuarios y grupos
+Aspectos básicos de seguridad
+Monitoreo de Rendimiento
+Diagnóstico y recuperación ante fallas
+Políticas de actualización (parches)
+Distintos roles de un servidor
+Servidores HTTP.
+Función de un servidor HTTP.
+Protocolo HTTP.
+Instalación.
+Configuración.
+Funcionamiento de los clientes HTTP.
+Sitios Virtuales
+Autenticación
+Revisión de archivos de logs.
+Indicadores de Performance.
+Buenas prácticas de Administración.
+Servicios de Correo Electrónico.
+Componentes de una solución de Correo Electrónico.
+Principales protocolos de Correo Electrónico.
+Instalación de los servidores asociados.
+Configuración y administración general.
+Manejos de colas.
+Correo Electrónico y DNS.
+Relay de Correo Electrónico.
+Manejo de listas de correo.
+Bloqueo de correo no solicitado.
+Revisión de archivos de logs.
+Buenas prácticas de administración.
+Servicios de Directorio.
+DNS
+¿Cómo funciona DNS?
+BIND.
+Configurando BIND.
+Configuración de clientes.
+Mantenimiento de BIND.
+Correo Elecrónico y DNS.
+Herramientas de monitoreo y diagnóstico (dig, nslookup).
+Buenas prácticas de administración.
+LDAP
+¿Qué es LDAP?
+Visión general.
+Definición de esquemas LDAP.
+Interoperabilidad LDAP.
+Herramientas de monitoreo y diagnóstico.
+Buenas prácticas de administración.
+Active Directory
+Fundamentos de Active Directory
+Esquema de Active Directory
+Topología de Sitios y Replicación.
+Active Directory y DNS.
+Group Policies.
+Buenas prácticas de administración.
+Herramientas de colaboración
+Administración de documentos.
+Servicios de Correo Electrónico.
+Servicios de Calendario.
+Administración de contenido Web.
+Administración de flujos de trabajo.
+Respaldos
+Herramientas nativas de las distintas plataformas (respaldo y restauración)
+Linux (dd, tar, cpio, etc)
+Windows (Ntbackup)
+Herramientas Open Source (Amanda)
+Ventajas frente a las herramientas nativas.
+Arquitectura de la solución.
+Instalación del servidor.
+Configuración.
+Instalación de clientes (Windows, Linux).
+Respaldos.
+Recuperación.
+Buenas prácticas de administración.
+Bibliografía
+Apache: The Definitive Guide, Third Edition Laurie, Peter Laurie O'Reilly Media, Inc. ISBN 10: 0-596-00203-3 | ISBN 13: 9780596002039
+Microsoft IIS 6.0 Administrator's Pocket Consultant Microsoft Press ISBN-10: 0735615608 | ISBN-13: 978-0735615601
+Internet Information Services (IIS) 6 Resource Kit Microsoft Press ISBN-10: 0735614202 | ISBN-13: 978-0735614208
+Postfix: The Definitive Guide Kyle Dent O'Reilly Media, Inc. ISBN-10: 0596002122 | ISBN-13: 978-0596002121
+Active Directory for Microsoft Windows Server 2003 Technical Reference Microsoft Press ISBN-10: 0735615772 | ISBN-13: 978-0735615779
+Active Directory: Designing, Deploying, and Running Active Directory Brian Desmond, Joe Richards, Robbie Allen, Alistair Lowe-Norris O'Reilly Media ISBN-10: 059652059X | ISBN-13: 978-0596520595
+DNS and BIND (5th Edition) Cricket Liu, Paul Albitz O'Reilly Media, Inc. ISBN-10: 0596100574 | ISBN-13: 978-0596100575
+LDAP System Administration Gerald Carter O'Reilly Media, Inc. ISBN-10: 1565924916 | ISBN-13: 978-1565924918
+Alfresco Enterprise Content Management Implementation Munwar Shariff Packt Publishing ISBN-10: 1904811116 | ISBN-13: 978-1904811114
+Backup & Recovery Inexpensive Backup Solutions for Open Systems W. Curtis Preston O'Reilly Media, Inc. ISBN 10: 0-596-10246-1 | ISBN 13: 9780596102463
+Previaturas
+Sistemas Operativos, curso de Redes de Computadoras.
+Anexo 1: Formas de evaluación
+Los estudiantes serán evaluados mediante entregas de carpetas e informes correspondientes a los trabajos de laboratorio y a través de la realización de dos parciales. Laboratorio: Los trabajos propuestos serán obligatorios. No se les asignará puntaje, solamente se evaluará si se aprueban o no. Parciales: El primero se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en las instancias de evaluación surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos. La exoneración del examen final se logra aprobando el laboratorio y acumulando como mínimo 60 puntos entre los dos parciales. La suficiencia se logra aprobando el laboratorio y acumulando como mínimo 25 puntos entre ambos parciales. Quien no apruebe el laboratorio o no obtenga 25 puntos entre ambos parciales deberá recursar la asignatura.
+Anexo 2: Propuesta de trabajos de investigación y laboratorio
+Trabajo de investigación 1
+Dada una plataforma (Windows o Linux), realizar una instalación completa, revisando los aspectos de seguridad y establecer una política de aplicación de parches críticos del sistema.
+Documentar los pasos seguidos y justificar las decisiones tomadas.
+Para la plataforma elegida, investigar las distintas opciones para la administración de usuarios y grupos (mediante interfaces gráficas o línea de comando).
+Proponer una serie de indicadores de rendimiento del Sistema Operativo y la manera en que se pueden recolectar dichos datos para su análisis posterior.
+Trabajo de investigación 2
+Instalación y configuración de un servidor web (Apache o IIS).
+Configuración de directorios protegidos por contraseña.
+Captura de tráfico de red entre el servidor y un cliente para su posterior análisis.
+Revisión de los logs del servidor y su correlación con el tráfico capturado. Investigar herramientas que nos permitan análisis estadísticos de los logs.
+Proponer una serie de indicadores de rendimiento básicos del servicio web y la manera de recolección.
+Trabajo de investigación 3
+Instalar y configurar un servidor SMTP, POP3 e IMAP para manejar el correo electrónico de un dominio. Estudiar aspectos como alta/baja de usuarios, alias de correo, listas de distribución, etc. Una vez instalado y configurado lo anterior, instalar y configurar un servicio de WebMail (como por ejemplo IMP de la suite Horde o SquirrellMail).
+Trabajo de investigación 4
+Instalación y configuración de un servicio DNS en un entrono Linux para el servidor central de una empresa con conexión a Internet donde a su vez, cada área de la empresa dispone de su propio servidor DNS (Recursos Humanos, Finanzas, Marketing, etc). Utilización de herramientas de consulta a servidores DNS (dig, nslookup, etc) para verificar el correcto funcionamiento.
+Trabajo de investigación 5
+Realizar un estudio a fondo de las posibilidades de las plataformas Alfresco, Zimbra u Horde de colaboración. Utilizando alguna de ellas, implementar un repositorio de documentos que pueda ser utilizado en distintas asignaturas de la carrera.
+Trabajo de investigación 6
+Investigar las herramientas nativas de las que se disponen en la plataforma Linux (tar, cpio, dd, dump, etc) y Windows (ntbackup) para realizar respaldos / restauraciones. Determinar cuáles son los escenarios de uso de cada herramienta. Utilizarlas para realizar respaldos / restauraciones de distintos tipos (archivos, carpetas, filesystems).
+Investigar sobre la herramienta de respaldos Amanda. Instalar un servidor de respaldos utilizando para respaldar un cliente sobre plataforma Linux y un cliente sobre plataforma Windows. Realizar una restauración en cada uno de los clientes.
+Report abuse
+Page details
+Page updated
+Report abuse

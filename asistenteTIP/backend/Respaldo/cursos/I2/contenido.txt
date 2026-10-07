@@ -1,0 +1,130 @@
+TIP - Inglés Técnico 2
+Search this site
+Embedded Files
+Skip to main content
+Skip to navigation
+Inglés Técnico 2
+Docente:
+Gonzalo Deleon
+gonzalo.deleon@utec.edu.uy
+Materia
+Ciencias Humanas y Sociales
+Créditos:
+Objetivo de la Asignatura
+Esta materia permite al alumno tener cierta fluidez oral del idioma inglés, en particular, le permitirá.
+Adquirir habilidad en la interpretación de diálogos.
+Adquirir un nivel de comprensión oral que resulte aplicable en ambientes de trabajo orientados a la Informática.
+Manejar terminología en el diálogo elemental sin ayuda del diccionario.
+Reconocer estructuras gramaticales de la lengua inglesa.
+Metodología de enseñanza
+Se dictarón  2  horas  semanales  de  clase,  incluyendo  presentaciones  teóricas  y  realización  de  trabajos  prácticos,  fundamentalmente  de  conversación.  Además,  cada  alumno  deberá  dedicar  un  promedio  de  2  horas  semanales  para  estudio  y  práctica  domiciliaria.
+Temario
+UNIDAD I: Introducción al mundo de los negocios.
+Presente simple (
+to be
+). Títulos y nombres. Direcciones, números de teléfonos.
+Presentarse:
+name, company, position
+It’s nice to meet you. My name’s John Smith
+Preguntas de tipo
+Wh: What’s his last name? Where is he from?
+Estrategias de conversación:
+Can you spell that? What’s the number again?
+UNIDAD II: Descripción de la Empresa.
+Presente simple: verbos regulares. Números: cientos y miles.
+Talking about company location, products, and global business:
+it’s a Uruguayan company. They make cell phones. How many employees does it have? What do you do?
+Estrategias de conversación:
+Can you repeat that? How do you spell it?
+UNIDAD III: Rutinas de oficina.
+Adverbios de frecuencia.
+Talking about business routines and frequency:
+We always have meetings on Thursdays. I sometimes go on trips
+Preguntas de frecuencia (
+How often…
+). Hora.
+Do you often work late? How often do you write business letters? I usually do. I hardly ever do.
+UNIDAD IV: Descripción de tareas en una empresa.
+Presente continuo.
+Talking about current actions and activities in the workplace:
+What is she doing? What are they doing? I’m writing the memo now. She’s coordinating the project. We’re building new plants. They’re talking to a client.
+UNIDAD V: Descripción de la historia de la compañía.
+Pasado simple: verbos regulares e irregulares. Fechas.
+Talking about recent business and company history:
+We opened a new office last year. They sold 5700 cell phones. What did the organization do in 1989? What happened from 1996 to 1998?
+Estrategias de conversación:
+Can you repeat that? How do you spell it? Did you say 813 or 830?
+UNIDAD VI: Organización de citas telefónicas.
+Distintas formas de pedir. Zonas horarias (mañana, tarde, etc).
+Making appointments. Leaving and taking messages:
+Can we meet on Tuesday? Could I speak to Mr. Lawson? May I have your name, please? Can you hold, please?
+UNIDAD VII: Ubicación de lugares y cosas.
+Preposiciones. Números ordinales (
+first, second, …
+).
+Asking for, describing, and confirming location of places and things:
+Where’s CPS company? It’s on the second floor. Where’s the wastebasket? It’s next to the desk.
+Estrategias de conversación - repetir:
+It’s on the third floor. The third floor?
+UNIDAD VIII: Llegar al lugar de una cita. Pedir directivas.
+Imperativos.
+Asking for and giving directions:
+How do I get there? Which way is it? Turn left. Go straight for two blocks.
+UNIDAD IX: Socializar.
+Preferencias:
+I’dlike… I’dprefer…
+Preguntas:
+How long….?
+Viajando: Dealing with airport procedures and hotel check-in:
+I’d like a single room. I’d prefer nonsmoking. How will you be paying? How long will you be staying?
+Invitar con algo:
+Would you like some tea? Would you like me to make the reservations? Can I get you something to drink? Cream or sugar?
+UNIDAD X: Comparar sitios y productos.
+Formas comparatives. Medidas: volumen, peso
+Comparing companies, jobs, and products:
+A has fewer applicants than B. I get a higher salary than I did before. C is more expensive than D. Our printer is faster than D.
+UNIDAD XI: Consejos laborales.
+Formas de necesidad y obligación.
+Giving advice about office projects and workplace needs:
+You need to tell everyone about it. You have to set deadlines. Why don’t you ask for some part-time help?
+Estrategias de conversación - desarrollo de una conversación:
+I agree… That’s right… Yes, and…
+UNIDAD XII: Lectura y discusión de documentos en clase.
+Lectura de documentos en clase (pronunciación).
+Discusión (trabajos en equipo o individuales).
+Comparación y comentarios.
+Bibliografía
+Diccionario bilingüe.
+Publicaciones varias en forma de libros, revistas, manuales, folletos, avisos publicitarios, diarios y documentos en idioma inglés sobre temas de la Informática.
+Previaturas
+No Tiene.
+Anexo 1: Formas de evaluación
+Los estudiantes serán evaluados mediante dos parciales, preferentemente orales.
+El primer parcial se realizará luego de la séptima semana de clases, y el segundo tendrá lugar luego de finalizado el curso.
+De los resultados obtenidos en las instancias de evaluación surgirán tres posibilidades:
+Exoneración del examen final: el estudiante aprueba totalmente el curso.
+Suficiencia en el curso: el estudiante está habilitado a rendir examen.
+Insuficiencia en el curso: el estudiante reprueba, debiendo inscribirse nuevamente en el curso.
+Sumando los resultados de los parciales se podrá obtener un máximo de 100 puntos.
+La exoneración del examen final se logra acumulando como mínimo 60 puntos entre los dos parciales.
+La suficiencia se logra acumulando como mínimo 25 puntos entre ambos parciales.
+Quien no obtenga 25 puntos entre ambos parciales deberá recursar la asignatura.
+Anexo 2: Artículos sugeridos para discusión en clase
+Se presenta una lista de artículos de Internet sugeridos para discusiones en clase
+Installing a Network Card
+Programming in C++
+What is Linux?
+USB
+Understanding and configuring user account control in Windows Vista
+RAID
+Fast Guide to RAM
+Backup Robot
+Firewall
+How to build your own PC
+Help Desk Basics Quiz
+Database Basics Quiz
+Linux Basics Quiz
+Report abuse
+Page details
+Page updated
+Report abuse

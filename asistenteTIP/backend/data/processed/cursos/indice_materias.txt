@@ -1,0 +1,47 @@
+================================================================================
+ÍNDICE DE CURSOS
+================================================================================
+
+Primer Semestre
+- Arquitectura del Computador
+- Inglés Técnico 1
+- Matemática
+- Matemática Discreta y Lógica 1
+- Principios de Programación
+
+Segundo Semestre
+- Bases de Datos 1
+- Inglés Técnico 2
+- Estructuras de Datos y Algoritmos
+- Matemática Discreta y Lógica 2
+- Sistemas Operativos
+
+Tercer Semestre
+- Bases de Datos 2
+- Comunicación Oral y Escrita
+- Contabilidad
+- Redes de Computadoras
+- Programación Avanzada
+
+Cuarto Semestre
+- Administración de Infraestructuras
+- Ingeniería de Software
+- Probabilidad y Estadística
+- Programación de Aplicaciones
+- Relaciones Personales y Laborales
+
+Quinto Semestre
+- Taller de Aplicaciones de Internet Ricas
+- Taller de Sistemas de Información Java EE
+- Administración de Infraestructuras 2
+- Pasantía Laboral
+- Taller de Desarrollo de Aplicaciones Web con PHP
+- Taller de Aplicaciones Para Dispositivos Móviles
+
+Sexto Semestre
+- Sistemas de Gestión de Contenidos
+- Taller de Sistemas de Información .NET
+- Introducción a los Sistemas de Control
+- Proyecto
+- Taller de Gestión de la Innovación en Tecnologías
+- Introducción al Desarrollo de Juegos

@@ -1,68 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asistente Virtual - Tecnólogo en Informática</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/x-icon" href="static/img/logo-utec.jpg">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <title>Consulta Académica · UTEC</title>
+  <link rel="stylesheet" href="styles.css?v=20261007">
+  <link rel="icon" type="image/x-icon" href="/static/img/logo-utec.jpg">
 </head>
-
 <body>
-  <div class="logo-container">
-    <img src="static/img/logo.png" alt="logo de UTEC" class="logo-utec">
-  </div>
-
-  <div id="canvas-wrap">
-
-    <div class="hologram-container inactive" id="hologram">
-
-      <div class="hologram-ring ring-1"></div>
-      <div class="hologram-ring ring-2"></div>
-
-      <div class="hologram-core"></div>
-
-      <div class="particles"></div>
-
-      <div class="sound-waves" id="sound-waves">
-        <span class="wave-bar"></span>
-        <span class="wave-bar"></span>
-        <span class="wave-bar"></span>
-        <span class="wave-bar"></span>
-        <span class="wave-bar"></span>
-        <span class="wave-bar"></span>
-        <span class="wave-bar"></span>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="UTEC, inicio">
+      <img src="/static/img/logo.png" alt="UTEC">
+      <span><strong>UTEC</strong><small>Universidad Tecnológica</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Consultas frecuentes">
+      <button class="nav-pill selected" data-question="¿En qué puedo ayudarte con la carrera?">⌂ <span>Consulta Académica</span></button>
+      <button data-question="¿Qué materias hay en la carrera?">Materias</button><i>•</i>
+      <button data-question="¿Cuáles son los horarios de clase?">Horarios</button><i>•</i>
+      <button data-question="¿Qué información general debo conocer?">Información General</button>
+    </nav>
+    <a class="admin-link" href="/admin">⚙ <span>Administrar</span></a>
+  </header>
+  <main class="app-shell">
+    <section class="chat-panel" aria-label="Conversación con el asistente">
+      <div class="intro-row">
+        <div class="status-indicator"><span></span><b id="status-bar">Sistema listo · Escribe o pulsa el micrófono</b></div>
+        <div id="transcript" aria-live="polite"></div>
       </div>
-
-    </div>
-
-    <div id="ui-panel">
-      <div id="status-bar">Sistema listo · Habla o escribe tu pregunta</div>
-      <div id="transcript" style="display: none;"></div>
-      <div id="chat-messages">
-        <div class="message assistant">
-          <div class="bubble">Hola, soy tu asistente virtual. Puedes hacerme preguntas sobre calendario, cursos,
-            horarios, parciales y presencialidades.</div>
-        </div>
+      <div id="chat-messages" class="chat-messages" aria-live="polite">
+        <article class="message assistant">
+          <div class="assistant-avatar"><img src="/static/img/logo-utec.jpg" alt=""></div>
+          <div class="bubble">Hola, soy tu asistente virtual. Puedo ayudarte con materias, horarios, parciales e información de la carrera.</div>
+        </article>
       </div>
-      <div id="controls">
-        <input type="text" id="text-input" placeholder="Escribe tu pregunta…">
-        <button id="mic-btn" title="Hablar con el asistente">
-          <span id="mic-icon">🎤</span>
-          <span id="mic-label">Hablar</span>
-        </button>
-        <button id="stop-btn" class="btn" onclick="stopResponse()" style="display:none;">⏹ Detener</button>
-        <button class="btn" onclick="sendText()">Enviar</button>
+    </section>
+    <aside class="voice-panel" aria-label="Control de voz">
+      <div class="hologram-container inactive" id="hologram">
+        <div class="hologram-ring ring-outer"></div><div class="hologram-ring ring-middle"></div>
+        <div class="hologram-core"><span aria-hidden="true">🎙</span></div>
+        <div class="sound-waves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </div>
-    </div>
-  </div>
-  <!-- MediaPipe Face Detection -->
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
-  <script src="app.js"></script>
-
+      <button id="mic-btn" class="mic-button" type="button" aria-pressed="false" title="Activar el micrófono">
+        <span id="mic-icon" aria-hidden="true">🎤</span><span id="mic-label">Hablar</span>
+      </button>
+      <p class="voice-hint" id="voice-hint">El micrófono solo se activa cuando lo pulsas.</p>
+    </aside>
+    <form id="composer" class="composer">
+      <label class="sr-only" for="text-input">Escribe tu pregunta</label>
+      <input id="text-input" type="text" autocomplete="off" placeholder="Escribe tu pregunta…">
+      <button id="stop-btn" class="icon-button stop-button" type="button" title="Detener respuesta" hidden>■</button>
+      <button class="send-button" type="submit" title="Enviar pregunta" aria-label="Enviar pregunta">➤</button>
+    </form>
+  </main>
+  <script src="app.js?v=20261007"></script>
 </body>
-
 </html>
