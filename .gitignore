@@ -10,3 +10,7 @@ __pycache__/
 *.py[cod]
 asistenteTIP/backend/prueba1directorio.py
 **/.env
+
+# Documentos de la facultad: los gestiona el panel de admin en el servidor
+asistenteTIP/backend/Documentos/*/*
+!asistenteTIP/backend/Documentos/*/.gitkeep
