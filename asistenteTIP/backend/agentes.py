@@ -47,6 +47,10 @@ def _limpiar_respuesta(texto: str) -> str:
         "",
         texto,
     )
+    # Red de seguridad: el modelo a veces cita "evidencia N" pese a la instrucción.
+    texto = re.sub(r"(?im)^\s*(?:[-*•]\s*)?\**\s*seg[uú]n\s+(?:la\s+|el\s+|las\s+|los\s+)?(?:evidencias?|tablas?|fuentes?)\s*\d*\s*:?\s*\**\s*:?\s*$", "", texto)
+    texto = re.sub(r"(?i)\s*\(\s*(?:seg[uú]n|de|en)\s+(?:la\s+|el\s+|las\s+|los\s+)?(?:primera\s+|segunda\s+|tercera\s+)?(?:evidencias?|tablas?|fuentes?)(?:\s+\d+)?(?:\s*(?:y|o|,)\s*(?:la\s+)?(?:evidencias?\s+)?\d+)*\s*\)", "", texto)
+    texto = re.sub(r"(?i),?\s*seg[uú]n\s+(?:la\s+|el\s+)?(?:evidencias?|tablas?|fuentes?)\s+\d+", "", texto)
     texto = re.sub(r"\n{3,}", "\n\n", texto)
     return texto.strip()
 
@@ -80,7 +84,8 @@ INTENT_RULES = (
     {
         "id": "docentes",
         "question": ("profesor", "profesora", "profe", "docente", "quien dicta",
-                     "quien da", "mail del docente", "correo del profesor"),
+                     "quien da", "dicta", "dictan", "quien lo da", "quien la da",
+                     "a cargo", "mail del docente", "correo del profesor"),
         "names": ("docente", "docentes", "profesor", "profesores", "catedra",
                   "catedras", "equipo docente"),
         "content": ("docente:", "dicta:", "profesor", "profesora", "catedra"),
@@ -152,7 +157,7 @@ def _endpoint() -> str:
     return OLLAMA_BASE_URL + "/api/generate"
 
 
-def _llamar_ollama(prompt: str, *, json_mode: bool = False):
+def _llamar_ollama(prompt: str, *, json_mode: bool = False, num_predict: int | None = None):
     etapa = "ROUTER" if json_mode else "SINTESIS"
     body = {
         "model": OLLAMA_MODEL,
@@ -160,7 +165,7 @@ def _llamar_ollama(prompt: str, *, json_mode: bool = False):
         "stream": False,
         "options": {
             "temperature": 0,
-            "num_predict": 220 if json_mode else max(250, int(os.getenv("OLLAMA_NUM_PREDICT", "400"))),
+            "num_predict": 220 if json_mode else (num_predict or max(250, int(os.getenv("OLLAMA_NUM_PREDICT", "400")))),
         },
     }
     if json_mode:
@@ -261,15 +266,27 @@ def _detectar_intenciones(pregunta: str) -> list[dict]:
 
 def _es_consulta_general_materias(pregunta: str) -> bool:
     q = _normalizar(pregunta)
+    # Pedidos de horarios, parciales o docentes se resuelven en sus propias carpetas.
+    if re.search(r"horario|parcial|examen|profesor|profe\b|docente|dicta|previatura|credito|programa de", q):
+        return False
     general = any(termino in q for termino in (
         "que materias hay", "que materias tiene", "todas las materias",
         "plan de estudios", "materias de la carrera", "materias hay en la carrera",
         "que se estudia", "materias por semestre", "lista de materias",
         "que asignaturas", "cuantas materias",
     ))
-    return general or (
-        "semestre" in q
-        and any(termino in q for termino in ("materia", "asignatura", "curso", "cuantas", "cantidad"))
+    # "carre\w*" tolera errores de tipeo como "carrear".
+    plural = re.search(r"\b(materias|asignaturas|cursos)\b", q)
+    contexto = re.search(
+        r"\b(carre\w*|plan|todas?|todo|lista|listado|semestres|cuantas|total|completo|completa|existen|transcurso)\b", q
+    )
+    return bool(
+        general
+        or (plural and contexto)
+        or (
+            "semestre" in q
+            and any(termino in q for termino in ("materia", "asignatura", "curso", "cuantas", "cantidad"))
+        )
     )
 
 
@@ -320,29 +337,61 @@ def _canonical_category(raw: str, categories: Mapping[str, object]) -> str | Non
     return None
 
 
+def _pregunta_amplia(pregunta: str) -> bool:
+    """Pedidos de un semestre completo o de todo un listado necesitan más fragmentos."""
+    q = _normalizar(pregunta)
+    return bool(re.search(r"\b(semestre|semestres|todos|todas|todo|completo|completa|toda la semana)\b", q))
+
+
+# Si no existe una carpeta propia para la intención, estas otras sí contienen la respuesta
+# (la leyenda "Materia – Docente" de horarios y el "Docente:" de cada programa).
+INTENT_FALLBACKS = {"docentes": ("horarios", "materias")}
+
+
 def _forced_routes(pregunta: str, categories: Mapping[str, object]) -> tuple[list[dict], list[str], bool]:
     intents = _detectar_intenciones(pregunta)
     selected: dict[str, dict] = {}
     unavailable: list[str] = []
+    amplia = _pregunta_amplia(pregunta)
+    rules_by_id = {rule["id"]: rule for rule in INTENT_RULES}
 
-    for rule in intents:
-        candidates = [
+    def candidates_for(rule: dict) -> list[tuple[int, str]]:
+        return [
             (score, str(category))
             for category, agent in categories.items()
             if (score := _category_match(str(category), agent, rule)) > 0
         ]
-        if not candidates:
-            unavailable.append(rule["id"])
-            continue
+
+    def select(rule: dict, candidates: list[tuple[int, str]]) -> None:
         best_score = max(score for score, _ in candidates)
         # Permite fusionar evidencia de dos carpetas que realmente describan
         # la misma categoría, pero evita enviar la pregunta a todos los agentes.
         for score, category in candidates:
             if score == best_score:
-                selected.setdefault(category, {
+                item = selected.setdefault(category, {
                     "categoria": category,
                     "consulta": pregunta[:300],
                 })
+                if amplia and rule["id"] in {"horarios", "parciales"}:
+                    item["top_k"] = 8
+
+    for rule in intents:
+        candidates = candidates_for(rule)
+        if candidates:
+            select(rule, candidates)
+        elif rule["id"] not in INTENT_FALLBACKS:
+            unavailable.append(rule["id"])
+        # Los docentes también salen de la leyenda de horarios y de los programas de cada materia.
+        if rule["id"] in INTENT_FALLBACKS:
+            found_fallback = False
+            for fallback_id in INTENT_FALLBACKS[rule["id"]]:
+                fallback_candidates = candidates_for(rules_by_id[fallback_id])
+                if fallback_candidates:
+                    select(rules_by_id[fallback_id], fallback_candidates)
+                    found_fallback = True
+            if not candidates and not found_fallback:
+                unavailable.append(rule["id"])
+
     if _es_consulta_general_materias(pregunta):
         categoria_cursos = next(
             (c for c in categories if _category_name(c) in {"cursos", "materias"}),
@@ -355,10 +404,7 @@ def _forced_routes(pregunta: str, categories: Mapping[str, object]) -> tuple[lis
                 "solo_raiz": True,
             }
 
-    return list(selected.values()), unavailable, bool(intents) or bool(_es_consulta_general_materias(pregunta))
-        
-
-    return list(selected.values()), unavailable, bool(intents)
+    return list(selected.values()), unavailable, bool(intents) or _es_consulta_general_materias(pregunta)
 
 
 def _parsear_consultas(texto: str, pregunta: str, categories: Mapping[str, object]) -> list[dict]:
@@ -481,6 +527,7 @@ def _buscar(
     agents: Mapping[str, object],
     consultas: list[dict],
     materia_aliases: list[str] | None = None,
+    materia_preferida: list[str] | None = None,
 ) -> list[dict]:
     if not consultas:
         return []
@@ -493,9 +540,10 @@ def _buscar(
         try:
             fragments = agent.search_with_source(
                 item.get("consulta") or "",
-                top_k=TOP_K,
+                top_k=item.get("top_k", TOP_K),
                 must_contain=materia_aliases,
                 solo_raiz=item.get("solo_raiz", False),
+                prefer=materia_preferida,
             )
         except Exception as error:
             print(f"[BUSQUEDA:{category}] {type(error).__name__}: {error}")
@@ -526,7 +574,7 @@ def _buscar(
     return [results[item["categoria"]] for item in consultas if item["categoria"] in results]
 
 
-def _evidencia(results: list[dict]) -> tuple[str, list[str]]:
+def _evidencia(results: list[dict], incluir_apoyos: bool = True) -> tuple[str, list[str]]:
     parts: list[str] = []
     sources: list[str] = []
     used = 0
@@ -536,7 +584,13 @@ def _evidencia(results: list[dict]) -> tuple[str, list[str]]:
             source = fragment.get("fuente") or result["categoria"]
             source = str(source)
             sources.append(source)
-            text = re.sub(r"\s+", " ", str(fragment.get("chunk", ""))).strip()
+            raw = str(fragment.get("chunk", ""))
+            if not incluir_apoyos:
+                # Los horarios de "Apoyo ..." no son clases; solo se envían si se preguntan.
+                raw = "\n".join(line for line in raw.splitlines() if not line.lstrip().lower().startswith("apoyo"))
+            text = re.sub(r"\s+", " ", raw).strip()
+            if not text:
+                continue
             block = f"[{result['categoria']} | {source} | evidencia {index}]\n{text[:1500]}"
             if used + len(block) > MAX_CONTEXT_CHARS:
                 break
@@ -556,6 +610,7 @@ def responder_stream(
     agentes: Mapping[str, object],
     materia_aliases: list[str] | None = None,
     historial: list[dict] | None = None,
+    materia_preferida: list[str] | None = None,
 ) -> Iterable[str]:
     if DEBUG_FLOW:
         print(f"[FLUJO:INICIO] pregunta={pregunta}", flush=True)
@@ -577,7 +632,7 @@ def responder_stream(
             item for item in consultas
             if _category_name(item.get("categoria", "")) not in {"cursos", "materias"}
         ]
-        results = _buscar(agentes, consultas_adicionales, materia_aliases)
+        results = _buscar(agentes, consultas_adicionales, materia_aliases, materia_preferida)
         results.insert(0, {
             "categoria": "cursos",
             "consulta": pregunta,
@@ -590,8 +645,8 @@ def responder_stream(
         })
         print(f"[CATALOGO:ESTATICO] archivo={ruta_indice} | secciones enviadas sin top_k", flush=True)
     else:
-        results = _buscar(agentes, consultas, materia_aliases)
-    evidence, sources = _evidencia(results)
+        results = _buscar(agentes, consultas, materia_aliases, materia_preferida)
+    evidence, sources = _evidencia(results, incluir_apoyos="apoyo" in _normalizar(pregunta))
     if DEBUG_FLOW:
         count_fragments = sum(len(item.get("fragmentos", [])) for item in results)
         print(
@@ -637,11 +692,14 @@ def responder_stream(
     Responde cada parte preguntada, con brevedad. Usa solamente la evidencia incluida abajo.
     {instruccion_indice}
     No copies bloques enteros ni inventes fechas, materias, docentes o reglas.
-    Si las fuentes muestran datos contradictorios, explica con precisión qué dice cada una.
+    Si dos fragmentos dicen lo mismo, menciona el dato una sola vez. Si se contradicen de verdad, explica con precisión qué dice cada uno.
     Si la evidencia no alcanza para una parte, dilo claramente y aun así responde las demás.
-    No confundas horarios de clase con fechas de parciales ni con fechas de exámenes.
+    No confundas horarios de clase con fechas de parciales ni con fechas de exámenes. Los "Apoyo ..." no son clases: menciónalos solo si te los piden.
     No supongas el mes o año si el documento no lo indica.
-    No uses encabezados repetidos. No menciones archivos, fuentes, citas ni referencias en la respuesta final.
+    Si piden un semestre o varias materias, responde una línea por materia, sin omitir ninguna que aparezca en la evidencia.
+    Si hay varios docentes para una materia, menciónalos a todos.
+    Si la evidencia no menciona lo que preguntan, dilo en una frase y no listes otros datos que no pidieron.
+    Nunca escribas "según la evidencia", "evidencia 1", "primera tabla", "fuente" ni nombres de archivos. No uses encabezados repetidos.
 
     {bloque_historial}
     Pregunta: {pregunta}
@@ -654,7 +712,7 @@ def responder_stream(
 
     response = None
     try:
-        response = _llamar_ollama(prompt)
+        response = _llamar_ollama(prompt, num_predict=900 if _pregunta_amplia(pregunta) else None)
         try:
             payload = response.json()
         except (ValueError, json.JSONDecodeError) as error:
@@ -684,10 +742,10 @@ def responder_stream(
         if response is not None:
             response.close()
 
-        answer = _limpiar_respuesta(answer)
-        if DEBUG_FLOW:
-            print(f"[RESPUESTA:WEB]\n{answer}", flush=True)
-        if error_router:
-            print("[ROUTER] Se usó clasificación de respaldo local.")
-        yield answer
+    answer = _limpiar_respuesta(answer)
+    if DEBUG_FLOW:
+        print(f"[RESPUESTA:WEB]\n{answer}", flush=True)
+    if error_router:
+        print("[ROUTER] Se usó clasificación de respaldo local.")
+    yield answer
 

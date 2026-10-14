@@ -157,16 +157,33 @@ class Agent:
                 document = Document(str(path))
                 content: list[tuple[str, Optional[int]]] = []
                 recent_heading = ""
+                pending: list[str] = []
+
+                def flush_pending() -> None:
+                    if pending:
+                        content.append(("\n".join(pending), None))
+                        pending.clear()
+
                 body = document.element.body
                 for element in body.iterchildren():
                     if element.tag.endswith("}p"):
                         paragraph = Paragraph(element, document).text.strip()
                         if paragraph:
-                            content.append((paragraph, None))
                             recent_heading = paragraph
+                            # Los párrafos cortos (leyendas, títulos) se agrupan en un
+                            # mismo fragmento para que no queden aislados.
+                            if len(paragraph) <= 160:
+                                pending.append(paragraph)
+                            else:
+                                flush_pending()
+                                content.append((paragraph, None))
                     elif element.tag.endswith("}tbl"):
+                        flush_pending()
                         table = Table(element, document)
-                        structured = self._format_schedule_table(table, recent_heading)
+                        structured = (
+                            self._format_schedule_table(table, recent_heading)
+                            or self._format_exam_table(table, recent_heading)
+                        )
                         if structured:
                             content.append((structured, None))
                         else:
@@ -175,6 +192,7 @@ class Agent:
                                 for row in table.rows
                             ]
                             content.append(("\n".join(rows), None))
+                flush_pending()
                 return content
             except Exception as error:
                 raise RuntimeError(f"No se pudo leer el DOCX: {error}") from error
@@ -263,14 +281,16 @@ class Agent:
         def format_time(minutes: int) -> str:
             return f"{minutes // 60:02d}:{minutes % 60:02d}"
 
-        lines = [f"Tabla de horarios; contexto: {context or 'sin título indicado'}." ]
+        # Una línea por actividad ("Arq: Miércoles 18:00–20:00; ..."), así cada
+        # materia queda completa y se puede recuperar sin mezclarla con otras.
         ordered_events = sorted(
             events.items(),
             key=lambda item: (day_order.get(item[0][0], 99), min(item[1][1]), item[1][0].casefold()),
         )
+        activities: dict[str, tuple[str, list[str]]] = {}
         for (day, _), (label, starts) in ordered_events:
-            intervals = []
             sorted_starts = sorted(starts)
+            intervals = []
             interval_start = previous = sorted_starts[0]
             for current in sorted_starts[1:]:
                 if current == previous + 60:
@@ -279,9 +299,85 @@ class Agent:
                 intervals.append((interval_start, previous + 60))
                 interval_start = previous = current
             intervals.append((interval_start, previous + 60))
+            slots = activities.setdefault(_normalizar(label), (label, []))[1]
             for start, end in intervals:
-                lines.append(f"{day.capitalize()} {format_time(start)}–{format_time(end)}: {label}.")
-        return "\n".join(lines)
+                slots.append(f"{day.capitalize()} {format_time(start)}–{format_time(end)}")
+
+        header = f"Horarios; contexto: {context or 'sin título indicado'}."
+        blocks: list[str] = []
+        current_lines: list[str] = []
+        size = len(header)
+        for label, slots in activities.values():
+            line = f"{label}: {'; '.join(slots)}."
+            if current_lines and size + len(line) > 800:
+                blocks.append("\n".join([header, *current_lines]))
+                current_lines, size = [], len(header)
+            current_lines.append(line)
+            size += len(line) + 1
+        if current_lines:
+            blocks.append("\n".join([header, *current_lines]))
+        return "\n\n".join(blocks)
+
+    @staticmethod
+    def _format_exam_table(table, heading: str = "") -> str | None:
+        """Une cada materia con su día y hora en tablas de parciales/exámenes."""
+        day_pattern = re.compile(
+            r"^(lunes|martes|miercoles|jueves|viernes|sabado)\s+\d{1,2}(?:/\d{1,2})?$"
+        )
+        rows = [[re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in table.rows]
+
+        def unique(row: list[str]) -> list[str]:
+            result: list[str] = []
+            for value in row:
+                if value and (not result or result[-1] != value):
+                    result.append(value)
+            return result
+
+        header_index = None
+        day_columns: list[tuple[int, str]] = []
+        for row_index, row in enumerate(rows):
+            matches = [(i, v) for i, v in enumerate(row) if day_pattern.match(_normalizar(v))]
+            if len(matches) >= 3:
+                header_index, day_columns = row_index, matches
+                break
+        if header_index is None:
+            return None
+
+        title = ""
+        month = ""
+        special: list[str] = []
+        for row in rows[:header_index]:
+            cells = unique(row)
+            if not cells:
+                continue
+            joined = " ".join(cells)
+            found = re.search(r"mes\s*:\s*(.+)$", joined, flags=re.IGNORECASE)
+            if found:
+                month = found.group(1).strip()
+            elif not title and len(cells) == 1:
+                title = cells[0]
+            elif len(cells) >= 2:
+                special.append(f"{cells[0]}: {', '.join(cells[1:])}.")
+
+        lines: list[str] = []
+        body_rows = rows[header_index + 1:]
+        for index, row in enumerate(body_rows[:-1]):
+            next_row = body_rows[index + 1]
+            if not row or not row[0] or _normalizar(next_row[0] if next_row else "") != "horario":
+                continue
+            semester = row[0]
+            for column, day in day_columns:
+                subject = row[column] if column < len(row) else ""
+                hours = next_row[column] if column < len(next_row) else ""
+                if not subject:
+                    continue
+                when = f"{day} ({month})" if month else day
+                lines.append(f"{subject} ({semester}): {when}" + (f", {hours}." if hours else "."))
+        if not lines and not special:
+            return None
+
+        context = "; ".join(part for part in [heading, title, f"mes: {month}" if month else ""] if part)
+        return "\n".join([f"Parciales y exámenes; contexto: {context or 'sin título indicado'}.", *special, *lines])
 
     @staticmethod
     def _chunk_text(
@@ -447,6 +543,7 @@ class Agent:
     threshold: float = 0.16,
     must_contain: Optional[list[str]] = None,
     solo_raiz: bool = False,
+    prefer: Optional[list[str]] = None,
     ) -> list[dict]:
         with self._lock:
             chunks = list(self.chunks)
@@ -481,6 +578,10 @@ class Agent:
             }
         ]
         aliases = [_normalizar(alias) for alias in (must_contain or []) if alias.strip()]
+        preferred = [_normalizar(alias) for alias in (prefer or []) if alias.strip()]
+        asks_teacher = bool(set(_tokens(query)) & {
+            "profesor", "profesora", "profe", "docente", "docentes", "dicta", "dicto", "imparte",
+        })
         lexical_scores: list[float] = []
 
         for chunk, source in zip(chunks, sources):
@@ -503,6 +604,15 @@ class Agent:
             for token in set(query_tokens):
                 if re.search(r"\d", token) and token in present:
                     score += 4.0
+            # La materia nombrada por el estudiante pesa más que coincidencias sueltas.
+            if preferred and any(
+                re.search(rf"(?<!\w){re.escape(alias)}(?!\w)", searchable)
+                for alias in preferred
+            ):
+                score += 6.0
+            # Las preguntas por docentes priorizan encabezados "Docente:" y leyendas "Materia – Docente".
+            if asks_teacher and ("docente:" in searchable or "dicta:" in searchable or " – " in chunk):
+                score += 3.0
             lexical_scores.append(score)
 
         scores = lexical_scores

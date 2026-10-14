@@ -263,22 +263,46 @@ class RAGSystem:
             return self._status_data()
 
     def _rebuild_entity_index(self) -> None:
+        """Construye alias de materias solo desde fuentes confiables de los documentos."""
         aliases: dict[str, str] = {}
+        stop = {"de", "la", "el", "en", "y", "los", "las", "un", "una", "del", "al", "si", "no", "se", "que", "con", "por", "para"}
+
+        def add(alias: str, code: str) -> None:
+            alias = re.sub(r"\s+", " ", str(alias)).strip(" .,:;-–")
+            key = quitar_acentos(alias).casefold()
+            if len(key) >= 2 and key not in stop:
+                aliases[key] = code
+
+        legend = re.compile(r"^(?P<head>[^\n]{3,90}?)\s+[–—-]\s+(?P<who>[A-ZÁÉÍÓÚÑ][^\n–—]{3,80})$", re.MULTILINE)
+        scheduled = re.compile(
+            r"^(?P<code>[^\n:(]{2,14}?)(?: \([^)]*\))?: (?:Lunes|Martes|Miércoles|Jueves|Viernes|Sábado)\b",
+            re.MULTILINE,
+        )
         for agent in self.agentes.values():
-            for chunk in agent.chunks:
-                # Formatos recurrentes del sitio: "MDL1 | ...", "Arq | ...",
-                # o "MDL1 (Matemática Discreta y Lógica 1)".
-                for match in re.finditer(
-                    r"\b([A-ZÁÉÍÓÚÜÑ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9]{0,9})\s*"
-                    r"(?:\|\s*(?:Lunes|Martes|Miércoles|Miercoles|Jueves|Viernes)|"
-                    r"\(\s*([^)]{3,100})\))",
-                    chunk,
-                ):
-                    code = match.group(1).strip()
-                    aliases[quitar_acentos(code).casefold()] = code
-                    official = match.group(2)
-                    if official:
-                        aliases[quitar_acentos(official).casefold()] = code
+            for chunk, source in zip(agent.chunks, agent.chunk_sources):
+                # Cada carpeta de cursos/<Código>/ es una materia; "TIP - <Nombre>" es su nombre oficial.
+                folder = re.search(r"/(?:cursos|materias)/([^/]+)/", source)
+                if folder and len(folder.group(1)) <= 30:
+                    code = folder.group(1).strip()
+                    add(code, code)
+                    title = re.match(r"\s*TIP - ([^\n]+?)(?:\s+Search this site|\n|$)", chunk)
+                    if title:
+                        add(title.group(1), code)
+
+                if source.startswith("Documentos/"):
+                    # Leyenda de horarios: "Arq Arquitectura de Computadoras – Jesús Guibert".
+                    for match in legend.finditer(chunk):
+                        tokens = match.group("head").split()
+                        if len(tokens) < 2:
+                            continue
+                        size = 2 if len(tokens) > 3 and tokens[2].casefold() == "taller" else 1
+                        code = " ".join(tokens[:size])
+                        add(code, code)
+                        add(" ".join(tokens[size:]), code)
+                    # Tablas de horarios y parciales: "PyE (4er. Semestre): Lunes 22 ...".
+                    for match in scheduled.finditer(chunk):
+                        code = match.group("code").strip()
+                        add(code, code)
 
                 for line in chunk.splitlines():
                     match = re.search(r"\bDicta(?:n)?\s*:\s*(.+)", line, flags=re.IGNORECASE)
@@ -292,9 +316,15 @@ class RAGSystem:
                         )
                         if course:
                             code = course.group(1).strip()
-                            aliases[quitar_acentos(code).casefold()] = code
+                            add(code, code)
                             if course.group(2):
-                                aliases[quitar_acentos(course.group(2)).casefold()] = code
+                                add(course.group(2), code)
+
+        # Un alias genérico que es el comienzo del nombre de otra materia ("matemática"
+        # frente a "matemática discreta y lógica 1") es ambiguo: se descarta.
+        for key in list(aliases):
+            if any(other != key and other.startswith(key + " ") and aliases[other] != aliases[key] for other in aliases):
+                del aliases[key]
 
         self._entity_aliases = sorted(
             aliases.items(),
@@ -302,12 +332,25 @@ class RAGSystem:
             reverse=True,
         )
 
-    def detectar_materia(self, pregunta: str) -> Optional[str]:
+    def detectar_materias(self, pregunta: str) -> list[str]:
+        """Todas las materias nombradas; el texto ya reconocido no se vuelve a usar."""
         query = quitar_acentos(pregunta).casefold()
+        found: list[str] = []
         for alias, canonical in getattr(self, "_entity_aliases", []):
-            if re.search(rf"(?<!\w){re.escape(alias)}(?!\w)", query):
-                return canonical
-        return None
+            pattern = rf"(?<!\w){re.escape(alias)}(?!\w)"
+            if re.search(pattern, query):
+                if canonical not in found:
+                    found.append(canonical)
+                query = re.sub(pattern, " ", query)
+        return found
+
+    def aliases_de(self, codes: list[str]) -> list[str]:
+        wanted = set(codes)
+        return [alias for alias, canonical in getattr(self, "_entity_aliases", []) if canonical in wanted]
+
+    def detectar_materia(self, pregunta: str) -> Optional[str]:
+        found = self.detectar_materias(pregunta)
+        return found[0] if found else None
 
     @staticmethod
     def _es_saludo(pregunta: str) -> bool:
@@ -331,6 +374,15 @@ class RAGSystem:
         return starts_as_followup or refers_to_previous
 
     @staticmethod
+    def _nombra_otro_tema(pregunta: str) -> bool:
+        """"y el de Física?" nombra algo nuevo aunque no sea una materia conocida."""
+        q = quitar_acentos(pregunta.casefold())
+        return bool(re.search(
+            r"\b(?:de|del)\s+(?!la\b|el\b|lo\b|los\b|las\b|esa\b|ese\b|eso\b|esta\b|este\b|ahi\b|alli\b)\w{2,}",
+            q,
+        ))
+
+    @staticmethod
     def _topic_hint(pregunta: str) -> str:
         q = quitar_acentos(pregunta.casefold())
         labels = (
@@ -349,10 +401,17 @@ class RAGSystem:
         current_entity = self.detectar_materia(pregunta)
         if current_entity:
             state["last_entity"] = current_entity
-        elif state.get("last_entity") and self._es_seguimiento(pregunta):
-            context = f" La consulta se refiere a {state['last_entity']}."
-            current_topic = self._topic_hint(pregunta)
-            if not current_topic and state.get("last_topic"):
+        if self._es_seguimiento(pregunta):
+            context = ""
+            # La materia anterior solo se hereda si la pregunta no nombra otra.
+            if (
+                not current_entity
+                and state.get("last_entity")
+                and not self._nombra_otro_tema(pregunta)
+            ):
+                context += f" La consulta se refiere a {state['last_entity']}."
+            # "¿Y el de PyE?" conserva lo que se estaba preguntando (docentes, parciales…).
+            if not self._topic_hint(pregunta) and state.get("last_topic"):
                 context += f" El tema anterior era: {state['last_topic']}."
             pregunta = pregunta.rstrip() + context
 
@@ -394,9 +453,13 @@ class RAGSystem:
         sentinel = object()
         texto_completo: list[str] = []
 
+        preferidas = self.aliases_de(self.detectar_materias(query))
+
         def produce() -> None:
             try:
-                for response_part in responder_stream(query, self.agentes, historial=historial):
+                for response_part in responder_stream(
+                    query, self.agentes, historial=historial, materia_preferida=preferidas or None,
+                ):
                     texto_completo.append(response_part)
                     loop.call_soon_threadsafe(queue.put_nowait, (response_part, "document"))
             except Exception as error:
@@ -426,5 +489,6 @@ class RAGSystem:
         )
         query = self._contextualizar(normalizar_consulta(question.strip()), state)
         print(f"[RAG:MEMORIA] sesión={session_id} | consulta contextualizada={query}", flush=True)
-        return "".join(responder_stream(query, self.agentes))
+        preferidas = self.aliases_de(self.detectar_materias(query))
+        return "".join(responder_stream(query, self.agentes, materia_preferida=preferidas or None))
 
