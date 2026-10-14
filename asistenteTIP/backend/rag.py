@@ -381,24 +381,26 @@ class RAGSystem:
         sid = session_id or "anonimo"
         state = self.sessions.setdefault(
             sid,
-            {"last_topic": None, "last_entity": None, "last_seen": time.time()},
+            {"last_topic": None, "last_entity": None, "last_seen": time.time(), "historial": []},
         )
         self.limpiar_sesiones()
         query = self._contextualizar(normalizar_consulta(question.strip()), state)
+        print(f"[RAG:MEMORIA] sesión={sid} | consulta contextualizada={query}", flush=True)
+
+        historial = list(state.get("historial", []))
 
         loop = asyncio.get_running_loop()
         queue: asyncio.Queue = asyncio.Queue()
         sentinel = object()
+        texto_completo: list[str] = []
 
         def produce() -> None:
             try:
-                for response_part in responder_stream(query, self.agentes):
+                for response_part in responder_stream(query, self.agentes, historial=historial):
+                    texto_completo.append(response_part)
                     loop.call_soon_threadsafe(queue.put_nowait, (response_part, "document"))
             except Exception as error:
-                message = (
-                    "No pude procesar la consulta. "
-                    f"{type(error).__name__}: {error}"
-                )
+                message = f"No pude procesar la consulta. {type(error).__name__}: {error}"
                 loop.call_soon_threadsafe(queue.put_nowait, (message, "error"))
             finally:
                 loop.call_soon_threadsafe(queue.put_nowait, sentinel)
@@ -410,6 +412,11 @@ class RAGSystem:
                 break
             yield item
 
+        respuesta_final = "".join(texto_completo).strip()
+        if respuesta_final:
+            state.setdefault("historial", []).append({"pregunta": question.strip(), "respuesta": respuesta_final})
+            state["historial"] = state["historial"][-5:]
+
     def answer(self, question: str, session_id: str = "anonimo") -> str:
         """Interfaz síncrona útil para consola, scripts o integraciones antiguas."""
         self._refresh_documents()
@@ -418,5 +425,6 @@ class RAGSystem:
             {"last_topic": None, "last_entity": None, "last_seen": time.time()},
         )
         query = self._contextualizar(normalizar_consulta(question.strip()), state)
+        print(f"[RAG:MEMORIA] sesión={session_id} | consulta contextualizada={query}", flush=True)
         return "".join(responder_stream(query, self.agentes))
 

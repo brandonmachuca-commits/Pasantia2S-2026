@@ -80,6 +80,7 @@ class Agent:
         self.chunks: list[str] = []
         self.chunk_sources: list[str] = []
         self.chunk_tiers: list[str] = []
+        self.chunk_root_level: list[bool] = [] 
         self.embeddings = None
         self.files_loaded: list[str] = []
         self.load_errors: list[str] = []
@@ -327,6 +328,7 @@ class Agent:
         next_chunks: list[str] = []
         next_sources: list[str] = []
         next_tiers: list[str] = []
+        next_root_level: list[bool] = []
         next_files: list[str] = []
         next_errors: list[str] = []
         counts = {"dynamic": 0, "static": 0}
@@ -347,6 +349,7 @@ class Agent:
                         f"{source_prefix}/{category_root}/"
                         f"{path.relative_to(root).as_posix()}"
                     )
+                    es_raiz = path.parent == root
                     loaded_any_text = any(page_text.strip() for page_text, _ in pages)
                     for page_text, page_number in pages:
                         for chunk in self._chunk_text(page_text):
@@ -360,6 +363,7 @@ class Agent:
                             next_chunks.append(chunk)
                             next_sources.append(source)
                             next_tiers.append(tier)
+                            next_root_level.append(es_raiz)
                     if loaded_any_text:
                         next_files.append(relative_source)
                         counts[tier] += 1
@@ -383,6 +387,7 @@ class Agent:
             self.chunks = next_chunks
             self.chunk_sources = next_sources
             self.chunk_tiers = next_tiers
+            self.chunk_root_level = next_root_level
             self.embeddings = next_embeddings
             self.files_loaded = next_files
             self.load_errors = next_errors
@@ -436,20 +441,34 @@ class Agent:
             return " ".join(self.chunks[:3])[:1800]
 
     def search_with_source(
-        self,
-        query: str,
-        top_k: int = 4,
-        threshold: float = 0.16,
-        must_contain: Optional[list[str]] = None,
+    self,
+    query: str,
+    top_k: int = 4,
+    threshold: float = 0.16,
+    must_contain: Optional[list[str]] = None,
+    solo_raiz: bool = False,
     ) -> list[dict]:
         with self._lock:
             chunks = list(self.chunks)
             sources = list(self.chunk_sources)
             tiers = list(self.chunk_tiers)
+            root_level = list(self.chunk_root_level)
             embeddings = self.embeddings
 
         if not chunks or top_k <= 0:
             return []
+
+        if solo_raiz:
+            # Un archivo "en la raíz" de la categoría (sin subcarpeta) suele ser
+            # el listado general; uno en subcarpeta es el programa de una materia.
+            indices_raiz = [i for i, es_raiz in enumerate(root_level) if es_raiz]
+            if indices_raiz:
+                chunks = [chunks[i] for i in indices_raiz]
+                sources = [sources[i] for i in indices_raiz]
+                tiers = [tiers[i] for i in indices_raiz]
+                embeddings = embeddings[indices_raiz] if embeddings is not None else None
+            else:
+                print(f"[AGENT:{self.nombre}] Aviso: no hay archivos de raíz, uso todos los documentos igual")
 
         query_norm = _normalizar(query)
         query_tokens = [

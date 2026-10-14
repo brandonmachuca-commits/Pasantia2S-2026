@@ -84,10 +84,23 @@ def require_admin(authorization: str | None = Header(default=None)) -> str:
     return token
 
 
+def _category_names() -> list[str]:
+    """Carpetas reales de Documentos (respetan mayúsculas) más categorías permitidas sin carpeta."""
+    names = {}
+    if DOCUMENTS_DIR.is_dir():
+        for path in DOCUMENTS_DIR.iterdir():
+            if path.is_dir() and not path.name.startswith("."):
+                names[path.name.casefold()] = path.name
+    for name in ALLOWED_CATEGORIES:
+        names.setdefault(name.casefold(), name)
+    return sorted(names.values(), key=str.casefold)
+
+
 def _category_directory(category: str) -> Path:
-    if category not in ALLOWED_CATEGORIES:
+    actual = next((name for name in _category_names() if name.casefold() == category.strip().casefold()), None)
+    if actual is None:
         raise HTTPException(status_code=400, detail="Categoría no permitida.")
-    directory = (DOCUMENTS_DIR / category).resolve()
+    directory = (DOCUMENTS_DIR / actual).resolve()
     if not directory.is_relative_to(DOCUMENTS_DIR.resolve()):
         raise HTTPException(status_code=400, detail="Ruta de categoría inválida.")
     return directory
@@ -172,7 +185,7 @@ async def admin_logout(token: str = Depends(require_admin)):
 @app.get("/admin/documents")
 async def admin_documents(_: str = Depends(require_admin)):
     categories = {}
-    for category in sorted(ALLOWED_CATEGORIES):
+    for category in _category_names():
         categories[category] = {"archivos": _files_in_category(category)}
     return {"categorias": categories}
 
@@ -202,17 +215,27 @@ async def ask_question(req: AskRequest):
         raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía.")
 
     async def event_stream():
+        started = time.perf_counter()
         source = "document"
-        print(f"[ASK] Pregunta: {req.question}")
+        chars_sent = 0
+        print(f"[ASK] Inicio | sesión={req.session_id} | pregunta={req.question}", flush=True)
         try:
             async for chunk, src in rag.answer_stream(req.question, req.session_id):
                 source = src
+                chars_sent += len(chunk)
                 payload = json.dumps({"type": "chunk", "text": chunk, "source": src}, ensure_ascii=False)
                 yield f"data: {payload}\n\n"
         except Exception as error:
+            print(f"[ASK:ERROR] {type(error).__name__}: {error}", flush=True)
             payload = json.dumps({"type": "error", "text": str(error)}, ensure_ascii=False)
             yield f"data: {payload}\n\n"
         finally:
+            elapsed = time.perf_counter() - started
+            print(
+                f"[ASK:FIN] sesión={req.session_id} | caracteres={chars_sent} | "
+                f"tipo={source} | total={elapsed:.2f}s",
+                flush=True,
+            )
             payload = json.dumps({"type": "done", "source": source})
             yield f"data: {payload}\n\n"
 
@@ -273,7 +296,7 @@ async def admin_upload(
         old_path = (category_dir / Path(*relative.parts)).resolve()
         if not old_path.is_relative_to(category_dir.resolve()) or not old_path.is_file():
             raise HTTPException(status_code=400, detail="La ruta de reemplazo no es válida.")
-        destination = old_path.with_suffix(Path(safe_name).suffix.casefold())
+        destination = old_path.parent / safe_name
     else:
         destination = category_dir / safe_name
         if destination.exists():
@@ -300,7 +323,11 @@ async def admin_upload(
         raise HTTPException(status_code=500, detail=f"El archivo se guardó, pero no se pudo recargar el agente: {error}") from error
 
     relative_destination = destination.relative_to(category_dir).as_posix()
-    return {"ok": True, "categoria": categoria, "archivo": relative_destination, "mensaje": f"Se actualizó {categoria}/{relative_destination} y se recargó el agente."}
+    return {"ok": True, "categoria": categoria, "archivo": relative_destination, "mensaje": (
+        f"Se reemplazó {reemplazar} por {relative_destination} y se recargó el agente."
+        if old_path is not None and old_path != destination
+        else f"Se actualizó {categoria}/{relative_destination} y se recargó el agente."
+    )}
 
 
 @app.post("/admin/update/all")

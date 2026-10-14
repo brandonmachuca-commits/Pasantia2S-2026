@@ -6,6 +6,8 @@ import json
 import os
 import re
 import unicodedata
+import time
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Iterable, Mapping
 
@@ -34,6 +36,19 @@ ROUTER_TIMEOUT = max(5, int(os.getenv("OLLAMA_ROUTER_TIMEOUT_SECONDS", "20")))
 ANSWER_TIMEOUT = max(15, int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "90")))
 TOP_K = max(1, int(os.getenv("RAG_K", "3")))
 MAX_CONTEXT_CHARS = max(2500, int(os.getenv("RAG_MAX_CONTEXT_CHARS", "9000")))
+DEBUG_FLOW = os.getenv("RAG_DEBUG_FLOW", "1").strip() != "0"
+DEBUG_PROMPTS = os.getenv("RAG_DEBUG_PROMPTS", "1").strip() != "0"
+
+
+def _limpiar_respuesta(texto: str) -> str:
+    """Quita una sección de fuentes si el modelo la añade pese a las instrucciones."""
+    texto = re.sub(
+        r"(?im)(?:^|\s)(?:[-*•]\s*)?(?:\*\*)?(?:fuentes?(?:\s+consultadas?)?|sources?)\s*(?:\*\*)?\s*:.*$",
+        "",
+        texto,
+    )
+    texto = re.sub(r"\n{3,}", "\n\n", texto)
+    return texto.strip()
 
 
 def _normalizar(texto: str) -> str:
@@ -154,6 +169,17 @@ def _llamar_ollama(prompt: str, *, json_mode: bool = False):
         body["think"] = False
 
     timeout = ROUTER_TIMEOUT if json_mode else ANSWER_TIMEOUT
+    etapa_label = "ROUTER" if json_mode else "SINTESIS"
+    started = time.perf_counter()
+    if DEBUG_FLOW:
+        print(
+            f"[OLLAMA:{etapa_label}:INICIO] modelo={OLLAMA_MODEL} "
+            f"timeout={timeout}s prompt={len(prompt)} caracteres",
+            flush=True,
+        )
+    if DEBUG_PROMPTS:
+        print(f"[OLLAMA:{etapa_label}:PROMPT]\n{prompt}\n[/{etapa_label}:PROMPT]", flush=True)
+
     response = requests.post(
         _endpoint(),
         json=body,
@@ -165,6 +191,9 @@ def _llamar_ollama(prompt: str, *, json_mode: bool = False):
         response.close()
         print(f"[OLLAMA:{etapa}] HTTP {status}: {detail or 'sin detalle'}")
         raise RuntimeError(f"Ollama HTTP {status}: {detail or 'respuesta sin detalle'}")
+    if DEBUG_FLOW:
+        elapsed = time.perf_counter() - started
+        print(f"[OLLAMA:{etapa_label}:HTTP] status={response.status_code} | latencia={elapsed:.2f}s", flush=True)
     return response
 
 
@@ -230,6 +259,58 @@ def _detectar_intenciones(pregunta: str) -> list[dict]:
                 found.append(next(rule for rule in INTENT_RULES if rule["id"] == "parciales"))
     return found
 
+def _es_consulta_general_materias(pregunta: str) -> bool:
+    q = _normalizar(pregunta)
+    general = any(termino in q for termino in (
+        "que materias hay", "que materias tiene", "todas las materias",
+        "plan de estudios", "materias de la carrera", "materias hay en la carrera",
+        "que se estudia", "materias por semestre", "lista de materias",
+        "que asignaturas", "cuantas materias",
+    ))
+    return general or (
+        "semestre" in q
+        and any(termino in q for termino in ("materia", "asignatura", "curso", "cuantas", "cantidad"))
+    )
+
+
+def _indice_materias(pregunta: str) -> tuple[str, str] | None:
+    """Recupera del índice estático todas las secciones de semestre solicitadas."""
+    raiz = Path(__file__).resolve().parent / "data" / "processed" / "cursos"
+    archivo = next((p for p in (raiz / "indice_materias.txt", raiz / "contenido.txt") if p.is_file()), None)
+    if archivo is None:
+        return None
+    try:
+        texto = archivo.read_text(encoding="utf-8-sig")
+    except (OSError, UnicodeError) as error:
+        print(f"[CATALOGO] No se pudo leer {archivo}: {error}", flush=True)
+        return None
+
+    nombres = ("Primer", "Segundo", "Tercer", "Cuarto", "Quinto", "Sexto")
+    titulos = re.compile(r"(?im)^\s*(Primer|Segundo|Tercer|Cuarto|Quinto|Sexto)\s+Semestre\s*$")
+    encabezados = list(titulos.finditer(texto))
+    if not encabezados:
+        return None
+    consulta = _normalizar(pregunta)
+    alias = (
+        "primer|primero|1er|1ro|1", "segundo|2do|2", "tercer|tercero|3er|3ro|3",
+        "cuarto|4to|4", "quinto|5to|5", "sexto|6to|6",
+    )
+    pedidos = [i for i, formas in enumerate(alias, 1)
+               if re.search(rf"(?<!\w)(?:{formas})(?!\w)", consulta)]
+    if not pedidos:
+        pedidos = list(range(1, 7))
+    bloques = []
+    for i, encabezado in enumerate(encabezados):
+        numero = nombres.index(encabezado.group(1).title()) + 1
+        if numero not in pedidos:
+            continue
+        fin = encabezados[i + 1].start() if i + 1 < len(encabezados) else len(texto)
+        materias = re.findall(r"(?m)^\s*[-*•]\s*(.+?)\s*$", texto[encabezado.end():fin])
+        if materias:
+            bloques.append(f"{nombres[numero - 1]} Semestre\n" + "\n".join(f"- {m}" for m in materias))
+    if not bloques:
+        return None
+    return str(archivo), "\n\n".join(bloques)
 
 def _canonical_category(raw: str, categories: Mapping[str, object]) -> str | None:
     normalized = _category_name(raw)
@@ -262,6 +343,20 @@ def _forced_routes(pregunta: str, categories: Mapping[str, object]) -> tuple[lis
                     "categoria": category,
                     "consulta": pregunta[:300],
                 })
+    if _es_consulta_general_materias(pregunta):
+        categoria_cursos = next(
+            (c for c in categories if _category_name(c) in {"cursos", "materias"}),
+            None,
+        )
+        if categoria_cursos:
+            selected[categoria_cursos] = {
+                "categoria": categoria_cursos,
+                "consulta": pregunta[:300],
+                "solo_raiz": True,
+            }
+
+    return list(selected.values()), unavailable, bool(intents) or bool(_es_consulta_general_materias(pregunta))
+        
 
     return list(selected.values()), unavailable, bool(intents)
 
@@ -346,6 +441,8 @@ def clasificar(
     for category, agent in categories.items():
         description = _category_profile(str(category), agent)
         descriptors.append(f"- {category}: {description[:420] or 'documentos de esta categoría'}")
+    if DEBUG_FLOW:
+        print(f"[ROUTER:ENTRADA] pregunta={pregunta} | categorías={', '.join(categories)}", flush=True)
     prompt = f"""Clasifica la pregunta de un estudiante universitario. No la respondas.
 Selecciona solo las carpetas que contengan evidencia necesaria para responder.
 Una pregunta con varios pedidos puede necesitar varias carpetas. No inventes categorías.
@@ -368,7 +465,12 @@ Pregunta: {pregunta}"""
         text = str(payload.get("response") or "").strip()
         if not text:
             raise RuntimeError("Ollama devolvió una clasificación vacía")
-        return _parsear_consultas(text, pregunta, categories), None
+        if DEBUG_FLOW:
+            print(f"[OLLAMA:ROUTER:SALIDA]\n{text}", flush=True)
+        selected = _parsear_consultas(text, pregunta, categories)
+        if DEBUG_FLOW:
+            print("[ROUTER:SELECCION] " + (", ".join(item["categoria"] for item in selected) or "sin categoría"), flush=True)
+        return selected, None
     except Exception as error:
         detail = f"{type(error).__name__}: " + re.sub(r"\s+", " ", str(error)).strip()[:180]
         print(f"[ROUTER] Ollama no clasificó; uso rutas locales ({detail})")
@@ -393,10 +495,26 @@ def _buscar(
                 item.get("consulta") or "",
                 top_k=TOP_K,
                 must_contain=materia_aliases,
+                solo_raiz=item.get("solo_raiz", False),
             )
         except Exception as error:
             print(f"[BUSQUEDA:{category}] {type(error).__name__}: {error}")
             fragments = []
+        if DEBUG_FLOW:
+            print(
+                f"[BUSQUEDA:{category}] consulta={item.get('consulta', '')!r} "
+                f"| resultados={len(fragments)}",
+                flush=True,
+            )
+            for index, fragment in enumerate(fragments, 1):
+                source = fragment.get("fuente") or category
+                score = fragment.get("score", "n/d")
+                text = re.sub(r"\s+", " ", str(fragment.get("chunk", ""))).strip()
+                print(
+                    f"[EVIDENCIA:{category}:{index}] archivo={source} | score={score} "
+                    f"| texto={text[:700]}",
+                    flush=True,
+                )
         return {"categoria": category, "consulta": item.get("consulta", ""), "fragmentos": fragments}
 
     results: dict[str, dict] = {}
@@ -430,35 +548,17 @@ def _evidencia(results: list[dict]) -> tuple[str, list[str]]:
 
 
 def _respaldo(results: list[dict], unavailable: list[str] | None = None) -> str:
-    """Respuesta de contingencia compacta si el modelo de síntesis falla."""
-    lines = []
-    seen = set()
-    for result in results:
-        for fragment in result.get("fragmentos", [])[:2]:
-            text = re.sub(r"\s+", " ", str(fragment.get("chunk", ""))).strip()
-            key = _normalizar(text)
-            if not text or key in seen:
-                continue
-            seen.add(key)
-            excerpt = text[:420].rstrip()
-            if len(text) > len(excerpt):
-                excerpt += "…"
-            lines.append(f"- {excerpt} ({fragment.get('fuente', result['categoria'] )})")
-    if not lines:
-        if unavailable:
-            return "Todavía no hay documentos cargados para responder sobre: " + ", ".join(unavailable) + "."
-        return "No encontré información relacionada en los documentos cargados."
-    return (
-        "No pude completar la redacción con Ollama. Encontré esta evidencia breve:\n"
-        + "\n".join(lines)
-    )
-
+    """Mensaje legible si Ollama no logra sintetizar; la evidencia queda en consola."""
+    return "Encontré información relacionada, pero no pude redactar una respuesta ahora. Inténtalo de nuevo en unos segundos."
 
 def responder_stream(
     pregunta: str,
     agentes: Mapping[str, object],
     materia_aliases: list[str] | None = None,
+    historial: list[dict] | None = None,
 ) -> Iterable[str]:
+    if DEBUG_FLOW:
+        print(f"[FLUJO:INICIO] pregunta={pregunta}", flush=True)
     consultas, error_router = clasificar(pregunta, agentes)
     print("[ROUTER] " + (", ".join(item["categoria"] for item in consultas) or "sin categoría disponible"))
 
@@ -470,8 +570,35 @@ def responder_stream(
             yield "No encontré una carpeta de documentos pertinente para esa pregunta."
         return
 
-    results = _buscar(agentes, consultas, materia_aliases)
+    catalogo = _indice_materias(pregunta) if _es_consulta_general_materias(pregunta) else None
+    if catalogo:
+        ruta_indice, texto_indice = catalogo
+        consultas_adicionales = [
+            item for item in consultas
+            if _category_name(item.get("categoria", "")) not in {"cursos", "materias"}
+        ]
+        results = _buscar(agentes, consultas_adicionales, materia_aliases)
+        results.insert(0, {
+            "categoria": "cursos",
+            "consulta": pregunta,
+            "fragmentos": [{
+                "chunk": texto_indice,
+                "fuente": ruta_indice,
+                "score": 1.0,
+                "tipo_fuente": "static",
+            }],
+        })
+        print(f"[CATALOGO:ESTATICO] archivo={ruta_indice} | secciones enviadas sin top_k", flush=True)
+    else:
+        results = _buscar(agentes, consultas, materia_aliases)
     evidence, sources = _evidencia(results)
+    if DEBUG_FLOW:
+        count_fragments = sum(len(item.get("fragmentos", [])) for item in results)
+        print(
+            f"[BUSQUEDA:FIN] fragmentos={count_fragments} "
+            f"| contexto={len(evidence)} caracteres | archivos={', '.join(sources) or 'ninguno'}",
+            flush=True,
+        )
     if not evidence:
         missing = [
             item["categoria"] for item in results
@@ -492,23 +619,38 @@ def responder_stream(
         "\nPedidos que no tienen una carpeta disponible: " + ", ".join(missing_categories)
         if missing_categories else ""
     )
+    bloque_historial = ""
+    if historial:
+        turnos = "\n".join(
+            f"Estudiante: {turno['pregunta']}\nAsistente: {turno['respuesta']}"
+            for turno in historial[-5:]
+        )
+        bloque_historial = f"\nConversación reciente (de más antigua a más nueva):\n{turnos}\n"
+
+    instruccion_indice = (
+        "La evidencia del índice es completa para los semestres pedidos. Enumera todas sus materias, "
+        "sin omitir semestres ni asignaturas; si el historial contradice el índice, usa el índice actual.\n"
+        if catalogo else ""
+    )
 
     prompt = f"""Eres el asistente académico de Tecnólogo en Informática. Redacta para el estudiante en español claro y natural.
-Responde cada parte preguntada, con brevedad. Usa solamente la evidencia incluida abajo.
-No copies bloques enteros ni inventes fechas, materias, docentes o reglas.
-Si las fuentes muestran datos contradictorios, explica con precisión qué dice cada una.
-Si la evidencia no alcanza para una parte, dilo claramente y aun así responde las demás.
-No confundas horarios de clase con fechas de parciales ni con fechas de exámenes.
-No supongas el mes o año si el documento no lo indica.
-No uses encabezados repetidos. Añade al final una sola línea "Fuentes: ..." con los archivos consultados.
+    Responde cada parte preguntada, con brevedad. Usa solamente la evidencia incluida abajo.
+    {instruccion_indice}
+    No copies bloques enteros ni inventes fechas, materias, docentes o reglas.
+    Si las fuentes muestran datos contradictorios, explica con precisión qué dice cada una.
+    Si la evidencia no alcanza para una parte, dilo claramente y aun así responde las demás.
+    No confundas horarios de clase con fechas de parciales ni con fechas de exámenes.
+    No supongas el mes o año si el documento no lo indica.
+    No uses encabezados repetidos. No menciones archivos, fuentes, citas ni referencias en la respuesta final.
 
-Pregunta: {pregunta}
+    {bloque_historial}
+    Pregunta: {pregunta}
 
-Evidencia recuperada:
-{evidence}
-{missing_note}
+    Evidencia recuperada:
+    {evidence}
+    {missing_note}
 
-Escribe la respuesta final al estudiante:"""
+    Escribe la respuesta final al estudiante:"""
 
     response = None
     try:
@@ -522,6 +664,9 @@ Escribe la respuesta final al estudiante:"""
         answer = str(payload.get("response") or "").strip()
         done = payload.get("done") is True
         reason = str(payload.get("done_reason", "sin detalle"))
+        if DEBUG_FLOW:
+            print(f"[OLLAMA:SINTESIS:METADATOS] done={done} | motivo={reason} | eval_count={payload.get('eval_count', 'n/d')}", flush=True)
+            print(f"[OLLAMA:SINTESIS:SALIDA]\n{answer}", flush=True)
         if not done or not answer:
             thinking_len = len(str(payload.get("thinking") or ""))
             print(
@@ -531,16 +676,18 @@ Escribe la respuesta final al estudiante:"""
             raise RuntimeError("Ollama no terminó una respuesta de texto")
     except Exception as error:
         print(f"[SINTESIS] Ollama no completó la respuesta: {type(error).__name__}: {error}")
+        if DEBUG_FLOW:
+            print("[SINTESIS:RESPALDO] Se devuelve el mensaje temporal; la evidencia ya quedó registrada arriba.", flush=True)
         yield _respaldo(results, unavailable)
         return
     finally:
         if response is not None:
             response.close()
 
-    if sources:
-        answer = re.sub(r"\n*Fuentes:\s*.*$", "", answer, flags=re.IGNORECASE | re.DOTALL).strip()
-        answer += "\n\nFuentes: " + ", ".join(sources)
-    if error_router:
-        print("[ROUTER] Se usó clasificación de respaldo local.")
-    yield answer
+        answer = _limpiar_respuesta(answer)
+        if DEBUG_FLOW:
+            print(f"[RESPUESTA:WEB]\n{answer}", flush=True)
+        if error_router:
+            print("[ROUTER] Se usó clasificación de respaldo local.")
+        yield answer
 
