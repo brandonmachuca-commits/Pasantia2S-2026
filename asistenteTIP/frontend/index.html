@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071426">
   <title>Consulta Académica · UTEC</title>
-  <link rel="stylesheet" href="styles.css?v=20261007">
+  <link rel="stylesheet" href="styles.css?v=20261020">
   <link rel="icon" type="image/x-icon" href="/static/img/logo-utec.jpg">
 </head>
 <body>
@@ -20,7 +20,6 @@
       <button data-question="¿Cuáles son los horarios de clase?">Horarios</button><i>•</i>
       <button data-question="¿Qué información general debo conocer?">Información General</button>
     </nav>
-    <a class="admin-link" href="/admin">⚙ <span>Administrar</span></a>
   </header>
   <main class="app-shell">
     <section class="chat-panel" aria-label="Conversación con el asistente">
@@ -53,6 +52,15 @@
       <button class="send-button" type="submit" title="Enviar pregunta" aria-label="Enviar pregunta">➤</button>
     </form>
   </main>
-  <script src="app.js?v=20261007"></script>
+  <div id="kiosk-overlay" class="kiosk-overlay">
+    <img src="/static/img/logo.png" alt="UTEC">
+    <h2 id="kiosk-title">Asistente virtual de la carrera</h2>
+    <p id="kiosk-message">Toca para comenzar. Si estás frente a la pantalla, te saludaré y podrás hablarme.</p>
+    <button id="kiosk-start" class="kiosk-start" type="button">Comenzar</button>
+    <button id="kiosk-text-only" class="kiosk-text-only" type="button">Prefiero escribir</button>
+  </div>
+  <div id="kiosk-badge" class="kiosk-badge" hidden>● La cámara solo detecta presencia · no se graba ni se envía</div>
+  <video id="kiosk-video" class="kiosk-video" playsinline muted aria-hidden="true"></video>
+  <script src="app.js?v=20261020"></script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+MediaPipe Tasks Vision 1.1.1 (licencia Apache-2.0), alojado localmente para que la atención por presencia
+no dependa de internet.
+
+- vision_bundle.mjs y wasm/vision_wasm_internal.*: paquete npm @mediapipe/tasks-vision
+- blaze_face_short_range.tflite: modelo de detección de caras (Google MediaPipe)
+
+Solo se usa para detectar si hay una persona frente a la cámara. No se guardan ni se envían imágenes.

@@ -200,11 +200,30 @@ async def speak(req: SpeakRequest):
     if not req.text.strip():
         raise HTTPException(status_code=400, detail="Texto vacío.")
 
-    async def audio_stream():
-        communicate = edge_tts.Communicate(req.text, "es-AR-ElenaNeural")
-        async for chunk in communicate.stream():
+    communicate = edge_tts.Communicate(req.text, "es-AR-ElenaNeural")
+    stream = communicate.stream()
+    first_audio = None
+    try:
+        # Se obtiene el primer fragmento antes de responder: si el servicio de voz falla
+        # (por ejemplo, HTTP 403), el navegador recibe un error claro y usa su voz de respaldo.
+        async for chunk in stream:
             if chunk["type"] == "audio":
-                yield chunk["data"]
+                first_audio = chunk["data"]
+                break
+    except Exception as error:
+        print(f"[SPEAK:ERROR] {type(error).__name__}: {error}", flush=True)
+        raise HTTPException(status_code=503, detail="El servicio de voz no está disponible.") from error
+    if first_audio is None:
+        raise HTTPException(status_code=503, detail="El servicio de voz no devolvió audio.")
+
+    async def audio_stream():
+        yield first_audio
+        try:
+            async for chunk in stream:
+                if chunk["type"] == "audio":
+                    yield chunk["data"]
+        except Exception as error:
+            print(f"[SPEAK:ERROR] {type(error).__name__}: {error}", flush=True)
 
     return StreamingResponse(audio_stream(), media_type="audio/mpeg")
 

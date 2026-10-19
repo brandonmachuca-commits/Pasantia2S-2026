@@ -115,23 +115,6 @@ body {
   box-shadow: 0 8px 24px #007fc544;
 }
 
-.admin-link {
-  white-space: nowrap;
-  color: #d6eaff;
-  text-decoration: none;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  padding: 11px 17px;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.admin-link:hover {
-  background: #0d3652;
-  border-color: var(--cyan);
-  color: white;
-}
-
 .app-shell {
   height: calc(100vh - 104px);
   min-height: 470px;
@@ -402,8 +385,7 @@ body {
 }
 
 .mic-button:focus-visible,
-.send-button:focus-visible,
-.admin-link:focus-visible {
+.send-button:focus-visible {
   outline: 2px solid white;
   outline-offset: 3px;
 }
@@ -532,11 +514,6 @@ body {
     font-size: 9px;
   }
 
-  .admin-link {
-    padding: 9px 12px;
-    font-size: 12px;
-  }
-
   .main-nav {
     order: 3;
     flex-basis: 100%;
@@ -617,4 +594,111 @@ body {
     flex-basis: 38px;
     border-radius: 12px;
   }
+}
+/* ── Atención por presencia: la cámara detecta a la persona y el asistente escucha solo ── */
+.kiosk-video {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  opacity: 0;
+  pointer-events: none;
+  bottom: 0;
+  left: 0;
+}
+
+.kiosk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  padding: 24px;
+  background: radial-gradient(ellipse at 50% 40%, #0a2a47, var(--bg) 70%);
+}
+
+.kiosk-overlay[hidden],
+.kiosk-badge[hidden] {
+  display: none;
+}
+
+.kiosk-overlay img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.kiosk-overlay h2 {
+  margin: 0;
+  font: 800 clamp(30px, 5vw, 56px) Manrope, sans-serif;
+}
+
+.kiosk-overlay p {
+  margin: 0;
+  max-width: 640px;
+  font-size: clamp(18px, 2.4vw, 28px);
+  color: var(--muted);
+}
+
+.kiosk-overlay.waiting p {
+  animation: kiosk-breathe 2.8s ease-in-out infinite;
+}
+
+.kiosk-start {
+  border: 1px solid var(--cyan);
+  border-radius: 28px;
+  background: linear-gradient(110deg, #087cc5, #065998);
+  color: white;
+  font: 700 18px 'DM Sans', sans-serif;
+  padding: 15px 34px;
+  cursor: pointer;
+}
+
+.kiosk-start[hidden] {
+  display: none;
+}
+
+.kiosk-start:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
+
+.kiosk-badge {
+  position: fixed;
+  left: 14px;
+  bottom: 12px;
+  z-index: 60;
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(6, 19, 35, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+
+@keyframes kiosk-breathe {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.kiosk-text-only {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 500 15px 'DM Sans', sans-serif;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.kiosk-text-only[hidden] {
+  display: none;
+}
+
+.kiosk-text-only:hover,
+.kiosk-text-only:focus-visible {
+  color: white;
 }

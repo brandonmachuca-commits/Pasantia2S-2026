@@ -574,6 +574,33 @@ def _buscar(
     return [results[item["categoria"]] for item in consultas if item["categoria"] in results]
 
 
+def _filtrar_por_materia(results: list[dict], aliases: list[str] | None) -> list[dict]:
+    """Si la pregunta nombra una materia, descarta los fragmentos que no la mencionan.
+
+    Evita que el modelo mezcle materias de otras tablas (por ejemplo, confundir PyE con PP).
+    Si ningún fragmento menciona la materia, no se filtra nada.
+    """
+    patterns = [
+        re.compile(rf"(?<!\w){re.escape(_normalizar(alias))}(?!\w)")
+        for alias in (aliases or []) if alias.strip()
+    ]
+    if not patterns:
+        return results
+
+    def menciona(fragment: dict) -> bool:
+        text = _normalizar(f"{fragment.get('chunk', '')} {fragment.get('fuente', '')}")
+        return any(pattern.search(text) for pattern in patterns)
+
+    if not any(menciona(f) for r in results for f in r.get("fragmentos", [])):
+        return results
+    filtered = []
+    for result in results:
+        kept = [f for f in result.get("fragmentos", []) if menciona(f)]
+        if kept:
+            filtered.append({**result, "fragmentos": kept})
+    return filtered
+
+
 def _evidencia(results: list[dict], incluir_apoyos: bool = True) -> tuple[str, list[str]]:
     parts: list[str] = []
     sources: list[str] = []
@@ -611,6 +638,7 @@ def responder_stream(
     materia_aliases: list[str] | None = None,
     historial: list[dict] | None = None,
     materia_preferida: list[str] | None = None,
+    equivalencias: list[list[str]] | None = None,
 ) -> Iterable[str]:
     if DEBUG_FLOW:
         print(f"[FLUJO:INICIO] pregunta={pregunta}", flush=True)
@@ -645,7 +673,7 @@ def responder_stream(
         })
         print(f"[CATALOGO:ESTATICO] archivo={ruta_indice} | secciones enviadas sin top_k", flush=True)
     else:
-        results = _buscar(agentes, consultas, materia_aliases, materia_preferida)
+        results = _filtrar_por_materia(_buscar(agentes, consultas, materia_aliases, materia_preferida), materia_preferida)
     evidence, sources = _evidencia(results, incluir_apoyos="apoyo" in _normalizar(pregunta))
     if DEBUG_FLOW:
         count_fragments = sum(len(item.get("fragmentos", [])) for item in results)
@@ -688,15 +716,24 @@ def responder_stream(
         if catalogo else ""
     )
 
+    bloque_equivalencias = ""
+    grupos = [sorted(set(grupo), key=len)[:5] for grupo in (equivalencias or []) if len(set(grupo)) >= 2]
+    if grupos:
+        bloque_equivalencias = (
+            "\n    Equivalencias de nombres (son la misma materia): "
+            + "; ".join(" = ".join(grupo) for grupo in grupos) + ".\n"
+        )
+
     prompt = f"""Eres el asistente académico de Tecnólogo en Informática. Redacta para el estudiante en español claro y natural.
     Responde cada parte preguntada, con brevedad. Usa solamente la evidencia incluida abajo.
-    {instruccion_indice}
+    {instruccion_indice}{bloque_equivalencias}
     No copies bloques enteros ni inventes fechas, materias, docentes o reglas.
     Si dos fragmentos dicen lo mismo, menciona el dato una sola vez. Si se contradicen de verdad, explica con precisión qué dice cada uno.
     Si la evidencia no alcanza para una parte, dilo claramente y aun así responde las demás.
     No confundas horarios de clase con fechas de parciales ni con fechas de exámenes. Los "Apoyo ..." no son clases: menciónalos solo si te los piden.
     No supongas el mes o año si el documento no lo indica.
     Si piden un semestre o varias materias, responde una línea por materia, sin omitir ninguna que aparezca en la evidencia.
+    Las siglas (PP, PyE, MDL1, Arq…) son materias distintas: no las confundas entre sí ni con el nombre de otra materia.
     Si hay varios docentes para una materia, menciónalos a todos.
     Si la evidencia no menciona lo que preguntan, dilo en una frase y no listes otros datos que no pidieron.
     Nunca escribas "según la evidencia", "evidencia 1", "primera tabla", "fuente" ni nombres de archivos. No uses encabezados repetidos.

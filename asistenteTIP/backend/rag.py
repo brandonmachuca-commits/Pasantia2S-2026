@@ -453,12 +453,15 @@ class RAGSystem:
         sentinel = object()
         texto_completo: list[str] = []
 
-        preferidas = self.aliases_de(self.detectar_materias(query))
+        materias = self.detectar_materias(query)
+        preferidas = self.aliases_de(materias)
+        equivalencias = [self.aliases_de([codigo]) for codigo in materias]
 
         def produce() -> None:
             try:
                 for response_part in responder_stream(
-                    query, self.agentes, historial=historial, materia_preferida=preferidas or None,
+                    query, self.agentes, historial=historial,
+                    materia_preferida=preferidas or None, equivalencias=equivalencias,
                 ):
                     texto_completo.append(response_part)
                     loop.call_soon_threadsafe(queue.put_nowait, (response_part, "document"))
@@ -489,6 +492,9 @@ class RAGSystem:
         )
         query = self._contextualizar(normalizar_consulta(question.strip()), state)
         print(f"[RAG:MEMORIA] sesión={session_id} | consulta contextualizada={query}", flush=True)
-        preferidas = self.aliases_de(self.detectar_materias(query))
-        return "".join(responder_stream(query, self.agentes, materia_preferida=preferidas or None))
+        materias = self.detectar_materias(query)
+        return "".join(responder_stream(
+            query, self.agentes, materia_preferida=self.aliases_de(materias) or None,
+            equivalencias=[self.aliases_de([codigo]) for codigo in materias],
+        ))
 
