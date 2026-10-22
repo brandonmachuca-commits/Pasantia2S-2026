@@ -275,14 +275,19 @@ def _es_consulta_general_materias(pregunta: str) -> bool:
         "que se estudia", "materias por semestre", "lista de materias",
         "que asignaturas", "cuantas materias",
     ))
-    # "carre\w*" tolera errores de tipeo como "carrear".
     plural = re.search(r"\b(materias|asignaturas|cursos)\b", q)
+    singular = re.search(r"\b(materia|asignatura)\b", q)
+    # "carre\w*" tolera errores de tipeo como "carrear".
     contexto = re.search(
         r"\b(carre\w*|plan|todas?|todo|lista|listado|semestres|cuantas|total|completo|completa|existen|transcurso)\b", q
     )
+    # "¿Cuánta materia tengo?" o "puedes contarlas" piden una cantidad: el índice ya la trae calculada.
+    cantidad = re.search(r"\b(cuant\w*|cantidad|total|cont\w+)\b", q)
     return bool(
         general
         or (plural and contexto)
+        or (singular and cantidad)
+        or (cantidad and "semestre" in q)
         or (
             "semestre" in q
             and any(termino in q for termino in ("materia", "asignatura", "curso", "cuantas", "cantidad"))
@@ -317,6 +322,7 @@ def _indice_materias(pregunta: str) -> tuple[str, str] | None:
     if not pedidos:
         pedidos = list(range(1, 7))
     bloques = []
+    total_materias = 0
     for i, encabezado in enumerate(encabezados):
         numero = nombres.index(encabezado.group(1).title()) + 1
         if numero not in pedidos:
@@ -324,9 +330,15 @@ def _indice_materias(pregunta: str) -> tuple[str, str] | None:
         fin = encabezados[i + 1].start() if i + 1 < len(encabezados) else len(texto)
         materias = re.findall(r"(?m)^\s*[-*•]\s*(.+?)\s*$", texto[encabezado.end():fin])
         if materias:
-            bloques.append(f"{nombres[numero - 1]} Semestre\n" + "\n".join(f"- {m}" for m in materias))
+            total_materias += len(materias)
+            bloques.append(
+                f"{nombres[numero - 1]} Semestre ({len(materias)} materias)\n" + "\n".join(f"- {m}" for m in materias)
+            )
     if not bloques:
         return None
+    if len(bloques) > 1:
+        etiqueta = "Total de la carrera" if len(bloques) == len(encabezados) else "Total de los semestres pedidos"
+        bloques.append(f"{etiqueta}: {total_materias} materias")
     return str(archivo), "\n\n".join(bloques)
 
 def _canonical_category(raw: str, categories: Mapping[str, object]) -> str | None:
@@ -593,12 +605,92 @@ def _filtrar_por_materia(results: list[dict], aliases: list[str] | None) -> list
 
     if not any(menciona(f) for r in results for f in r.get("fragmentos", [])):
         return results
+    def solo_lineas_de_la_materia(fragment: dict) -> dict:
+        """En tablas de horarios/parciales deja el encabezado y solo las filas de la materia pedida."""
+        lines = str(fragment.get("chunk", "")).splitlines()
+        if not lines or not lines[0].startswith(("Horarios;", "Parciales y exámenes;")):
+            return fragment
+        kept = [lines[0]] + [
+            line for line in lines[1:]
+            if any(p.search(_normalizar(line)) for p in patterns)
+        ]
+        return {**fragment, "chunk": "\n".join(kept)} if len(kept) > 1 else fragment
+
     filtered = []
     for result in results:
-        kept = [f for f in result.get("fragmentos", []) if menciona(f)]
+        kept = [solo_lineas_de_la_materia(f) for f in result.get("fragmentos", []) if menciona(f)]
         if kept:
             filtered.append({**result, "fragmentos": kept})
     return filtered
+
+
+def _es_consulta_general_docentes(pregunta: str) -> bool:
+    q = _normalizar(pregunta)
+    docentes = re.search(r"\b(profesor\w*|profe\w*|docente\w*)\b", q)
+    amplia = re.search(r"\b(todos|todas|lista|listado|completo|completa|cada materia)\b|de la carrera|cuales son los", q)
+    return bool(docentes and amplia)
+
+
+def _limpiar_docente(texto: str) -> str:
+    """Corta el nombre antes del correo electrónico que suele seguirlo en las fichas."""
+    nombre = []
+    for token in texto.split():
+        if "@" in token or re.fullmatch(r"[a-z0-9_-]+\.[a-z0-9._-]+", token):
+            break
+        nombre.append(token)
+    return " ".join(nombre).strip(" .,:;-")
+
+
+def _directorio_docentes(agentes: Mapping[str, object]) -> str | None:
+    """Lista de docentes por materia: leyenda de horarios (vigente) y, si falta, la ficha de cada materia."""
+    def clave(texto: str) -> str:
+        return re.sub(r"[^a-z0-9]", "", _normalizar(texto))
+
+    vigentes: dict[str, tuple[str, str]] = {}   # clave -> (materia, docente)
+    fichas: dict[str, tuple[str, str]] = {}
+    leyenda = re.compile(r"^(?P<head>[^\n]{3,90}?)\s+[–—-]\s+(?P<who>[A-ZÁÉÍÓÚÑ][^\n–—]{3,80})$", re.MULTILINE)
+    for agent in agentes.values():
+        chunks = getattr(agent, "chunks", [])
+        sources = getattr(agent, "chunk_sources", [])
+        for chunk, source in zip(chunks, sources):
+            if source.startswith("Documentos/"):
+                for match in leyenda.finditer(chunk):
+                    tokens = match.group("head").split()
+                    if len(tokens) < 2:
+                        continue
+                    size = 2 if len(tokens) > 3 and tokens[2].casefold() == "taller" else 1
+                    codigo = " ".join(tokens[:size])
+                    nombre = " ".join(tokens[size:])
+                    vigentes[clave(codigo)] = (f"{nombre} ({codigo})", re.sub(r"\s*/\s*", " y ", match.group("who").strip()))
+            carpeta = re.search(r"/(?:cursos|materias)/([^/]+)/", source)
+            if carpeta:
+                docente = re.search(r"Docentes?:?[ \t]*\n?[ \t]*([^\n]+)", chunk)
+                if docente:
+                    codigo = carpeta.group(1).strip()
+                    titulo = re.match(r"\s*TIP - ([^\n]+?)(?:\s+Search this site|\n|$)", chunk)
+                    nombre_materia = titulo.group(1).strip() if titulo else ""
+                    etiqueta = (
+                        nombre_materia if not nombre_materia or len(codigo) > 20 or clave(codigo) == clave(nombre_materia)
+                        else f"{nombre_materia} ({codigo})"
+                    ) if nombre_materia else codigo
+                    nombre = _limpiar_docente(docente.group(1))
+                    if nombre:
+                        fichas.setdefault(clave(codigo), (etiqueta, nombre))
+    if not vigentes and not fichas:
+        return None
+    # Un mismo docente escrito distinto ("Gonzalo Deleon") toma la grafía de la leyenda vigente.
+    canonicos = {clave(nombre): nombre for _, nombre in vigentes.values()}
+    fichas = {k: (m, canonicos.get(clave(n), n)) for k, (m, n) in fichas.items()}
+    lineas = []
+    for k, (materia, nombre) in vigentes.items():
+        lineas.append((materia, nombre))
+        if k in fichas and clave(fichas[k][1]) != clave(nombre) and DEBUG_FLOW:
+            print(f"[DOCENTES:CONFLICTO] {materia}: horarios={nombre!r} | ficha={fichas[k][1]!r}", flush=True)
+    lineas += [datos for k, datos in fichas.items() if k not in vigentes]
+    lineas.sort(key=lambda item: _normalizar(item[0]))
+    return "Docentes por materia:\n" + "\n".join(
+        f"- {materia}: {nombre}" for materia, nombre in lineas
+    )
 
 
 def _evidencia(results: list[dict], incluir_apoyos: bool = True) -> tuple[str, list[str]]:
@@ -618,7 +710,7 @@ def _evidencia(results: list[dict], incluir_apoyos: bool = True) -> tuple[str, l
             text = re.sub(r"\s+", " ", raw).strip()
             if not text:
                 continue
-            block = f"[{result['categoria']} | {source} | evidencia {index}]\n{text[:1500]}"
+            block = f"[{result['categoria']} | {source} | evidencia {index}]\n{text[: 5000 if fragment.get('completo') else 1500]}"
             if used + len(block) > MAX_CONTEXT_CHARS:
                 break
             category_parts.append(block)
@@ -644,6 +736,16 @@ def responder_stream(
         print(f"[FLUJO:INICIO] pregunta={pregunta}", flush=True)
     consultas, error_router = clasificar(pregunta, agentes)
     print("[ROUTER] " + (", ".join(item["categoria"] for item in consultas) or "sin categoría disponible"))
+    directorio = (
+        _directorio_docentes(agentes)
+        if not materia_preferida and _es_consulta_general_docentes(pregunta) else None
+    )
+
+    if directorio:
+        # La lista ya está armada y es exacta: se entrega tal cual, sin pedirle al modelo que la reescriba.
+        print("[DOCENTES:DIRECTORIO] lista completa entregada sin consultar al modelo", flush=True)
+        yield directorio
+        return
 
     if not consultas:
         forced, unavailable, has_intent = _forced_routes(pregunta, agentes)
@@ -654,7 +756,14 @@ def responder_stream(
         return
 
     catalogo = _indice_materias(pregunta) if _es_consulta_general_materias(pregunta) else None
-    if catalogo:
+    if directorio:
+        results = [{
+            "categoria": "docentes",
+            "consulta": pregunta,
+            "fragmentos": [{"chunk": directorio, "fuente": "directorio de docentes", "score": 1.0, "completo": True}],
+        }]
+        print("[DOCENTES:DIRECTORIO] lista completa enviada sin top_k", flush=True)
+    elif catalogo:
         ruta_indice, texto_indice = catalogo
         consultas_adicionales = [
             item for item in consultas
@@ -711,10 +820,13 @@ def responder_stream(
         bloque_historial = f"\nConversación reciente (de más antigua a más nueva):\n{turnos}\n"
 
     instruccion_indice = (
-        "La evidencia del índice es completa para los semestres pedidos. Enumera todas sus materias, "
-        "sin omitir semestres ni asignaturas; si el historial contradice el índice, usa el índice actual.\n"
+        "La evidencia del índice es completa para los semestres pedidos y ya trae las cantidades calculadas. "
+        "Enumera todas sus materias sin omitir semestres ni asignaturas y, si preguntan cuántas son, "
+        "usa esas cantidades sin recalcular; si el historial contradice el índice, usa el índice actual.\n"
         if catalogo else ""
     )
+    if directorio:
+        instruccion_indice += "La evidencia es la lista completa de docentes por materia: enumera todos, sin omitir ninguno.\n"
 
     bloque_equivalencias = ""
     grupos = [sorted(set(grupo), key=len)[:5] for grupo in (equivalencias or []) if len(set(grupo)) >= 2]

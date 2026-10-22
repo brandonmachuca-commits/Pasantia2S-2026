@@ -334,10 +334,14 @@ class RAGSystem:
 
     def detectar_materias(self, pregunta: str) -> list[str]:
         """Todas las materias nombradas; el texto ya reconocido no se vuelve a usar."""
-        query = quitar_acentos(pregunta).casefold()
+        # Se comparan sin la "s" final de cada palabra, para que "principio" y "principios" coincidan.
+        def singular(texto: str) -> str:
+            return re.sub(r"(?<=\w)s\b", "", texto)
+
+        query = singular(quitar_acentos(pregunta).casefold())
         found: list[str] = []
         for alias, canonical in getattr(self, "_entity_aliases", []):
-            pattern = rf"(?<!\w){re.escape(alias)}(?!\w)"
+            pattern = rf"(?<!\w){re.escape(singular(alias))}(?!\w)"
             if re.search(pattern, query):
                 if canonical not in found:
                     found.append(canonical)
