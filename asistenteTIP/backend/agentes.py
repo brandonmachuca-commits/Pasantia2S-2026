@@ -267,7 +267,7 @@ def _detectar_intenciones(pregunta: str) -> list[dict]:
 def _es_consulta_general_materias(pregunta: str) -> bool:
     q = _normalizar(pregunta)
     # Pedidos de horarios, parciales o docentes se resuelven en sus propias carpetas.
-    if re.search(r"horario|parcial|examen|profesor|profe\b|docente|dicta|previatura|credito|programa de", q):
+    if re.search(r"horario|parcial|examen|profesor|profe\b|docente|quien(?:es)? (?:dicta|dictan|da|dan)\b|previatura|credito|programa de", q):
         return False
     general = any(termino in q for termino in (
         "que materias hay", "que materias tiene", "todas las materias",
@@ -641,11 +641,33 @@ def _limpiar_docente(texto: str) -> str:
     return " ".join(nombre).strip(" .,:;-")
 
 
-def _directorio_docentes(agentes: Mapping[str, object]) -> str | None:
-    """Lista de docentes por materia: leyenda de horarios (vigente) y, si falta, la ficha de cada materia."""
-    def clave(texto: str) -> str:
-        return re.sub(r"[^a-z0-9]", "", _normalizar(texto))
+def _clave_materia(texto: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", _normalizar(texto))
 
+
+def _docentes_estaticos() -> dict[str, tuple[str, str]]:
+    """Archivo estático de docentes: solo respalda preguntas por docentes de materias sin otra fuente."""
+    ruta = Path(__file__).resolve().parent / "data" / "processed" / "docentes" / "contenido.txt"
+    try:
+        texto = ruta.read_text(encoding="utf-8-sig")
+    except OSError:
+        return {}
+    resultado: dict[str, tuple[str, str]] = {}
+    docente = ""
+    for linea in texto.splitlines():
+        linea = linea.strip()
+        if linea.lower().startswith("docente:"):
+            docente = linea.split(":", 1)[1].strip()
+        elif linea.lower().startswith("dicta:") and docente:
+            for materia in re.finditer(r"([^,()]+?)\s*\(([^)]+)\)", linea.split(":", 1)[1]):
+                codigo, nombre = materia.group(1).strip(), materia.group(2).strip()
+                resultado.setdefault(_clave_materia(codigo), (f"{nombre} ({codigo})", docente))
+    return resultado
+
+
+def _leer_docentes(agentes: Mapping[str, object]) -> tuple[dict, dict]:
+    """Docentes por materia: de la leyenda de horarios (vigentes) y de la ficha de cada materia."""
+    clave = _clave_materia
     vigentes: dict[str, tuple[str, str]] = {}   # clave -> (materia, docente)
     fichas: dict[str, tuple[str, str]] = {}
     leyenda = re.compile(r"^(?P<head>[^\n]{3,90}?)\s+[–—-]\s+(?P<who>[A-ZÁÉÍÓÚÑ][^\n–—]{3,80})$", re.MULTILINE)
@@ -676,11 +698,22 @@ def _directorio_docentes(agentes: Mapping[str, object]) -> str | None:
                     nombre = _limpiar_docente(docente.group(1))
                     if nombre:
                         fichas.setdefault(clave(codigo), (etiqueta, nombre))
-    if not vigentes and not fichas:
-        return None
+    # Último recurso: el archivo estático de docentes, solo para materias que no tienen otra fuente.
+    for k, datos in _docentes_estaticos().items():
+        if k not in vigentes:
+            fichas.setdefault(k, datos)
     # Un mismo docente escrito distinto ("Gonzalo Deleon") toma la grafía de la leyenda vigente.
     canonicos = {clave(nombre): nombre for _, nombre in vigentes.values()}
     fichas = {k: (m, canonicos.get(clave(n), n)) for k, (m, n) in fichas.items()}
+    return vigentes, fichas
+
+
+def _directorio_docentes(agentes: Mapping[str, object]) -> str | None:
+    """Lista completa: la leyenda de horarios manda y la ficha solo completa las materias que no están en ella."""
+    clave = _clave_materia
+    vigentes, fichas = _leer_docentes(agentes)
+    if not vigentes and not fichas:
+        return None
     lineas = []
     for k, (materia, nombre) in vigentes.items():
         lineas.append((materia, nombre))
@@ -691,6 +724,16 @@ def _directorio_docentes(agentes: Mapping[str, object]) -> str | None:
     return "Docentes por materia:\n" + "\n".join(
         f"- {materia}: {nombre}" for materia, nombre in lineas
     )
+
+
+def _docentes_de(agentes: Mapping[str, object], aliases: list[str]) -> tuple[list[str], bool]:
+    """Docente de las materias nombradas: primero la leyenda de horarios; si la materia no está, su ficha."""
+    vigentes, fichas = _leer_docentes(agentes)
+    claves = {_clave_materia(alias) for alias in aliases}
+    lineas = [f"- {materia}: {nombre}" for k, (materia, nombre) in vigentes.items() if k in claves]
+    hay_vigente = bool(lineas)
+    lineas += [f"- {materia}: {nombre}" for k, (materia, nombre) in fichas.items() if k in claves and k not in vigentes]
+    return lineas, hay_vigente
 
 
 def _evidencia(results: list[dict], incluir_apoyos: bool = True) -> tuple[str, list[str]]:
@@ -783,6 +826,24 @@ def responder_stream(
         print(f"[CATALOGO:ESTATICO] archivo={ruta_indice} | secciones enviadas sin top_k", flush=True)
     else:
         results = _filtrar_por_materia(_buscar(agentes, consultas, materia_aliases, materia_preferida), materia_preferida)
+    if materia_preferida and any(rule["id"] == "docentes" for rule in _detectar_intenciones(pregunta)):
+        lineas_docentes, hay_vigente = _docentes_de(agentes, materia_preferida)
+        if lineas_docentes:
+            if hay_vigente:
+                # Si la materia figura en la leyenda de horarios, el docente de la ficha se descarta.
+                for result in results:
+                    for fragment in result.get("fragmentos", []):
+                        fragment["chunk"] = re.sub(
+                            r"(Docentes?:?[ \t]*\n?[ \t]*)[^\n]+", r"\1(ver docente vigente)", str(fragment.get("chunk", ""))
+                        )
+            results.insert(0, {
+                "categoria": "docentes",
+                "consulta": pregunta,
+                "fragmentos": [{
+                    "chunk": "Docente vigente (dato oficial, tiene prioridad):\n" + "\n".join(lineas_docentes),
+                    "fuente": "docentes vigentes", "score": 1.0, "completo": True,
+                }],
+            })
     evidence, sources = _evidencia(results, incluir_apoyos="apoyo" in _normalizar(pregunta))
     if DEBUG_FLOW:
         count_fragments = sum(len(item.get("fragmentos", [])) for item in results)

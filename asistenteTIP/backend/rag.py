@@ -278,6 +278,23 @@ class RAGSystem:
             r"^(?P<code>[^\n:(]{2,14}?)(?: \([^)]*\))?: (?:Lunes|Martes|Miércoles|Jueves|Viernes|Sábado)\b",
             re.MULTILINE,
         )
+        def registrar_dicta(texto: str) -> None:
+            for line in texto.splitlines():
+                match = re.search(r"\bDicta(?:n)?\s*:\s*(.+)", line, flags=re.IGNORECASE)
+                if not match:
+                    continue
+                for segment in match.group(1).split(","):
+                    course = re.match(
+                        r"\s*([A-ZÁÉÍÓÚÜÑ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9]{0,9})"
+                        r"(?:\s*\(([^)]{3,100})\))?",
+                        segment,
+                    )
+                    if course:
+                        code = course.group(1).strip()
+                        add(code, code)
+                        if course.group(2):
+                            add(course.group(2), code)
+
         for agent in self.agentes.values():
             for chunk, source in zip(agent.chunks, agent.chunk_sources):
                 # Cada carpeta de cursos/<Código>/ es una materia; "TIP - <Nombre>" es su nombre oficial.
@@ -304,21 +321,13 @@ class RAGSystem:
                         code = match.group("code").strip()
                         add(code, code)
 
-                for line in chunk.splitlines():
-                    match = re.search(r"\bDicta(?:n)?\s*:\s*(.+)", line, flags=re.IGNORECASE)
-                    if not match:
-                        continue
-                    for segment in match.group(1).split(","):
-                        course = re.match(
-                            r"\s*([A-ZÁÉÍÓÚÜÑ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9]{0,9})"
-                            r"(?:\s*\(([^)]{3,100})\))?",
-                            segment,
-                        )
-                        if course:
-                            code = course.group(1).strip()
-                            add(code, code)
-                            if course.group(2):
-                                add(course.group(2), code)
+                registrar_dicta(chunk)
+
+        # El archivo estático de docentes también aporta códigos y nombres de materias (BD1, etc.).
+        try:
+            registrar_dicta((self.static_root / "docentes" / "contenido.txt").read_text(encoding="utf-8-sig"))
+        except OSError:
+            pass
 
         # Un alias genérico que es el comienzo del nombre de otra materia ("matemática"
         # frente a "matemática discreta y lógica 1") es ambiguo: se descarta.
@@ -372,7 +381,7 @@ class RAGSystem:
             return False
         starts_as_followup = q.startswith(("y ", "¿y ", "tambien ", "ademas "))
         refers_to_previous = any(term in q for term in (
-            "su ", "sus ", "esa ", "ese ", "la misma", "el mismo", "cuando es",
+            "su ", "sus ", "esa ", "ese ", "esas ", "esos ", "la misma", "el mismo", "cuando es",
             "cuando son", "y el examen", "y los parciales", "y la fecha",
         ))
         return starts_as_followup or refers_to_previous
@@ -401,7 +410,15 @@ class RAGSystem:
             label for label, terms in labels if any(term in q for term in terms)
         )
 
+    _SEMESTRE = re.compile(r"\b(primer|primero|segundo|tercer|tercero|cuarto|quinto|sexto)\s+semestre\b")
+
     def _contextualizar(self, pregunta: str, state: dict) -> str:
+        # "¿Cuáles son esas 6 materias?" se refiere al semestre del que se hablaba.
+        semestre = self._SEMESTRE.search(quitar_acentos(pregunta.casefold()))
+        if semestre:
+            state["last_semestre"] = semestre.group(0)
+        elif state.get("last_semestre") and self._es_seguimiento(pregunta) and re.search(r"\bmaterias?\b", quitar_acentos(pregunta.casefold())):
+            pregunta = pregunta.rstrip() + f" Se refiere al {state['last_semestre']}."
         current_entity = self.detectar_materia(pregunta)
         if current_entity:
             state["last_entity"] = current_entity
