@@ -1,0 +1,2 @@
+Geist y Geist Mono (variables, subconjuntos latin y latin-ext), paquetes @fontsource-variable.
+Licencia SIL Open Font License 1.1. Se alojan localmente para no depender de internet.

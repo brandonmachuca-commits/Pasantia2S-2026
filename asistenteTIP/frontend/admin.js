@@ -53,16 +53,23 @@
     const names = Object.keys(categories).sort((a, b) => a.localeCompare(b, 'es'));
     if (!names.length) list.innerHTML = '<div class="empty">No hay agentes cargados.</div>';
     names.forEach((name) => {
-      const item = document.createElement('div'); item.className = 'status-item';
-      const label = document.createElement('div');
-      const title = document.createElement('strong'); title.textContent = name;
-      const detail = document.createElement('small');
       const info = categories[name];
-      detail.textContent = `${info.archivos ?? 0} archivo(s) · ${info.fragmentos ?? info.chunks ?? 0} fragmentos`;
-      label.append(title, detail);
-      const count = document.createElement('span'); count.className = 'count';
-      count.textContent = info.activo === false || (info.fragmentos ?? info.chunks ?? 0) === 0 ? 'Vacío' : 'Activo';
-      item.append(label, count); list.append(item);
+      const chunks = info.fragmentos ?? info.chunks ?? 0;
+      const empty = info.activo === false || chunks === 0;
+      const row = document.createElement('div'); row.className = 'status-item'; row.setAttribute('role', 'row');
+      const cells = [
+        ['name', name, 'rowheader'],
+        ['num', String(info.archivos ?? 0), 'cell'],
+        ['num', String(chunks), 'cell'],
+      ];
+      cells.forEach(([kind, text, role]) => {
+        const cell = document.createElement('span'); cell.className = kind; cell.textContent = text; cell.setAttribute('role', role);
+        row.append(cell);
+      });
+      const state = document.createElement('span'); state.setAttribute('role', 'cell'); state.className = 'num';
+      const badge = document.createElement('span'); badge.className = `badge ${empty ? 'empty-badge' : 'ok-badge'}`;
+      badge.textContent = empty ? 'Vacío' : 'Activo';
+      state.append(badge); row.append(state); list.append(row);
     });
   }
   $('login-form').addEventListener('submit', async (event) => {
@@ -75,13 +82,13 @@
       const data = await result.json().catch(() => ({}));
       if (!result.ok) throw new Error(data.detail || `HTTP ${result.status}`);
       token = data.token; sessionStorage.setItem(TOKEN_KEY, token); $('admin-password').value = '';
-      showDashboard(); await refresh(); notice('status-message', 'Acceso concedido.', 'success');
+      showDashboard(); await refresh();
     } catch (error) { notice('login-message', error.message, 'error'); }
   });
   $('category').addEventListener('change', updateTargets);
   $('file-input').addEventListener('change', () => {
     const file = $('file-input').files[0];
-    $('file-label').textContent = file ? `${file.name} · ${(file.size / 1024 / 1024).toFixed(2)} MB` : 'Selecciona un archivo';
+    $('file-label').textContent = file ? `${file.name} · ${(file.size / 1024 / 1024).toFixed(2)} MB` : 'Selecciona o arrastra un archivo';
   });
   const dropZone = $('drop-zone');
   dropZone.addEventListener('dragover', (event) => { event.preventDefault(); dropZone.classList.add('dragover'); });
@@ -105,7 +112,7 @@
       form.append('archivo', file);
       const result = await api('/admin/upload', { method: 'POST', body: form });
       notice('upload-message', result.mensaje || 'Archivo subido y agente actualizado.', 'success');
-      $('upload-form').reset(); $('file-label').textContent = 'Selecciona un archivo';
+      $('upload-form').reset(); $('file-label').textContent = 'Selecciona o arrastra un archivo';
       await refresh();
     } catch (error) {
       notice('upload-message', error.message, 'error');

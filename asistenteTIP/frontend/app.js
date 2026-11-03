@@ -25,30 +25,67 @@
     status.classList.toggle('pulse', pulse);
   }
 
+  const LEYENDAS = {
+    inactive: 'Esperando tu pregunta',
+    listening: 'Te escucho…',
+    thinking: 'Pensando…',
+    speaking: 'El asistente está hablando',
+  };
+
   function setHologram(state) {
-    hologram.classList.remove('inactive', 'listening', 'thinking', 'speaking');
-    hologram.classList.add(state);
+    for (const el of [hologram, $('orb')]) {
+      el.classList.remove('inactive', 'listening', 'thinking', 'speaking');
+      el.classList.add(state);
+    }
+    $('orb-caption').textContent = LEYENDAS[state] || LEYENDAS.inactive;
+    // La respuesta que se está diciendo en voz alta queda marcada en la transcripción.
+    document.querySelectorAll('.msg.hablando').forEach((el) => el.classList.remove('hablando'));
+    if (state === 'speaking') {
+      const respuestas = $('chat-messages').querySelectorAll('.msg.assistant');
+      if (respuestas.length) respuestas[respuestas.length - 1].classList.add('hablando');
+    }
+  }
+
+  // Dos formas de conversar: por voz (círculo + transcripción) o escribiendo (chat).
+  function setModo(modo) {
+    document.body.dataset.modo = modo;
+    $('modo-switch').textContent = modo === 'voz' ? 'Prefiero escribir' : 'Conversar por voz';
+  }
+
+  const SPARKLE = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"></path></svg>';
+
+  // Las sugerencias solo se muestran mientras la conversación está vacía.
+  function syncChips() {
+    $('chips').hidden = Boolean($('chat-messages').querySelector('.msg.user'));
   }
 
   function addMessage(text, type) {
     const article = document.createElement('article');
-    article.className = `message ${type}`;
+    article.className = `msg ${type}`;
+    const cuerpo = document.createElement('div');
+    cuerpo.className = 'cuerpo';
+    const rol = document.createElement('span');
+    rol.className = 'rol';
+    rol.textContent = type === 'assistant' ? 'Asistente' : 'Tú';
+    const contenido = document.createElement('p');
+    // Text-only rendering prevents document/model output from becoming HTML.
+    contenido.textContent = text;
     if (type === 'assistant') {
       const avatar = document.createElement('div');
-      avatar.className = 'assistant-avatar';
-      const image = document.createElement('img');
-      image.src = '/static/img/logo-utec.jpg';
-      image.alt = '';
-      avatar.append(image);
-      article.append(avatar);
+      avatar.className = 'avatar';
+      avatar.setAttribute('aria-hidden', 'true');
+      avatar.innerHTML = SPARKLE;   // ícono fijo del código, nunca texto del modelo
+      contenido.className = 'text';
+      cuerpo.append(rol, contenido);
+      article.append(avatar, cuerpo);
+    } else {
+      contenido.className = 'bubble';
+      cuerpo.append(rol, contenido);
+      article.append(cuerpo);
     }
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    // Text-only rendering prevents document/model output from becoming HTML.
-    bubble.textContent = text;
-    article.append(bubble);
     $('chat-messages').append(article);
-    $('chat-messages').scrollTop = $('chat-messages').scrollHeight;
+    syncChips();
+    $('chat-scroll').scrollTop = $('chat-scroll').scrollHeight;
   }
 
   function cleanForSpeech(text) {
@@ -199,7 +236,6 @@
     $('mic-btn').classList.toggle('active', listening);
     $('mic-btn').setAttribute('aria-pressed', String(listening));
     $('mic-label').textContent = listening ? 'Escuchando…' : 'Hablar';
-    $('mic-icon').textContent = listening ? '⏹' : '🎤';
   }
 
   function initSpeechRecognition() {
@@ -233,7 +269,7 @@
       }
     };
     recognition.onerror = (event) => {
-      setMicButton(false); setHologram('inactive');
+      setMicButton(false); if (!afterTurn) setHologram('inactive');
       if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
         micDenied = true;
         setStatus('Permite el uso del micrófono en el navegador para hablar.');
@@ -243,7 +279,7 @@
     };
     recognition.onend = () => {
       setMicButton(false);
-      if (!turnBusy) setHologram('inactive');
+      if (!turnBusy && !afterTurn) setHologram('inactive');
       if ($('status-bar').textContent.startsWith('Escuchando')) setStatus('Sistema listo · Escribe o pulsa el micrófono');
       if (afterTurn && !turnBusy) afterTurn();   // presencia: sigue escuchando mientras haya alguien
     };
@@ -265,8 +301,14 @@
   // alguien se acerca, saluda y abre el micrófono; al alejarse, reinicia la conversación.
   // Está activo en la página principal; con ?presencia=0 se usa solo el chat.
   const params = new URLSearchParams(window.location.search);
+  setModo('texto');
   if (params.get('presencia') !== '0') initKiosk();
   else $('kiosk-overlay').hidden = true;
+  $('modo-switch').addEventListener('click', () => {
+    // De voz a escribir se cierra la cámara; de escribir a voz se vuelve a la pantalla de inicio.
+    if (document.body.dataset.modo === 'voz') $('kiosk-text-only').click();
+    else window.location.href = window.location.pathname;
+  });
 
   function initKiosk() {
     const PRESENT_AFTER_MS = Number(params.get('presente')) || 1200;  // cara estable antes de saludar
@@ -295,13 +337,14 @@
       if (timer) { clearInterval(timer); timer = null; }
       video.srcObject?.getTracks().forEach((track) => track.stop());
       active = false; afterTurn = null;
+      setModo('texto');
       overlay.hidden = true; $('kiosk-badge').hidden = true;
       setStatus(note || 'Sistema listo · Escribe o pulsa el micrófono');
     }
 
     function showOverlay(text, waiting) {
       message.textContent = text;
-      overlay.classList.toggle('waiting', Boolean(waiting));
+      overlay.classList.toggle('esperando', Boolean(waiting));
       overlay.hidden = false;
     }
 
@@ -322,6 +365,7 @@
       sessionId = window.crypto?.randomUUID?.() || `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
       sessionStorage.setItem('session_id', sessionId);
       $('chat-messages').replaceChildren();
+      syncChips();
     }
 
     function beginSession() {
@@ -344,7 +388,7 @@
       newVisitor();
       setHologram('inactive'); setStatus('Sistema listo · Acércate para consultar');
       $('stop-btn').hidden = true;
-      showOverlay('Acércate para consultar. Te escucharé cuando estés frente a la pantalla.', true);
+      showOverlay('Te escucharé cuando estés frente a la pantalla.', true);
     }
 
     function check() {
@@ -393,8 +437,9 @@
         return;
       }
       $('kiosk-badge').hidden = false;
+      setModo('voz');
       setStatus('Sistema listo · Acércate para consultar');
-      showOverlay('Acércate para consultar. Te escucharé cuando estés frente a la pantalla.', true);
+      showOverlay('Te escucharé cuando estés frente a la pantalla.', true);
       timer = setInterval(check, CHECK_MS);
     }
 
