@@ -18,12 +18,9 @@ except ImportError:
 
 SUPPORTED_EXTENSIONS = {".pdf", ".txt", ".md", ".markdown", ".csv", ".docx", ".html", ".htm"}
 STATIC_FALLBACK_CATEGORIES = {
-    "cursos", "materias", "info_general", "perfil_ingreso", "perfil_egreso",
+    "info_general", "perfil_ingreso", "perfil_egreso",
 }
-STATIC_CATEGORY_ALIASES = {
-    "cursos": ("cursos", "materias"),
-    "materias": ("materias", "cursos"),
-}
+STATIC_CATEGORY_ALIASES: dict[str, tuple[str, ...]] = {}
 DEFAULT_CHUNK_SIZE = 1000
 DEFAULT_CHUNK_OVERLAP = 120
 
@@ -36,6 +33,22 @@ def _normalizar(texto: str) -> str:
 
 def _tokens(texto: str) -> list[str]:
     return re.findall(r"[a-z0-9]+", _normalizar(texto))
+
+
+PREFIJO_FICHA = "Ficha de "
+_PALABRAS_VACIAS = {"de", "del", "la", "las", "el", "los", "y", "e", "en", "a", "para"}
+
+
+def titulo_de_ficha(fragmento: str) -> str:
+    """Título que Agent antepone a los fragmentos de una ficha subida a la raíz de cursos."""
+    found = re.match(rf"{PREFIJO_FICHA}(.+?)\. ", fragmento)
+    return found.group(1).strip() if found else ""
+
+
+def siglas_de_titulo(titulo: str) -> str:
+    """"Estructura de Datos y Algoritmos" -> "eda"; "Bases de Datos 1" -> "bd1"."""
+    palabras = re.findall(r"[^\W\d_]+|\d+", _normalizar(titulo))
+    return "".join(p if p.isdigit() else p[0] for p in palabras if p not in _PALABRAS_VACIAS)
 
 
 class _TextoHTML(HTMLParser):
@@ -80,7 +93,8 @@ class Agent:
         self.chunks: list[str] = []
         self.chunk_sources: list[str] = []
         self.chunk_tiers: list[str] = []
-        self.chunk_root_level: list[bool] = [] 
+        self.chunk_root_level: list[bool] = []
+        self.textos: dict[str, str] = {}
         self.embeddings = None
         self.files_loaded: list[str] = []
         self.load_errors: list[str] = []
@@ -115,6 +129,59 @@ class Agent:
                 continue
         return data.decode("utf-8", errors="replace")
 
+    @staticmethod
+    def _limpiar_texto_pdf(texto: str) -> str:
+        """Recompone párrafos cuando el PDF entrega una palabra por línea.
+
+        Algunos PDF (por ejemplo, exportados desde Word) se extraen como
+        "Estructura\\n \\nde\\n \\nDatos". Sin este paso, cada palabra queda como
+        un fragmento aislado ("Docente:", "Créditos:") sin su valor.
+        """
+        lineas = [linea.strip() for linea in texto.replace("\r\n", "\n").replace("\r", "\n").split("\n")]
+        con_texto = [linea for linea in lineas if linea]
+        if len(con_texto) < 20:
+            return texto
+        palabras_por_linea = sum(len(linea.split()) for linea in con_texto) / len(con_texto)
+        vacias = len(lineas) - len(con_texto)
+        if palabras_por_linea >= 2.0 or vacias < len(con_texto) * 0.5:
+            return texto
+
+        # Una línea vacía separa palabras; dos o más seguidas separan párrafos.
+        parrafos: list[str] = []
+        actual: list[str] = []
+        vacias_seguidas = 0
+        for linea in lineas:
+            if linea:
+                if vacias_seguidas >= 2 and actual:
+                    parrafos.append(" ".join(actual))
+                    actual = []
+                actual.append(linea)
+                vacias_seguidas = 0
+            else:
+                vacias_seguidas += 1
+        if actual:
+            parrafos.append(" ".join(actual))
+        return "\n".join(parrafos)
+
+    @staticmethod
+    def _titulo_documento(pages: list[tuple[str, Optional[int]]]) -> str:
+        """Título probable de una ficha: su primera línea, sin los datos que la siguen."""
+        primera = next((texto for texto, _ in pages if texto.strip()), "")
+        if not re.search(r"(?i)\b(?:docentes?|cr[eé]ditos)\b", primera[:800]):
+            return ""
+        for texto, _ in pages:
+            for linea in texto.splitlines():
+                linea = linea.strip()
+                if not linea:
+                    continue
+                if linea.startswith("TIP -"):
+                    return ""
+                titulo = re.split(
+                    r"\b(?:docente|materia|cr[eé]ditos|profesor\w*)\s*:", linea, maxsplit=1, flags=re.IGNORECASE
+                )[0].strip(" -–—:.")
+                return titulo if 4 <= len(titulo) <= 80 else ""
+        return ""
+
     def _read_file(self, path: Path) -> list[tuple[str, Optional[int]]]:
         suffix = path.suffix.casefold()
         if suffix in {".txt", ".md", ".markdown", ".csv"}:
@@ -126,7 +193,10 @@ class Agent:
 
                 pages = PyPDFLoader(str(path)).load()
                 return [
-                    (page.page_content or "", int(page.metadata.get("page", index)))
+                    (
+                        self._limpiar_texto_pdf(page.page_content or ""),
+                        int(page.metadata.get("page", index)),
+                    )
                     for index, page in enumerate(pages)
                 ]
             except Exception as loader_error:
@@ -135,7 +205,7 @@ class Agent:
 
                     reader = PdfReader(str(path))
                     return [
-                        (page.extract_text() or "", index)
+                        (self._limpiar_texto_pdf(page.extract_text() or ""), index)
                         for index, page in enumerate(reader.pages)
                     ]
                 except Exception as fallback_error:
@@ -416,6 +486,11 @@ class Agent:
                 if end >= len(paragraph):
                     break
                 start = max(start + 1, end - overlap)
+                # El solapamiento empieza en una palabra completa, no a mitad de una.
+                if paragraph[start - 1] not in " \n":
+                    next_space = paragraph.find(" ", start, end)
+                    if 0 <= next_space < end - 1:
+                        start = next_space + 1
 
         return chunks
 
@@ -425,6 +500,7 @@ class Agent:
         next_sources: list[str] = []
         next_tiers: list[str] = []
         next_root_level: list[bool] = []
+        next_texts: dict[str, str] = {}
         next_files: list[str] = []
         next_errors: list[str] = []
         counts = {"dynamic": 0, "static": 0}
@@ -447,8 +523,18 @@ class Agent:
                     )
                     es_raiz = path.parent == root
                     loaded_any_text = any(page_text.strip() for page_text, _ in pages)
+                    # En cursos, un archivo subido en la raíz es la ficha de una materia: se
+                    # antepone su título a cada fragmento para que la búsqueda por materia
+                    # no descarte el temario, la bibliografía, etc.
+                    titulo = (
+                        self._titulo_documento(pages)
+                        if tier == "dynamic" and self.carpeta.casefold() in {"cursos", "materias"}
+                        else ""
+                    )
                     for page_text, page_number in pages:
                         for chunk in self._chunk_text(page_text):
+                            if titulo:
+                                chunk = f"{PREFIJO_FICHA}{titulo}. {chunk}"
                             key = _normalizar(chunk)
                             if not key or key in seen_in_tier:
                                 continue
@@ -459,8 +545,9 @@ class Agent:
                             next_chunks.append(chunk)
                             next_sources.append(source)
                             next_tiers.append(tier)
-                            next_root_level.append(es_raiz)
+                            next_root_level.append(es_raiz and not titulo)
                     if loaded_any_text:
+                        next_texts[relative_source] = "\n".join(text for text, _ in pages)
                         next_files.append(relative_source)
                         counts[tier] += 1
                     else:
@@ -484,6 +571,7 @@ class Agent:
             self.chunk_sources = next_sources
             self.chunk_tiers = next_tiers
             self.chunk_root_level = next_root_level
+            self.textos = next_texts
             self.embeddings = next_embeddings
             self.files_loaded = next_files
             self.load_errors = next_errors

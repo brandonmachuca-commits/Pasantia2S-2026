@@ -89,7 +89,9 @@
   }
 
   function cleanForSpeech(text) {
-    return text.replace(/```[\s\S]*?```/g, 'código').replace(/[*_#>`]/g, ' ')
+    // El correo se deja solo en pantalla: leerlo en voz alta resulta ininteligible.
+    return text.replace(/[\w.+-]+@[\w.-]+\.\w+/g, 'el correo que aparece en pantalla')
+      .replace(/```[\s\S]*?```/g, 'código').replace(/[*_#>`]/g, ' ')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\s+/g, ' ').trim();
   }
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import hmac
 import json
 import os
@@ -10,6 +11,7 @@ import re
 import secrets
 import tempfile
 import time
+import unicodedata
 import zipfile
 from datetime import datetime
 from io import BytesIO
@@ -115,6 +117,46 @@ def _files_in_category(category: str) -> list[str]:
         if path.is_file() and path.suffix.casefold() in SUPPORTED_UPLOADS and not path.name.startswith((".", "~$")):
             result.append(path.relative_to(directory).as_posix())
     return sorted(result, key=str.casefold)
+
+
+_NOMBRE_GENERICO = ("archivo", "ficha", "programa", "contenido", "version")
+
+
+def _clave_nombre(nombre: str) -> str:
+    """Nombre sin años, números, símbolos ni palabras genéricas: "EDAarchivo2026" y "EDA2027" -> "eda"."""
+    texto = unicodedata.normalize("NFKD", Path(nombre).stem.casefold())
+    letras = re.sub(r"[^a-z]", "", "".join(c for c in texto if not unicodedata.combining(c)))
+    for palabra in _NOMBRE_GENERICO:
+        letras = letras.replace(palabra, "")
+    return letras
+
+
+def _similares(category: str, filename: str, content: bytes) -> dict:
+    """Archivos de la categoría con el mismo contenido o con un nombre equivalente al que se sube."""
+    directory = _category_directory(category)
+    huella = hashlib.sha256(content).hexdigest()
+    nueva = _clave_nombre(filename)
+    identicos: list[str] = []
+    parecidos: list[str] = []
+    for relative in _files_in_category(category):
+        path = directory / Path(*PurePosixPath(relative).parts)
+        try:
+            if hashlib.sha256(path.read_bytes()).hexdigest() == huella:
+                identicos.append(relative)
+                continue
+        except OSError:
+            continue
+        pure = PurePosixPath(relative)
+        claves = {_clave_nombre(pure.name)}
+        if len(pure.parts) > 1:
+            claves.add(_clave_nombre(pure.parts[-2]))
+        claves.discard("")
+        if nueva and any(
+            clave == nueva or (min(len(clave), len(nueva)) >= 3 and (clave.startswith(nueva) or nueva.startswith(clave)))
+            for clave in claves
+        ):
+            parecidos.append(relative)
+    return {"identicos": identicos, "parecidos": parecidos}
 
 
 def _validate_document(filename: str, content: bytes) -> None:
@@ -294,6 +336,7 @@ async def admin_upload(
     categoria: str = Form(...),
     archivo: UploadFile = File(...),
     reemplazar: str = Form(default=""),
+    confirmar: str = Form(default=""),
     _: str = Depends(require_admin),
 ):
     category_dir = _category_directory(categoria)
@@ -307,6 +350,18 @@ async def admin_upload(
     _validate_document(safe_name, content)
 
     category_dir.mkdir(parents=True, exist_ok=True)
+    if not reemplazar:
+        encontrados = _similares(categoria, safe_name, content)
+        if encontrados["identicos"]:
+            raise HTTPException(status_code=409, detail={
+                "codigo": "identico", "archivos": encontrados["identicos"],
+                "mensaje": f"Ese mismo archivo ya está cargado: {', '.join(encontrados['identicos'])}.",
+            })
+        if encontrados["parecidos"] and not confirmar:
+            raise HTTPException(status_code=409, detail={
+                "codigo": "similares", "archivos": encontrados["parecidos"],
+                "mensaje": "Ya existen archivos con un nombre parecido: " + ", ".join(encontrados["parecidos"]) + ".",
+            })
     old_path: Path | None = None
     if reemplazar:
         if reemplazar not in _files_in_category(categoria):
@@ -332,6 +387,7 @@ async def admin_upload(
             temp_file.flush()
             os.fsync(temp_file.fileno())
         os.replace(temp_name, destination)
+        os.chmod(destination, 0o644)
         if old_path is not None and old_path != destination and old_path.exists():
             old_path.unlink()
         await asyncio.to_thread(rag.reload_category, categoria)
@@ -347,6 +403,28 @@ async def admin_upload(
         if old_path is not None and old_path != destination
         else f"Se actualizó {categoria}/{relative_destination} y se recargó el agente."
     )}
+
+
+@app.post("/admin/delete")
+async def admin_delete(
+    categoria: str = Form(...),
+    archivo: str = Form(...),
+    _: str = Depends(require_admin),
+):
+    category_dir = _category_directory(categoria)
+    if archivo not in _files_in_category(categoria):
+        raise HTTPException(status_code=404, detail="El archivo ya no existe en esa categoría.")
+    path = (category_dir / Path(*PurePosixPath(archivo).parts)).resolve()
+    if not path.is_relative_to(category_dir.resolve()) or not path.is_file():
+        raise HTTPException(status_code=400, detail="La ruta del archivo no es válida.")
+    path.unlink()
+    # Si la subcarpeta de una materia queda vacía se elimina también.
+    parent = path.parent
+    while parent != category_dir.resolve() and parent.is_dir() and not any(parent.iterdir()):
+        parent.rmdir()
+        parent = parent.parent
+    await asyncio.to_thread(rag.reload_category, categoria)
+    return {"ok": True, "categoria": categoria, "archivo": archivo, "mensaje": f"Se eliminó {categoria}/{archivo} y se recargó el agente."}
 
 
 @app.post("/admin/update/all")
@@ -375,6 +453,8 @@ async def actualizar_categoria(categoria: str, _: str = Depends(require_admin)):
     if categoria in {"info_general", "perfil_ingreso", "perfil_egreso"}:
         await asyncio.to_thread(rag.reload_category, categoria)
         return {"ok": True, "mensaje": f"{categoria} recargado desde sus archivos."}
+    if categoria in {"cursos", "docentes"}:
+        raise HTTPException(status_code=409, detail=f"{categoria} se gestiona desde la carpeta Documentos con el panel; los scripts ya no lo regeneran.")
     downloads = {
         "cursos": "download_cursos.py", "horarios": "download_horarios.py", "parciales": "download_parciales.py",
         "calendario": "download_calendario.py", "presencialidades": "download_presencialidades.py", "docentes": "download_docentes.py",

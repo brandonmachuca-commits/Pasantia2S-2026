@@ -296,6 +296,33 @@
   gap: 8px;
 }
 
+/* Crédito del desarrollador en la pantalla de inicio: nota de cámara al centro, crédito a la derecha. */
+.reposo .app-footer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.reposo .camera-note {
+  grid-column: 2;
+}
+
+.credito {
+  grid-column: 3;
+  justify-self: end;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .reposo .app-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
 .kiosk-video {
   position: fixed;
   left: 0;

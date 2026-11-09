@@ -13,6 +13,8 @@ from typing import Iterable, Mapping
 
 import requests
 
+from agent import siglas_de_titulo, titulo_de_ficha
+
 
 # Descripciones para las carpetas conocidas. No forman una lista permitida:
 # las carpetas que existan realmente en Documentos se descubren al iniciar.
@@ -38,6 +40,24 @@ TOP_K = max(1, int(os.getenv("RAG_K", "3")))
 MAX_CONTEXT_CHARS = max(2500, int(os.getenv("RAG_MAX_CONTEXT_CHARS", "9000")))
 DEBUG_FLOW = os.getenv("RAG_DEBUG_FLOW", "1").strip() != "0"
 DEBUG_PROMPTS = os.getenv("RAG_DEBUG_PROMPTS", "1").strip() != "0"
+
+
+CONTACTO_SECRETARIA = "secretaria.tipaysandu@utec.edu.uy"
+_SIN_RESPUESTA = re.compile(
+    r"\bno\b[^.\n]{0,40}?\b(?:proporcion|indic|mencion|especific|encuentr|encontr|disponib|registrad|"
+    r"figur|aparec|contien|dispon|cuent|puedo\s+(?:responder|confirmar)|tengo\s+(?:informaci|el\s+dato))\w*"
+    r"|\bno\s+hay\s+(?:informaci|document|datos)|todav[ií]a\s+no\s+hay|sin\s+(?:dato|informaci)",
+    re.IGNORECASE,
+)
+
+
+def _con_contacto(texto: str) -> str:
+    """Si la respuesta admite que no tiene el dato, agrega el contacto de secretaría."""
+    if CONTACTO_SECRETARIA in texto or not _SIN_RESPUESTA.search(texto):
+        return texto
+    return (
+        f"{texto.rstrip()}\n\nPuedes consultarlo con secretaría: {CONTACTO_SECRETARIA}"
+    )
 
 
 def _limpiar_respuesta(texto: str) -> str:
@@ -295,10 +315,23 @@ def _es_consulta_general_materias(pregunta: str) -> bool:
     )
 
 
+def _carpeta_documentos(*nombres: str) -> Path | None:
+    """Carpeta de Documentos cuyo nombre coincide (sin distinguir mayúsculas) con alguno de los dados."""
+    configurado = os.getenv("DOCUMENTOS_DIR", "").strip()
+    base = Path(__file__).resolve().parent
+    raiz = Path(configurado).expanduser() if configurado else base / "Documentos"
+    if not raiz.is_absolute():
+        raiz = base / raiz
+    if not raiz.is_dir():
+        return None
+    buscados = {nombre.casefold() for nombre in nombres}
+    return next((p for p in sorted(raiz.iterdir()) if p.is_dir() and p.name.casefold() in buscados), None)
+
+
 def _indice_materias(pregunta: str) -> tuple[str, str] | None:
     """Recupera del índice estático todas las secciones de semestre solicitadas."""
-    raiz = Path(__file__).resolve().parent / "data" / "processed" / "cursos"
-    archivo = next((p for p in (raiz / "indice_materias.txt", raiz / "contenido.txt") if p.is_file()), None)
+    raiz = _carpeta_documentos("cursos", "materias")
+    archivo = next((p for p in (raiz / "indice_materias.txt", raiz / "contenido.txt") if raiz and p.is_file()), None) if raiz else None
     if archivo is None:
         return None
     try:
@@ -604,7 +637,16 @@ def _filtrar_por_materia(results: list[dict], aliases: list[str] | None) -> list
         return any(pattern.search(text) for pattern in patterns)
 
     if not any(menciona(f) for r in results for f in r.get("fragmentos", [])):
-        return results
+        # La materia pedida no figura en la evidencia: las tablas y leyendas de otras materias
+        # (horarios, parciales, docentes) se descartan para que el modelo no las atribuya a esta.
+        def es_tabla(fragment: dict) -> bool:
+            chunk = str(fragment.get("chunk", ""))
+            return chunk.startswith(("Horarios;", "Parciales y exámenes;")) or len(re.findall(r"\s[–—]\s", chunk)) >= 3
+        sin_tablas = [
+            {**r, "fragmentos": [f for f in r.get("fragmentos", []) if not es_tabla(f)]}
+            for r in results
+        ]
+        return [r for r in sin_tablas if r["fragmentos"]]
     def solo_lineas_de_la_materia(fragment: dict) -> dict:
         """En tablas de horarios/parciales deja el encabezado y solo las filas de la materia pedida."""
         lines = str(fragment.get("chunk", "")).splitlines()
@@ -645,13 +687,10 @@ def _clave_materia(texto: str) -> str:
     return re.sub(r"[^a-z0-9]", "", _normalizar(texto))
 
 
-def _docentes_estaticos() -> dict[str, tuple[str, str]]:
-    """Archivo estático de docentes: solo respalda preguntas por docentes de materias sin otra fuente."""
-    ruta = Path(__file__).resolve().parent / "data" / "processed" / "docentes" / "contenido.txt"
-    try:
-        texto = ruta.read_text(encoding="utf-8-sig")
-    except OSError:
-        return {}
+def _docentes_registrados(agentes: Mapping[str, object]) -> dict[str, tuple[str, str]]:
+    """Archivo de docentes (Documentos/docentes): solo respalda materias sin otra fuente."""
+    agente = next((a for nombre, a in agentes.items() if _normalizar(str(nombre)) == "docentes"), None)
+    texto = "\n".join(getattr(agente, "textos", {}).values())
     resultado: dict[str, tuple[str, str]] = {}
     docente = ""
     for linea in texto.splitlines():
@@ -675,7 +714,7 @@ def _leer_docentes(agentes: Mapping[str, object]) -> tuple[dict, dict]:
         chunks = getattr(agent, "chunks", [])
         sources = getattr(agent, "chunk_sources", [])
         for chunk, source in zip(chunks, sources):
-            if source.startswith("Documentos/"):
+            if source.startswith("Documentos/") and not source.startswith("Documentos/docentes/"):
                 for match in leyenda.finditer(chunk):
                     tokens = match.group("head").split()
                     if len(tokens) < 2:
@@ -685,12 +724,18 @@ def _leer_docentes(agentes: Mapping[str, object]) -> tuple[dict, dict]:
                     nombre = " ".join(tokens[size:])
                     vigentes[clave(codigo)] = (f"{nombre} ({codigo})", re.sub(r"\s*/\s*", " y ", match.group("who").strip()))
             carpeta = re.search(r"/(?:cursos|materias)/([^/]+)/", source)
+            titulo_ficha = titulo_de_ficha(chunk) if source.startswith("Documentos/") and not carpeta else ""
+            if titulo_ficha:
+                docente = re.search(r"Docentes?:?[ \t]*\n?[ \t]*([^\n]+)", chunk)
+                nombre = _limpiar_docente(docente.group(1)) if docente else ""
+                if nombre:
+                    fichas.setdefault(clave(siglas_de_titulo(titulo_ficha)), (titulo_ficha, nombre))
             if carpeta:
                 docente = re.search(r"Docentes?:?[ \t]*\n?[ \t]*([^\n]+)", chunk)
                 if docente:
                     codigo = carpeta.group(1).strip()
                     titulo = re.match(r"\s*TIP - ([^\n]+?)(?:\s+Search this site|\n|$)", chunk)
-                    nombre_materia = titulo.group(1).strip() if titulo else ""
+                    nombre_materia = titulo.group(1).strip() if titulo else titulo_de_ficha(chunk)
                     etiqueta = (
                         nombre_materia if not nombre_materia or len(codigo) > 20 or clave(codigo) == clave(nombre_materia)
                         else f"{nombre_materia} ({codigo})"
@@ -699,7 +744,7 @@ def _leer_docentes(agentes: Mapping[str, object]) -> tuple[dict, dict]:
                     if nombre:
                         fichas.setdefault(clave(codigo), (etiqueta, nombre))
     # Último recurso: el archivo estático de docentes, solo para materias que no tienen otra fuente.
-    for k, datos in _docentes_estaticos().items():
+    for k, datos in _docentes_registrados(agentes).items():
         if k not in vigentes:
             fichas.setdefault(k, datos)
     # Un mismo docente escrito distinto ("Gonzalo Deleon") toma la grafía de la leyenda vigente.
@@ -736,6 +781,40 @@ def _docentes_de(agentes: Mapping[str, object], aliases: list[str]) -> tuple[lis
     return lineas, hay_vigente
 
 
+def _creditos_de(agentes: Mapping[str, object], equivalencias: list[list[str]]) -> list[str]:
+    """Créditos de cada materia nombrada, tomados de su ficha; un valor vacío o 0 significa "sin dato"."""
+    lineas: list[str] = []
+    vistos: set[frozenset] = set()
+    for grupo in equivalencias:
+        nombres = {_normalizar(alias) for alias in grupo if alias.strip()}
+        if not nombres or frozenset(nombres) in vistos:
+            continue
+        vistos.add(frozenset(nombres))
+        valores: set[int] = set()
+        for nombre_agente in ("cursos", "materias"):
+            agent = agentes.get(nombre_agente)
+            for chunk, source in zip(getattr(agent, "chunks", []), getattr(agent, "chunk_sources", [])):
+                # La ficha de una materia se reconoce por su carpeta o por su título, no por
+                # cualquier mención (el programa de Pasantía nombra al Proyecto, por ejemplo).
+                carpeta = re.search(r"/(?:cursos|materias)/([^/]+)/", source)
+                tip = re.match(r"\s*TIP - ([^\n]+?)(?:\s+Search this site|\n|$)", chunk)
+                identidades = {_normalizar(carpeta.group(1))} if carpeta else set()
+                identidades.add(_normalizar(tip.group(1)) if tip else _normalizar(titulo_de_ficha(chunk)))
+                if not identidades & nombres:
+                    continue
+                encontrado = re.search(r"Cr[eé]ditos\s*:?\s*(\d+)", chunk[:1200], flags=re.IGNORECASE)
+                if encontrado and int(encontrado.group(1)) > 0:
+                    valores.add(int(encontrado.group(1)))
+        largo = max(nombres, key=len)
+        corto = min(nombres, key=len)
+        etiqueta = largo if corto == largo or len(corto) > 6 else f"{largo} ({corto})"
+        if valores:
+            lineas.append(f"- {etiqueta}: {' o '.join(str(v) for v in sorted(valores))} créditos")
+        else:
+            lineas.append(f"- {etiqueta}: SIN DATO (las fichas no registran sus créditos)")
+    return lineas
+
+
 def _evidencia(results: list[dict], incluir_apoyos: bool = True) -> tuple[str, list[str]]:
     parts: list[str] = []
     sources: list[str] = []
@@ -751,6 +830,8 @@ def _evidencia(results: list[dict], incluir_apoyos: bool = True) -> tuple[str, l
                 # Los horarios de "Apoyo ..." no son clases; solo se envían si se preguntan.
                 raw = "\n".join(line for line in raw.splitlines() if not line.lstrip().lower().startswith("apoyo"))
             text = re.sub(r"\s+", " ", raw).strip()
+            # "Créditos: 0" es un marcador vacío del sitio de origen, no un dato real.
+            text = re.sub(r"(Cr[eé]ditos\s*:?\s*)0\b\.?", r"\1(sin dato)", text, flags=re.IGNORECASE)
             if not text:
                 continue
             block = f"[{result['categoria']} | {source} | evidencia {index}]\n{text[: 5000 if fragment.get('completo') else 1500]}"
@@ -793,9 +874,9 @@ def responder_stream(
     if not consultas:
         forced, unavailable, has_intent = _forced_routes(pregunta, agentes)
         if has_intent and unavailable:
-            yield "Todavía no hay documentos cargados para responder sobre: " + ", ".join(unavailable) + "."
+            yield _con_contacto("Todavía no hay documentos cargados para responder sobre: " + ", ".join(unavailable) + ".")
         else:
-            yield "No encontré una carpeta de documentos pertinente para esa pregunta."
+            yield _con_contacto("No encontré una carpeta de documentos pertinente para esa pregunta.")
         return
 
     catalogo = _indice_materias(pregunta) if _es_consulta_general_materias(pregunta) else None
@@ -844,6 +925,21 @@ def responder_stream(
                     "fuente": "docentes vigentes", "score": 1.0, "completo": True,
                 }],
             })
+    if equivalencias and re.search(r"\bcredit", _normalizar(pregunta)):
+        lineas_creditos = _creditos_de(agentes, equivalencias)
+        if lineas_creditos:
+            # El número sale solo de la ficha de la materia pedida: sin dato se dice así y no se
+            # toma el de otra materia ni el de una respuesta anterior.
+            historial = None
+            results.insert(0, {
+                "categoria": "creditos",
+                "consulta": pregunta,
+                "fragmentos": [{
+                    "chunk": "Créditos (dato oficial, tiene prioridad; si dice SIN DATO, responde que no está "
+                             "registrado y no uses ningún otro número):\n" + "\n".join(lineas_creditos),
+                    "fuente": "fichas de materias", "score": 1.0, "completo": True,
+                }],
+            })
     evidence, sources = _evidencia(results, incluir_apoyos="apoyo" in _normalizar(pregunta))
     if DEBUG_FLOW:
         count_fragments = sum(len(item.get("fragmentos", [])) for item in results)
@@ -858,9 +954,9 @@ def responder_stream(
             if not item.get("fragmentos")
         ]
         if missing:
-            yield "No encontré información pertinente en los archivos de estas categorías: " + ", ".join(missing) + "."
+            yield _con_contacto("No encontré información pertinente en los archivos de estas categorías: " + ", ".join(missing) + ".")
         else:
-            yield "No encontré información pertinente en los documentos cargados."
+            yield _con_contacto("No encontré información pertinente en los documentos cargados.")
         return
 
     _, unavailable, _ = _forced_routes(pregunta, agentes)
@@ -952,7 +1048,7 @@ def responder_stream(
         if response is not None:
             response.close()
 
-    answer = _limpiar_respuesta(answer)
+    answer = _con_contacto(_limpiar_respuesta(answer))
     if DEBUG_FLOW:
         print(f"[RESPUESTA:WEB]\n{answer}", flush=True)
     if error_router:

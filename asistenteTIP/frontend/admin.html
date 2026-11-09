@@ -8,7 +8,7 @@
   <link rel="icon" type="image/x-icon" href="/static/img/logo-utec.jpg">
   <script src="theme.js"></script>
   <link rel="stylesheet" href="base.css?v=20261103">
-  <link rel="stylesheet" href="admin.css?v=20261103">
+  <link rel="stylesheet" href="admin.css?v=20261105">
 </head>
 <body>
   <header class="app-header">
@@ -82,6 +82,10 @@ académica</span>
               <small>Se guardará en backend/Documentos/&lt;categoría&gt;</small>
               <input id="file-input" name="archivo" type="file" accept=".pdf,.docx,.txt,.md,.markdown,.csv,.html,.htm" required>
             </label>
+            <div class="dup-box" id="dup-box" hidden role="alert">
+              <p id="dup-text"></p>
+              <div class="dup-actions" id="dup-actions"></div>
+            </div>
             <button class="btn btn-primary btn-block" type="submit" id="upload-submit">Subir y actualizar agente</button>
             <p class="notice" id="upload-message" role="status"></p>
           </form>
@@ -107,11 +111,20 @@ académica</span>
             </div>
           </div>
           <p class="notice" id="status-message" role="status"></p>
-          <p class="footnote">Los archivos estáticos de <code>data/processed</code> no se modifican desde este panel.</p>
+          <p class="footnote">Cursos y docentes se guardan en <code>backend/Documentos</code> y se editan desde este panel. Información general y perfiles siguen en <code>data/processed</code>.</p>
+        </section>
+
+        <section class="card panel panel-wide">
+          <div class="panel-head">
+            <h2>Archivos de la categoría</h2>
+            <p>Carpetas y archivos guardados en el servidor para la categoría elegida arriba.</p>
+          </div>
+          <div id="files-list" class="files-list"><div class="empty">Elige una categoría.</div></div>
+          <p class="notice" id="files-message" role="status"></p>
         </section>
       </div>
     </section>
   </main>
-  <script src="admin.js?v=20261103"></script>
+  <script src="admin.js?v=20261105"></script>
 </body>
 </html>

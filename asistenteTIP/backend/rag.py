@@ -16,6 +16,8 @@ from agent import (
     STATIC_CATEGORY_ALIASES,
     STATIC_FALLBACK_CATEGORIES,
     SUPPORTED_EXTENSIONS,
+    siglas_de_titulo,
+    titulo_de_ficha,
 )
 from agentes import AGENTES, responder_stream
 
@@ -323,11 +325,40 @@ class RAGSystem:
 
                 registrar_dicta(chunk)
 
-        # El archivo estático de docentes también aporta códigos y nombres de materias (BD1, etc.).
-        try:
-            registrar_dicta((self.static_root / "docentes" / "contenido.txt").read_text(encoding="utf-8-sig"))
-        except OSError:
-            pass
+        # Fichas subidas a cursos: su título completo es un alias de la materia. En una subcarpeta
+        # la materia es la carpeta; suelta en la raíz se deduce por las iniciales del título
+        # ("Estructura de Datos y Algoritmos" -> EDA).
+        for agent in self.agentes.values():
+            for chunk, source in zip(agent.chunks, agent.chunk_sources):
+                titulo = titulo_de_ficha(chunk)
+                if not titulo:
+                    continue
+                carpeta = re.search(r"/(?:cursos|materias)/([^/]+)/", source)
+                if carpeta:
+                    code = carpeta.group(1).strip()
+                else:
+                    sigla = siglas_de_titulo(titulo)
+                    code = next((c for c in set(aliases.values()) if quitar_acentos(c).casefold() == sigla), None)
+                    code = code or sigla.upper()
+                add(code, code)
+                add(titulo, code)
+
+        # El índice de materias trae los nombres oficiales; si sus iniciales coinciden con un código
+        # ya conocido ("Sistemas Operativos" -> SO, "Bases de Datos 1" -> BD1), pasan a ser alias.
+        indice = next(
+            (
+                texto for agent in self.agentes.values()
+                for fuente, texto in getattr(agent, "textos", {}).items()
+                if fuente.endswith("/indice_materias.txt")
+            ),
+            "",
+        )
+        codigos = {quitar_acentos(c).casefold(): c for c in set(aliases.values())}
+        for linea in indice.splitlines():
+            nombre = linea.strip().removeprefix("-").strip() if linea.strip().startswith("-") else ""
+            code = codigos.get(siglas_de_titulo(nombre)) if nombre else None
+            if code:
+                add(nombre, code)
 
         # Un alias genérico que es el comienzo del nombre de otra materia ("matemática"
         # frente a "matemática discreta y lógica 1") es ambiguo: se descarta.
@@ -345,9 +376,12 @@ class RAGSystem:
         """Todas las materias nombradas; el texto ya reconocido no se vuelve a usar."""
         # Se comparan sin la "s" final de cada palabra, para que "principio" y "principios" coincidan.
         def singular(texto: str) -> str:
-            return re.sub(r"(?<=\w)s\b", "", texto)
+            # "ingeniería en software" y "ingeniería de software" nombran la misma materia.
+            return re.sub(r"\ben\b", "de", re.sub(r"(?<=\w)s\b", "", texto))
 
-        query = singular(quitar_acentos(pregunta).casefold())
+        # El reconocimiento de voz escribe "dos" donde el nombre oficial lleva "2".
+        query = quitar_acentos(pregunta).casefold()
+        query = singular(re.sub(r"(?<=\w) uno\b", " 1", re.sub(r"(?<=\w) dos\b", " 2", query)))
         found: list[str] = []
         for alias, canonical in getattr(self, "_entity_aliases", []):
             pattern = rf"(?<!\w){re.escape(singular(alias))}(?!\w)"
