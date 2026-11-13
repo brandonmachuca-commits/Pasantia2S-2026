@@ -14,3 +14,6 @@ asistenteTIP/backend/prueba1directorio.py
 # Documentos de la facultad: los gestiona el panel de admin en el servidor
 asistenteTIP/backend/Documentos/*/*
 !asistenteTIP/backend/Documentos/*/.gitkeep
+
+# Documentación del proyecto (informes), solo en esta máquina
+asistenteTIP/docs/
